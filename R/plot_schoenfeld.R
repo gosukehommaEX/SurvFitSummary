@@ -8,10 +8,10 @@
 #' @param control_arm Character string specifying which ARM level should be used as
 #'   the reference (control) group. If NULL (default), uses the first factor level
 #'
-#' @return A single ggplot object containing:
+#' @return A ggplot object:
 #'   \itemize{
-#'     \item Single plot if ARM has 2 levels
-#'     \item Horizontal panel if ARM has 3+ levels with aligned y-axes
+#'     \item Single plot without facet if ARM has 2 levels
+#'     \item Horizontal facet panels if ARM has 3+ levels with shared y-axis
 #'   }
 #'
 #' @details
@@ -48,8 +48,8 @@
 #' }
 #'
 #' @importFrom survival coxph Surv cox.zph
-#' @importFrom ggplot2 ggplot aes geom_point geom_smooth geom_hline labs theme_bw theme element_text element_blank element_rect element_line annotate coord_cartesian scale_x_continuous scale_y_continuous scale_shape_manual scale_linetype_manual scale_color_manual guide_legend guides unit
-#' @importFrom patchwork wrap_plots plot_annotation plot_layout
+#' @importFrom ggplot2 ggplot aes geom_point geom_smooth geom_hline labs theme_bw theme element_text element_blank element_rect element_line annotate coord_cartesian scale_x_continuous scale_y_continuous scale_shape_manual scale_linetype_manual scale_color_manual guide_legend guides unit facet_grid vars
+#' @importFrom dplyr bind_rows mutate group_by summarise filter
 #' @export
 #'
 #' @examples
@@ -116,7 +116,7 @@
 #'   column_event = NULL
 #' )
 #'
-#' # Creates 3 plots (A vs Control, B vs Control, C vs Control)
+#' # Creates 3 panels (A vs Control, B vs Control, C vs Control)
 #' p3 <- plot_schoenfeld(
 #'   dataset = dataset3_processed,
 #'   control_arm = "Control"
@@ -133,185 +133,87 @@ plot_schoenfeld <- function(dataset,
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package 'ggplot2' is required but not installed.")
   }
-  if (!requireNamespace("patchwork", quietly = TRUE)) {
-    stop("Package 'patchwork' is required but not installed.")
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop("Package 'dplyr' is required but not installed.")
   }
 
   # Check ARM levels
   arm_levels <- unique(dataset$ARM)
   if (length(arm_levels) < 2) {
-    stop("ARM must have at least 2 levels for proportional hazards test. Found: ",
-         length(arm_levels), " level(s)")
+    stop("ARM must have at least 2 levels for proportional hazards test.")
   }
 
-  # Handle control_arm specification
-  if (!is.null(control_arm)) {
-    if (!control_arm %in% arm_levels) {
-      stop("Specified control_arm '", control_arm, "' not found in ARM levels: ",
-           paste(arm_levels, collapse = ", "))
-    }
-    # Relevel ARM to set control_arm as reference
-    dataset$ARM <- relevel(factor(dataset$ARM), ref = control_arm)
-    arm_levels <- levels(dataset$ARM)
-    cat("ARM releveled with '", control_arm, "' as reference group\n", sep = "")
+  # Convert ARM to factor if not already
+  dataset$ARM <- factor(dataset$ARM, levels = arm_levels)
+
+  # Determine control group
+  if (is.null(control_arm)) {
+    control <- levels(dataset$ARM)[1]
+    warning(paste0("control_arm not specified. Using '", control, "' as reference."))
   } else {
-    # Ensure ARM is a factor
-    if (!is.factor(dataset$ARM)) {
-      dataset$ARM <- as.factor(dataset$ARM)
-      arm_levels <- levels(dataset$ARM)
+    if (!control_arm %in% arm_levels) {
+      stop(paste0("control_arm '", control_arm, "' not found in ARM levels."))
     }
+    control <- control_arm
   }
 
-  # Control arm is the reference (first level)
-  control <- arm_levels[1]
-  treatment_arms <- arm_levels[-1]
+  # Set control as reference level
+  dataset$ARM <- relevel(dataset$ARM, ref = control)
 
-  # Store all schoenfeld data to calculate common y-axis range
+  # Get treatment arms (exclude control)
+  treatment_arms <- setdiff(levels(dataset$ARM), control)
+
+  # Store all data for combining
   all_schoenfeld_data <- list()
 
-  # First pass: collect all data
+  # Process each treatment arm vs control comparison individually
   for (trt_arm in treatment_arms) {
-    # Create binary comparison dataset: control vs current treatment
-    binary_data <- dataset[dataset$ARM %in% c(control, trt_arm), ]
-    binary_data$ARM <- droplevels(binary_data$ARM)
-    binary_data$ARM <- relevel(binary_data$ARM, ref = control)
+    # Create subset with only control and this treatment arm
+    subset_data <- dataset %>%
+      dplyr::filter(ARM %in% c(control, trt_arm))
 
-    # Fit Cox model and test PH assumption
-    cox_fit <- survival::coxph(survival::Surv(SURVTIME, EVENT) ~ ARM, data = binary_data)
-    ph_test <- survival::cox.zph(cox_fit)
+    # Re-level to ensure control is reference
+    subset_data$ARM <- factor(subset_data$ARM, levels = c(control, trt_arm))
 
-    # Get ARM coefficient name
-    arm_coef <- grep('^ARM', names(coef(cox_fit)), value = TRUE)[1]
+    # Fit Cox model for this comparison only
+    cox_formula <- survival::Surv(SURVTIME, EVENT) ~ ARM
+    fit_cox_subset <- survival::coxph(cox_formula, data = subset_data)
 
-    # Extract data
-    beta <- coef(cox_fit)[arm_coef]
-    pval <- ph_test$table["ARM", 'p']
+    # Test proportional hazards assumption
+    ph_test_subset <- survival::cox.zph(fit_cox_subset)
 
-    # Get residuals (should be a single column for binary comparison)
-    if (is.matrix(ph_test$y)) {
-      residuals <- ph_test$y[, 1]
+    # Extract scaled residuals
+    if (is.matrix(ph_test_subset$y)) {
+      residuals <- ph_test_subset$y[, 1]
     } else {
-      residuals <- ph_test$y
+      residuals <- ph_test_subset$y
     }
 
     schoenfeld_data <- data.frame(
-      Time = ph_test$time,
-      Residuals = residuals,
-      Beta_t = beta + residuals
+      Time = ph_test_subset$time,
+      Residuals = residuals
     )
 
-    all_schoenfeld_data[[trt_arm]] <- list(
-      data = schoenfeld_data,
-      beta = beta,
-      pval = pval,
-      ph_test = ph_test
-    )
-  }
+    # Get beta coefficient and p-value
+    beta <- coef(fit_cox_subset)[1]
+    pval <- ph_test_subset$table["ARM", "p"]
 
-  # Calculate common y-axis range across all plots
-  all_residuals <- unlist(lapply(all_schoenfeld_data, function(x) x$data$Residuals))
-  y_limits <- range(all_residuals, na.rm = TRUE)
-  y_buffer <- diff(y_limits) * 0.1
-  y_limits <- c(y_limits[1] - y_buffer, y_limits[2] + y_buffer)
+    # Store data with comparison label
+    schoenfeld_data$Comparison <- paste0(trt_arm, " vs ", control)
 
-  # Calculate common x-axis range across all plots
-  all_times <- unlist(lapply(all_schoenfeld_data, function(x) x$data$Time))
-  x_max <- max(all_times, na.rm = TRUE)
-
-  # Create plot list for each treatment vs control comparison
-  plot_list <- list()
-
-  for (trt_arm in treatment_arms) {
-    # Extract stored data
-    schoenfeld_data <- all_schoenfeld_data[[trt_arm]]$data
-    beta <- all_schoenfeld_data[[trt_arm]]$beta
-    pval <- all_schoenfeld_data[[trt_arm]]$pval
-    ph_test <- all_schoenfeld_data[[trt_arm]]$ph_test
-
-    # Create plot title (without subtitle at individual plot level)
-    plot_title <- paste0(trt_arm, " vs ", control)
-
-    # Create annotation text (only beta and p-value)
+    # Store annotation info
     pval_text <- ifelse(pval < 0.001, 'p < 0.001', sprintf('p = %.3f', pval))
     annot_color <- ifelse(pval < 0.05, '#D91E49', '#658D1B')
     annot <- sprintf('%s\nβ = %.3f', pval_text, beta)
 
-    # Create plot
-    p <- ggplot2::ggplot(schoenfeld_data, ggplot2::aes(x = Time, y = Residuals)) +
-      ggplot2::geom_hline(
-        ggplot2::aes(yintercept = 0, linetype = 'Reference line (y = 0)'),
-        color = '#D91E49',
-        linewidth = 0.8
-      ) +
-      ggplot2::geom_point(
-        ggplot2::aes(shape = 'Residuals'),
-        alpha = 0.5,
-        color = '#004C97',
-        size = 2
-      ) +
-      ggplot2::geom_smooth(
-        ggplot2::aes(color = 'LOESS smoothing (95% CI)'),
-        method = 'loess',
-        formula = y ~ x,
-        se = TRUE,
-        fill = '#F0B323',
-        alpha = 0.2,
-        linewidth = 1
-      ) +
-      ggplot2::scale_shape_manual(
-        name = '',
-        values = c('Residuals' = 16)
-      ) +
-      ggplot2::scale_linetype_manual(
-        name = '',
-        values = c('Reference line (y = 0)' = 'dashed')
-      ) +
-      ggplot2::scale_color_manual(
-        name = '',
-        values = c('LOESS smoothing (95% CI)' = '#F0B323')
-      ) +
-      ggplot2::coord_cartesian(xlim = c(0, x_max), ylim = y_limits) +
-      ggplot2::labs(
-        title = plot_title,
-        x = 'Time',
-        y = 'Scaled Schoenfeld Residuals'
-      ) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(
-        plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
-        plot.subtitle = ggplot2::element_text(size = 20, hjust = 0.5),
-        axis.title.x = ggplot2::element_text(size = 22),
-        axis.title.y = ggplot2::element_text(size = 22),
-        axis.text.x = ggplot2::element_text(size = 18),
-        axis.text.y = ggplot2::element_text(size = 18),
-        legend.position = 'bottom',
-        legend.text = ggplot2::element_text(size = 16),
-        legend.title = ggplot2::element_blank(),
-        legend.key = ggplot2::element_rect(colour = NA, fill = NA),
-        legend.key.width = ggplot2::unit(2, "cm"),
-        panel.grid.major = ggplot2::element_line(color = 'gray90'),
-        panel.grid.minor = ggplot2::element_blank()
-      ) +
-      ggplot2::guides(
-        shape = ggplot2::guide_legend(order = 1),
-        linetype = ggplot2::guide_legend(order = 2),
-        color = ggplot2::guide_legend(order = 3)
-      ) +
-      ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0, NA)) +
-      ggplot2::annotate(
-        'text',
-        x = max(schoenfeld_data$Time) * 0.7,
-        y = y_limits[2] * 0.9,
-        label = annot,
-        hjust = 0,
-        vjust = 1,
-        size = 6,
-        fontface = 'bold',
-        color = annot_color
-      )
+    schoenfeld_data$Annotation <- annot
+    schoenfeld_data$Annot_Color <- annot_color
 
-    # Store plot
-    plot_list[[trt_arm]] <- p
+    all_schoenfeld_data[[trt_arm]] <- list(
+      data = schoenfeld_data,
+      beta = beta,
+      pval = pval
+    )
 
     # Print diagnostics
     cat(sprintf(
@@ -320,59 +222,125 @@ plot_schoenfeld <- function(dataset,
       control,
       beta,
       pval,
-      length(ph_test$time),
+      length(ph_test_subset$time),
       min(schoenfeld_data$Residuals, na.rm = TRUE),
       max(schoenfeld_data$Residuals, na.rm = TRUE)
     ))
   }
 
-  # Arrange plots horizontally if multiple ARM comparisons
-  if (length(plot_list) > 1) {
-    combined_plot <- patchwork::wrap_plots(
-      plot_list,
-      ncol = length(plot_list),
-      nrow = 1
+  # Combine all data
+  combined_data <- dplyr::bind_rows(lapply(all_schoenfeld_data, function(x) x$data))
+
+  # Convert Comparison to factor to control panel order
+  combined_data$Comparison <- factor(combined_data$Comparison,
+                                     levels = unique(combined_data$Comparison))
+
+  # Calculate common y-axis range
+  y_limits <- range(combined_data$Residuals, na.rm = TRUE)
+  y_buffer <- diff(y_limits) * 0.1
+  y_limits <- c(y_limits[1] - y_buffer, y_limits[2] + y_buffer)
+
+  # Create annotation data frame for each panel
+  annot_data <- combined_data %>%
+    dplyr::group_by(Comparison, Annotation, Annot_Color) %>%
+    dplyr::summarise(
+      x_pos = max(Time, na.rm = TRUE) * 0.98,
+      y_pos = y_limits[2] * 0.95,
+      .groups = 'drop'
+    )
+
+  # Create base plot
+  p <- ggplot2::ggplot(combined_data, ggplot2::aes(x = Time, y = Residuals)) +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = 0, linetype = 'Reference line (y = 0)'),
+      color = '#D91E49',
+      linewidth = 0.8
     ) +
-      patchwork::plot_layout(guides = 'collect') +
-      patchwork::plot_annotation(
-        title = 'Scaled Schoenfeld Residuals',
-        subtitle = 'Test for proportional hazards assumption using Grambsch-Therneau method',
-        theme = ggplot2::theme(
-          plot.title = ggplot2::element_text(
-            size = 20,
-            face = 'bold',
-            color = '#666666',
-            hjust = 0.5
-          ),
-          plot.subtitle = ggplot2::element_text(
-            size = 16,
-            color = '#666666',
-            hjust = 0.5
-          ),
-          legend.position = 'bottom'
-        )
-      )
-  } else {
-    combined_plot <- plot_list[[1]] +
-      patchwork::plot_annotation(
-        title = 'Scaled Schoenfeld Residuals',
-        subtitle = 'Test for proportional hazards assumption using Grambsch-Therneau method',
-        theme = ggplot2::theme(
-          plot.title = ggplot2::element_text(
-            size = 20,
-            face = 'bold',
-            color = '#666666',
-            hjust = 0.5
-          ),
-          plot.subtitle = ggplot2::element_text(
-            size = 16,
-            color = '#666666',
-            hjust = 0.5
-          ),
-          legend.position = 'bottom'
-        )
-      )
+    ggplot2::geom_point(
+      ggplot2::aes(shape = 'Residuals'),
+      alpha = 0.5,
+      color = '#004C97',
+      size = 2
+    ) +
+    ggplot2::geom_smooth(
+      ggplot2::aes(color = 'LOESS smoothing (95% CI)'),
+      method = 'loess',
+      formula = y ~ x,
+      se = TRUE,
+      fill = '#F0B323',
+      alpha = 0.2,
+      linewidth = 1
+    ) +
+    ggplot2::geom_text(
+      data = annot_data,
+      ggplot2::aes(x = x_pos, y = y_pos, label = Annotation),
+      color = annot_data$Annot_Color,
+      inherit.aes = FALSE,
+      hjust = 1,
+      vjust = 1,
+      size = 5,
+      fontface = 'bold',
+      show.legend = FALSE
+    ) +
+    ggplot2::scale_color_manual(
+      values = c('LOESS smoothing (95% CI)' = '#F0B323'),
+      name = NULL
+    ) +
+    ggplot2::scale_shape_manual(
+      values = c('Residuals' = 16),
+      name = NULL
+    ) +
+    ggplot2::scale_linetype_manual(
+      values = c('Reference line (y = 0)' = 'dashed'),
+      name = NULL
+    ) +
+    ggplot2::coord_cartesian(ylim = y_limits) +
+    ggplot2::scale_x_continuous(expand = c(0, 0)) +
+    ggplot2::scale_y_continuous(expand = c(0.02, 0)) +
+    ggplot2::labs(
+      title = 'Scaled Schoenfeld Residuals',
+      subtitle = 'Test for proportional hazards assumption using Grambsch-Therneau method',
+      x = 'Time',
+      y = 'Scaled Schoenfeld Residuals'
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
+        size = 20,
+        face = 'bold',
+        hjust = 0.5
+      ),
+      plot.subtitle = ggplot2::element_text(
+        size = 16,
+        hjust = 0.5
+      ),
+      axis.title.x = ggplot2::element_text(size = 18),
+      axis.title.y = ggplot2::element_text(size = 18),
+      axis.text.x = ggplot2::element_text(size = 14),
+      axis.text.y = ggplot2::element_text(size = 14),
+      strip.text = ggplot2::element_text(size = 16, face = 'bold'),
+      strip.background = ggplot2::element_rect(fill = '#E8E8E8', color = 'black'),
+      legend.position = 'bottom',
+      legend.text = ggplot2::element_text(size = 14),
+      legend.title = ggplot2::element_blank(),
+      legend.key = ggplot2::element_rect(colour = NA, fill = NA),
+      legend.key.width = ggplot2::unit(2, "cm"),
+      panel.grid.major = ggplot2::element_line(color = 'gray90'),
+      panel.grid.minor = ggplot2::element_blank()
+    ) +
+    ggplot2::guides(
+      shape = ggplot2::guide_legend(order = 1),
+      linetype = ggplot2::guide_legend(order = 2),
+      color = ggplot2::guide_legend(order = 3)
+    )
+
+  # Add facet_grid only if there are 2 or more treatment arms (3+ total arms)
+  if (length(treatment_arms) >= 2) {
+    p <- p + ggplot2::facet_grid(
+      cols = ggplot2::vars(Comparison),
+      scales = "free_x"
+    )
   }
 
-  return(combined_plot)
+  return(p)
 }

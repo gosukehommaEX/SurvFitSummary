@@ -282,7 +282,7 @@ plot_hazard_and_parametric <- function(dataset,
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = 20, face = 'bold', hjust = 0.5),
       plot.subtitle = ggplot2::element_text(size = 16, hjust = 0.5),
-      axis.title.x = ggplot2::element_text(size = 18),
+      axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_text(size = 18),
       axis.text.x = ggplot2::element_text(size = 14),
       axis.text.y = ggplot2::element_text(size = 14),
@@ -296,6 +296,13 @@ plot_hazard_and_parametric <- function(dataset,
       panel.grid.major = ggplot2::element_line(color = 'gray90'),
       panel.grid.minor = ggplot2::element_blank()
     )
+
+  # If single arm, hide y-axis strip text (ARM labels)
+  if (n_arms == 1) {
+    p <- p + ggplot2::theme(
+      strip.text.y = ggplot2::element_blank()
+    )
+  }
 
   # Add confidence intervals if requested
   if (conf_int) {
