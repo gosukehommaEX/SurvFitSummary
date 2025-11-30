@@ -324,14 +324,14 @@ plot_km_and_parametric <- function(dataset,
     ggplot2::theme_bw() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
-      plot.subtitle = ggplot2::element_text(size = 20, hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(size = 24, hjust = 0.5),
       axis.title.x = ggplot2::element_text(size = 22),
       axis.title.y = ggplot2::element_text(size = 22),
-      axis.text.x = ggplot2::element_text(size = 18),
-      axis.text.y = ggplot2::element_text(size = 18),
+      axis.text.x = ggplot2::element_text(size = 20),
+      axis.text.y = ggplot2::element_text(size = 20),
       legend.position = 'bottom',
-      legend.text = ggplot2::element_text(size = 16),
-      legend.title = ggplot2::element_text(size = 16),
+      legend.text = ggplot2::element_text(size = 18),
+      legend.title = ggplot2::element_text(size = 18),
       legend.key = ggplot2::element_rect(colour = NA, fill = NA),
       legend.key.width = ggplot2::unit(2, "cm"),
       panel.grid.major = ggplot2::element_line(color = 'gray90'),
@@ -406,7 +406,7 @@ plot_km_and_parametric <- function(dataset,
       label = legend_text,
       hjust = 0,
       vjust = 1,
-      size = 6,
+      size = 8,
       fontface = 'bold'
     )
 

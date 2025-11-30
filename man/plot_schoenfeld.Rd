@@ -14,10 +14,10 @@ ARM (treatment arm), SURVTIME (survival time), EVENT (event indicator)}
 the reference (control) group. If NULL (default), uses the first factor level}
 }
 \value{
-A single ggplot object containing:
+A ggplot object:
 \itemize{
-\item Single plot if ARM has 2 levels
-\item Horizontal panel if ARM has 3+ levels with aligned y-axes
+\item Single plot without facet if ARM has 2 levels
+\item Horizontal facet panels if ARM has 3+ levels with shared y-axis
 }
 }
 \description{
@@ -121,7 +121,7 @@ dataset3_processed <- processing_dataset(
   column_event = NULL
 )
 
-# Creates 3 plots (A vs Control, B vs Control, C vs Control)
+# Creates 3 panels (A vs Control, B vs Control, C vs Control)
 p3 <- plot_schoenfeld(
   dataset = dataset3_processed,
   control_arm = "Control"
