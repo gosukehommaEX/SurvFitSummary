@@ -1,9 +1,8 @@
-#' Plot Kaplan-Meier Curves with Parametric Distribution Overlay (Fixed for Single ARM)
+#' Plot Kaplan-Meier Curves with Parametric Distribution Overlay
 #'
 #' This function creates a combined visualization of Kaplan-Meier survival curves
-#' with overlaid parametric distribution fits. It supports multiple treatment arms,
-#' displays confidence intervals optionally, and handles multiple time scales.
-#' Fixed version handles single ARM datasets correctly.
+#' with overlaid parametric distribution fits. It supports multiple treatment arms
+#' and displays confidence intervals optionally.
 #'
 #' @param dataset A data frame containing survival analysis data with columns:
 #'   ARM (treatment arm), SURVTIME (survival time), EVENT (event indicator)
@@ -11,40 +10,32 @@
 #'   Must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "gamma"
 #' @param conf_int Logical indicating whether to display 95% confidence intervals on
 #'   Kaplan-Meier curves. Default is TRUE
-#' @param time_scale Character string specifying the unit of time scale in the input dataset.
-#'   Must be one of: "day", "week", "month", "year". Default is "week".
-#'   Data will be converted internally to weeks for analysis
-#' @param time_horizon Numeric value specifying the maximum time point in the specified
-#'   time_scale unit. If NULL (default), uses the maximum observed survival time in the
-#'   dataset. All outputs (plots and tables) are displayed in weeks
 #'
 #' @return A list containing:
 #'   \describe{
-#'     \item{plot}{ggplot object with Kaplan-Meier curves and parametric overlays,
-#'       with x-axis in weeks}
-#'     \item{risktable}{Data frame showing number at risk at 4-week intervals,
-#'       with Time column in weeks}
+#'     \item{plot}{ggplot object with Kaplan-Meier curves and parametric overlays}
+#'     \item{risktable}{Data frame showing number at risk at regular intervals}
 #'   }
 #'
 #' @details
 #' The function performs the following operations:
 #' \itemize{
-#'   \item Converts input SURVTIME from time_scale to weeks internally
 #'   \item Fits Kaplan-Meier curves using \code{survival::survfit()}
 #'   \item Fits parametric survival models independently for each ARM
-#'   \item Calculates number at risk at 4-week intervals
-#'   \item Returns plot and risk table with all time values in weeks
+#'   \item Calculates number at risk at regular intervals
 #'   \item Axes begin at (0, 0) for improved visualization
-#'   \item Handles both single and multiple ARM datasets
+#'   \item X-axis extends to the longest ARM's last event time
+#'   \item Handles single and multiple ARM datasets
 #' }
 #'
 #' @importFrom survival Surv survfit
 #' @importFrom flexsurv flexsurvreg
 #' @importFrom ggplot2 ggplot aes geom_line geom_step geom_ribbon scale_color_manual
 #'   scale_fill_manual scale_x_continuous scale_y_continuous labs theme element_text
-#'   element_blank element_line coord_cartesian annotate geom_hline
-#' @importFrom dplyr group_by summarise n mutate select
+#'   element_blank element_line annotate expansion
+#' @importFrom dplyr group_by summarise n mutate select filter arrange
 #' @importFrom tibble as_tibble
+#' @importFrom tidyr pivot_wider
 #' @export
 #'
 #' @examples
@@ -69,15 +60,13 @@
 #' result <- plot_km_and_parametric(
 #'   dataset = dataset1_processed,
 #'   distribution = "weibull",
-#'   conf_int = TRUE,
-#'   time_scale = "week",
-#'   time_horizon = 100
+#'   conf_int = TRUE
 #' )
 #'
 #' print(result$plot)
 #' print(result$risktable)
 #'
-#' #' # Example 2: Two-arm trial with input data in weeks
+#' # Example 2: Two-arm trial
 #' dataset <- generate_dummy_survival_data(
 #'   arm = c("Treatment", "Control"),
 #'   n = c(100, 100),
@@ -97,20 +86,42 @@
 #' result <- plot_km_and_parametric(
 #'   dataset = dataset_processed,
 #'   distribution = "weibull",
-#'   conf_int = TRUE,
-#'   time_scale = "week",
-#'   time_horizon = 100
+#'   conf_int = TRUE
 #' )
 #'
 #' print(result$plot)
 #' print(result$risktable)
+#'
+#' # Example 3: Three-arm trial
+#' dataset3 <- generate_dummy_survival_data(
+#'   arm = c("Treatment A", "Treatment B", "Control"),
+#'   n = c(80, 90, 100),
+#'   hazards = log(2) / c(25, 20, 15),
+#'   dropout_per_year = 0.1,
+#'   seed = 456
+#' )
+#'
+#' dataset3_processed <- processing_dataset(
+#'   dataset = dataset3,
+#'   column_arm = "ARM",
+#'   column_survtime = "SURVTIME",
+#'   column_cnsr = "CNSR",
+#'   column_event = NULL
+#' )
+#'
+#' result3 <- plot_km_and_parametric(
+#'   dataset = dataset3_processed,
+#'   distribution = "weibull",
+#'   conf_int = TRUE
+#' )
+#'
+#' print(result3$plot)
+#' print(result3$risktable)
 #' }
 
 plot_km_and_parametric <- function(dataset,
                                    distribution,
-                                   conf_int = TRUE,
-                                   time_scale = "week",
-                                   time_horizon = NULL) {
+                                   conf_int = TRUE) {
 
   # Load required packages
   if (!requireNamespace("survival", quietly = TRUE)) {
@@ -132,24 +143,6 @@ plot_km_and_parametric <- function(dataset,
     stop("Distribution must be one of: ", paste(valid_distributions, collapse = ", "))
   }
 
-  # Validate and set time scale conversion factor
-  scale_factors <- c(
-    "day" = 1 / 7,
-    "week" = 1,
-    "month" = 30.44 / 7,
-    "year" = 365.25 / 7
-  )
-
-  if (!time_scale %in% names(scale_factors)) {
-    stop("time_scale must be one of: ", paste(names(scale_factors), collapse = ", "))
-  }
-
-  scale_factor <- scale_factors[time_scale]
-
-  # Convert SURVTIME to weeks
-  dataset <- dataset %>%
-    dplyr::mutate(SURVTIME = SURVTIME * scale_factor)
-
   # Define color palette
   color_palette <- c('#004C97', '#F0B323', '#658D1B', '#A62B4E', '#D91E49', '#939597')
 
@@ -164,13 +157,6 @@ plot_km_and_parametric <- function(dataset,
   }
   names(colors) <- as.character(arm_levels)
 
-  # Set time_horizon in weeks
-  if (is.null(time_horizon)) {
-    time_horizon_weeks <- max(dataset$SURVTIME, na.rm = TRUE)
-  } else {
-    time_horizon_weeks <- time_horizon * scale_factor
-  }
-
   # Distribution name mapping
   dist_names <- c(
     'exp' = 'Exponential',
@@ -182,163 +168,251 @@ plot_km_and_parametric <- function(dataset,
     'gamma' = 'Gamma'
   )
 
-  # Calculate sample size and event counts for each ARM
-  arm_summary <- dataset %>%
-    dplyr::group_by(ARM) %>%
-    dplyr::summarise(
-      N = dplyr::n(),
-      Events = sum(EVENT),
-      .groups = 'drop'
-    )
+  # Fit Kaplan-Meier model
+  km_fit <- survival::survfit(survival::Surv(SURVTIME, EVENT) ~ ARM, data = dataset)
 
-  # Fit Kaplan-Meier curves - FIXED for single ARM
+  # Extract KM curve data (handle both single and multiple ARMs)
   if (n_arms == 1) {
-    # Single ARM: use ~ 1 formula
-    km_fit <- survival::survfit(survival::Surv(SURVTIME, EVENT) ~ 1, data = dataset)
+    # Single ARM case
     km_data <- data.frame(
       time = km_fit$time,
       surv = km_fit$surv,
-      upper = km_fit$upper,
+      ARM = arm_levels[1],
       lower = km_fit$lower,
-      ARM = as.character(arm_levels[1])
+      upper = km_fit$upper,
+      stringsAsFactors = FALSE
     )
   } else {
-    # Multiple ARMs: use ~ ARM formula
-    km_fit <- survival::survfit(survival::Surv(SURVTIME, EVENT) ~ ARM, data = dataset)
+    # Multiple ARMs case
+    # Extract ARM names from strata names (remove "ARM=" prefix)
+    strata_names <- names(km_fit$strata)
+    arm_names <- gsub("ARM=", "", strata_names)
+
     km_data <- data.frame(
       time = km_fit$time,
       surv = km_fit$surv,
-      upper = km_fit$upper,
+      ARM = rep(arm_names, km_fit$strata),
       lower = km_fit$lower,
-      ARM = gsub('ARM=', '', rep(names(km_fit$strata), km_fit$strata))
+      upper = km_fit$upper,
+      stringsAsFactors = FALSE
     )
   }
 
-  # Calculate risk table (number at risk at each 4-week time point)
-  time_points_weeks <- seq(0, time_horizon_weeks, by = 4)
-  risktable_list <- list()
+  # Add point at time = 0 with survival = 1 for each ARM
+  km_data_start <- data.frame(
+    time = 0,
+    surv = 1,
+    ARM = arm_levels,
+    lower = 1,
+    upper = 1,
+    stringsAsFactors = FALSE
+  )
 
-  for (time_weeks in time_points_weeks) {
-    row_data <- data.frame(Time = time_weeks)
+  km_data <- rbind(km_data_start, km_data)
 
-    for (arm in arm_levels) {
-      arm_data <- dataset[dataset$ARM == arm, ]
-      # Count subjects still at risk (SURVTIME >= current time)
-      nrisk <- sum(arm_data$SURVTIME >= time_weeks)
-      row_data[[as.character(arm)]] <- nrisk
+  # Sort by ARM and time
+  km_data <- km_data %>%
+    dplyr::arrange(ARM, time)
+
+  # Determine the plot time horizon (longest ARM's last event time)
+  max_time_per_arm <- km_data %>%
+    dplyr::group_by(ARM) %>%
+    dplyr::summarise(max_time = max(time), .groups = 'drop')
+
+  plot_time_horizon <- max(max_time_per_arm$max_time)
+
+  # Extend KM data to plot_time_horizon for each ARM
+  km_data_extended <- data.frame()
+
+  for (arm in arm_levels) {
+    km_data_arm <- km_data %>% dplyr::filter(ARM == arm)
+
+    # Get last observation for this ARM
+    last_obs <- km_data_arm[nrow(km_data_arm), ]
+
+    # If last time < plot_time_horizon, add endpoint
+    if (last_obs$time < plot_time_horizon) {
+      end_point <- data.frame(
+        time = plot_time_horizon,
+        surv = last_obs$surv,
+        ARM = arm,
+        lower = last_obs$lower,
+        upper = last_obs$upper,
+        stringsAsFactors = FALSE
+      )
+      km_data_arm <- rbind(km_data_arm, end_point)
     }
 
-    risktable_list[[length(risktable_list) + 1]] <- row_data
+    km_data_extended <- rbind(km_data_extended, km_data_arm)
   }
 
-  # Combine risk table rows into data frame
-  risktable_df <- do.call(rbind, risktable_list)
-  rownames(risktable_df) <- NULL
+  km_data <- km_data_extended
 
-  # Create base plot
-  p <- suppressWarnings({
-    ggplot2::ggplot(km_data, ggplot2::aes(x = time, y = surv, color = ARM)) +
-      ggplot2::geom_step(linewidth = 1) +
-      ggplot2::scale_color_manual(values = colors) +
-      ggplot2::labs(
-        title = 'Kaplan-Meier Curves with Parametric Distribution Overlay',
-        subtitle = paste('Distribution:', dist_names[distribution]),
-        x = 'Time (weeks)',
-        y = 'Survival Probability',
-        color = NULL,
-        fill = NULL
-      ) +
-      ggplot2::coord_cartesian(
-        xlim = c(0, time_horizon_weeks),
-        ylim = c(0, 1)
-      ) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(
-        plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
-        plot.subtitle = ggplot2::element_text(size = 20, hjust = 0.5),
-        axis.title.x = ggplot2::element_text(size = 22),
-        axis.title.y = ggplot2::element_text(size = 22),
-        axis.text.x = ggplot2::element_text(size = 18),
-        axis.text.y = ggplot2::element_text(size = 18),
-        legend.position = 'bottom',
-        legend.text = ggplot2::element_text(size = 16),
-        legend.title = ggplot2::element_text(size = 16),
-        legend.key = ggplot2::element_rect(colour = NA, fill = NA),
-        legend.key.width = ggplot2::unit(2, "cm"),
-        panel.grid.major = ggplot2::element_line(color = 'gray90'),
-        panel.grid.minor = ggplot2::element_blank()
-      )
-  })
+  # Fit parametric survival models for each ARM
+  parametric_data <- data.frame()
 
-  # Add confidence intervals if requested
-  if (conf_int) {
-    p <- suppressWarnings({
-      p +
-        ggplot2::geom_ribbon(
-          ggplot2::aes(ymin = lower, ymax = upper, fill = ARM),
-          alpha = 0.2,
-          color = NA
-        ) +
-        ggplot2::scale_fill_manual(values = colors)
-    })
-  }
+  for (arm in arm_levels) {
+    # Subset data for current ARM
+    data_arm <- dataset %>% dplyr::filter(ARM == arm)
 
-  # Fit parametric distributions and add overlay for each ARM
-  time_seq <- seq(0, time_horizon_weeks, length.out = 200)
-
-  for (i in seq_along(arm_levels)) {
-    arm_name <- arm_levels[i]
-    arm_subset <- dataset[dataset$ARM == arm_name, ]
-
-    # Fit parametric model independently for this ARM
-    param_fit <- flexsurv::flexsurvreg(
+    # Fit parametric model
+    fit <- flexsurv::flexsurvreg(
       survival::Surv(SURVTIME, EVENT) ~ 1,
-      data = arm_subset,
+      data = data_arm,
       dist = distribution
     )
 
-    # Get survival predictions
-    param_pred <- summary(param_fit, t = time_seq, type = 'survival')[[1]]
+    # Generate prediction times (from 0 to plot_time_horizon)
+    pred_times <- seq(0, plot_time_horizon, length.out = 200)
 
-    param_data <- data.frame(
-      time = time_seq,
-      surv = param_pred$est,
-      ARM = as.character(arm_name)
+    # Predict survival probabilities
+    surv_pred <- summary(fit, t = pred_times, type = "survival", ci = FALSE)
+
+    # Extract survival probabilities
+    surv_values <- surv_pred[[1]]$est
+
+    # Create dataframe
+    temp_df <- data.frame(
+      time = pred_times,
+      surv = surv_values,
+      ARM = arm,
+      stringsAsFactors = FALSE
     )
 
-    # Add parametric curve overlay
-    p <- p +
-      ggplot2::geom_line(
-        data = param_data,
-        ggplot2::aes(x = time, y = surv),
-        color = colors[i],
-        linetype = 'dashed',
-        linewidth = 1.2,
-        inherit.aes = FALSE
-      )
+    parametric_data <- rbind(parametric_data, temp_df)
   }
 
-  # Create annotation text for sample sizes and events
-  annotation_lines <- paste0(
-    arm_summary$ARM, ': N=', arm_summary$N, ', Events=', arm_summary$Events
-  )
-  annotation_text <- paste(annotation_lines, collapse = '\n')
+  # Calculate number at risk at regular intervals (10% of plot_time_horizon)
+  interval <- max(1, round(plot_time_horizon / 10))
+  risk_times <- seq(0, plot_time_horizon, by = interval)
 
-  # Add annotation in top-right corner
+  risk_table <- data.frame()
+
+  for (t in risk_times) {
+    at_risk <- dataset %>%
+      dplyr::filter(SURVTIME >= t) %>%
+      dplyr::group_by(ARM) %>%
+      dplyr::summarise(n = dplyr::n(), .groups = 'drop') %>%
+      dplyr::mutate(Time = t)
+
+    risk_table <- rbind(risk_table, at_risk)
+  }
+
+  # Reshape risk table for output
+  risk_table_wide <- risk_table %>%
+    tidyr::pivot_wider(names_from = ARM, values_from = n, values_fill = 0) %>%
+    dplyr::select(Time, dplyr::everything())
+
+  # Create base plot
+  p <- ggplot2::ggplot(km_data, ggplot2::aes(x = time, y = surv, color = ARM)) +
+    ggplot2::scale_x_continuous(
+      limits = c(0, plot_time_horizon),
+      expand = ggplot2::expansion(mult = 0, add = 0)
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, 1),
+      expand = ggplot2::expansion(mult = 0, add = 0)
+    ) +
+    ggplot2::scale_color_manual(values = colors) +
+    ggplot2::labs(
+      title = 'Kaplan-Meier Curves with Parametric Distribution Overlay',
+      subtitle = paste('Distribution:', dist_names[distribution]),
+      x = 'Time',
+      y = 'Survival Probability',
+      color = NULL
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(size = 20, hjust = 0.5),
+      axis.title.x = ggplot2::element_text(size = 22),
+      axis.title.y = ggplot2::element_text(size = 22),
+      axis.text.x = ggplot2::element_text(size = 18),
+      axis.text.y = ggplot2::element_text(size = 18),
+      legend.position = 'bottom',
+      legend.text = ggplot2::element_text(size = 16),
+      legend.title = ggplot2::element_text(size = 16),
+      legend.key = ggplot2::element_rect(colour = NA, fill = NA),
+      legend.key.width = ggplot2::unit(2, "cm"),
+      panel.grid.major = ggplot2::element_line(color = 'gray90'),
+      panel.grid.minor = ggplot2::element_blank()
+    )
+
+  # Add confidence intervals if requested
+  if (conf_int) {
+    # For step plots, we need to duplicate points to create step effect in ribbon
+    km_data_ribbon <- data.frame()
+
+    for (arm in arm_levels) {
+      km_data_arm <- km_data %>% dplyr::filter(ARM == arm)
+
+      # Create step data for ribbon
+      n_points <- nrow(km_data_arm)
+      step_data <- data.frame()
+
+      for (i in 1:(n_points - 1)) {
+        # Add current point
+        step_data <- rbind(step_data, km_data_arm[i, ])
+        # Add horizontal segment endpoint (next time point with current values)
+        next_point <- km_data_arm[i, ]
+        next_point$time <- km_data_arm[i + 1, "time"]
+        step_data <- rbind(step_data, next_point)
+      }
+      # Add last point
+      step_data <- rbind(step_data, km_data_arm[n_points, ])
+
+      km_data_ribbon <- rbind(km_data_ribbon, step_data)
+    }
+
+    p <- p +
+      ggplot2::geom_ribbon(
+        data = km_data_ribbon,
+        ggplot2::aes(ymin = lower, ymax = upper, fill = ARM),
+        alpha = 0.2,
+        color = NA
+      ) +
+      ggplot2::scale_fill_manual(values = colors, guide = "none")
+  }
+
+  # Add KM step lines
+  p <- p +
+    ggplot2::geom_step(linewidth = 1)
+
+  # Add parametric overlay
+  p <- p +
+    ggplot2::geom_line(
+      data = parametric_data,
+      ggplot2::aes(x = time, y = surv, color = ARM),
+      linetype = 'dashed',
+      linewidth = 1
+    )
+
+  # Add legend for ARM info
+  legend_lines <- c()
+  for (i in seq_along(arm_levels)) {
+    arm <- arm_levels[i]
+    n_arm <- sum(dataset$ARM == arm)
+    events_arm <- sum(dataset$ARM == arm & dataset$EVENT == 1)
+    legend_lines <- c(legend_lines, sprintf("%s: N=%d, Events=%d", arm, n_arm, events_arm))
+  }
+
+  legend_text <- paste(legend_lines, collapse = "\n")
+
   p <- p +
     ggplot2::annotate(
       'text',
-      x = time_horizon_weeks * 0.98,
-      y = 0.98,
-      label = annotation_text,
-      hjust = 1,
+      x = plot_time_horizon * 0.65,
+      y = 0.95,
+      label = legend_text,
+      hjust = 0,
       vjust = 1,
-      size = 5
+      size = 6,
+      fontface = 'bold'
     )
 
   # Return list with plot and risk table
   return(list(
     plot = p,
-    risktable = risktable_df
+    risktable = risk_table_wide
   ))
 }

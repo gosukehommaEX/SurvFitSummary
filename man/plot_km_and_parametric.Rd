@@ -2,15 +2,9 @@
 % Please edit documentation in R/plot_km_and_parametric.R
 \name{plot_km_and_parametric}
 \alias{plot_km_and_parametric}
-\title{Plot Kaplan-Meier Curves with Parametric Distribution Overlay (Fixed for Single ARM)}
+\title{Plot Kaplan-Meier Curves with Parametric Distribution Overlay}
 \usage{
-plot_km_and_parametric(
-  dataset,
-  distribution,
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = NULL
-)
+plot_km_and_parametric(dataset, distribution, conf_int = TRUE)
 }
 \arguments{
 \item{dataset}{A data frame containing survival analysis data with columns:
@@ -21,40 +15,28 @@ Must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "ga
 
 \item{conf_int}{Logical indicating whether to display 95\% confidence intervals on
 Kaplan-Meier curves. Default is TRUE}
-
-\item{time_scale}{Character string specifying the unit of time scale in the input dataset.
-Must be one of: "day", "week", "month", "year". Default is "week".
-Data will be converted internally to weeks for analysis}
-
-\item{time_horizon}{Numeric value specifying the maximum time point in the specified
-time_scale unit. If NULL (default), uses the maximum observed survival time in the
-dataset. All outputs (plots and tables) are displayed in weeks}
 }
 \value{
 A list containing:
 \describe{
-\item{plot}{ggplot object with Kaplan-Meier curves and parametric overlays,
-with x-axis in weeks}
-\item{risktable}{Data frame showing number at risk at 4-week intervals,
-with Time column in weeks}
+\item{plot}{ggplot object with Kaplan-Meier curves and parametric overlays}
+\item{risktable}{Data frame showing number at risk at regular intervals}
 }
 }
 \description{
 This function creates a combined visualization of Kaplan-Meier survival curves
-with overlaid parametric distribution fits. It supports multiple treatment arms,
-displays confidence intervals optionally, and handles multiple time scales.
-Fixed version handles single ARM datasets correctly.
+with overlaid parametric distribution fits. It supports multiple treatment arms
+and displays confidence intervals optionally.
 }
 \details{
 The function performs the following operations:
 \itemize{
-\item Converts input SURVTIME from time_scale to weeks internally
 \item Fits Kaplan-Meier curves using \code{survival::survfit()}
 \item Fits parametric survival models independently for each ARM
-\item Calculates number at risk at 4-week intervals
-\item Returns plot and risk table with all time values in weeks
+\item Calculates number at risk at regular intervals
 \item Axes begin at (0, 0) for improved visualization
-\item Handles both single and multiple ARM datasets
+\item X-axis extends to the longest ARM's last event time
+\item Handles single and multiple ARM datasets
 }
 }
 \examples{
@@ -79,15 +61,13 @@ dataset1_processed <- processing_dataset(
 result <- plot_km_and_parametric(
   dataset = dataset1_processed,
   distribution = "weibull",
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = 100
+  conf_int = TRUE
 )
 
 print(result$plot)
 print(result$risktable)
 
-#' # Example 2: Two-arm trial with input data in weeks
+# Example 2: Two-arm trial
 dataset <- generate_dummy_survival_data(
   arm = c("Treatment", "Control"),
   n = c(100, 100),
@@ -107,12 +87,36 @@ dataset_processed <- processing_dataset(
 result <- plot_km_and_parametric(
   dataset = dataset_processed,
   distribution = "weibull",
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = 100
+  conf_int = TRUE
 )
 
 print(result$plot)
 print(result$risktable)
+
+# Example 3: Three-arm trial
+dataset3 <- generate_dummy_survival_data(
+  arm = c("Treatment A", "Treatment B", "Control"),
+  n = c(80, 90, 100),
+  hazards = log(2) / c(25, 20, 15),
+  dropout_per_year = 0.1,
+  seed = 456
+)
+
+dataset3_processed <- processing_dataset(
+  dataset = dataset3,
+  column_arm = "ARM",
+  column_survtime = "SURVTIME",
+  column_cnsr = "CNSR",
+  column_event = NULL
+)
+
+result3 <- plot_km_and_parametric(
+  dataset = dataset3_processed,
+  distribution = "weibull",
+  conf_int = TRUE
+)
+
+print(result3$plot)
+print(result3$risktable)
 }
 }

@@ -11,17 +11,12 @@
 #'   "gengamma", "gamma". Example: c("weibull", "gompertz", "lnorm")
 #' @param conf_int Logical indicating whether to display 95% confidence intervals on
 #'   Kaplan-Meier curves. Default is TRUE. Applied to all distributions
-#' @param time_scale Character string specifying the unit of time scale in the input dataset.
-#'   Must be one of: "day", "week", "month", "year". Default is "week"
-#' @param time_horizon Numeric value specifying the maximum time point in the specified
-#'   time_scale unit. If NULL (default), uses the maximum observed survival time in the
-#'   dataset
 #'
 #' @return A list containing:
 #'   \describe{
 #'     \item{plots}{Named list of ggplot objects, one for each distribution.
 #'       Names correspond to distribution names (e.g., "weibull", "gompertz")}
-#'     \item{risktable}{Data frame showing number at risk at 4-week intervals.
+#'     \item{risktable}{Data frame showing number at risk at regular intervals.
 #'       This is shared across all distributions as it depends only on the data,
 #'       not the fitted distribution}
 #'   }
@@ -58,9 +53,7 @@
 #' result <- plot_km_and_parametric_multiple(
 #'   dataset = dataset_processed,
 #'   distributions = c("weibull", "gompertz", "lnorm"),
-#'   conf_int = TRUE,
-#'   time_scale = "week",
-#'   time_horizon = 100
+#'   conf_int = TRUE
 #' )
 #'
 #' # Access individual plots
@@ -74,9 +67,7 @@
 
 plot_km_and_parametric_multiple <- function(dataset,
                                             distributions,
-                                            conf_int = TRUE,
-                                            time_scale = "week",
-                                            time_horizon = NULL) {
+                                            conf_int = TRUE) {
 
   # Validate distributions parameter
   if (!is.character(distributions)) {
@@ -106,9 +97,7 @@ plot_km_and_parametric_multiple <- function(dataset,
     result <- plot_km_and_parametric(
       dataset = dataset,
       distribution = dist,
-      conf_int = conf_int,
-      time_scale = time_scale,
-      time_horizon = time_horizon
+      conf_int = conf_int
     )
 
     # Store plot with distribution name as key

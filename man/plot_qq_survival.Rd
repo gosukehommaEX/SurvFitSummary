@@ -18,7 +18,7 @@ first factor level. Required when ARM has 3+ levels}
 A ggplot object containing:
 \itemize{
 \item Single Q-Q plot if ARM has 2 levels
-\item Horizontal panel of Q-Q plots if ARM has 3+ levels, each comparing
+\item Faceted Q-Q plots if ARM has 3+ levels, each comparing
 a treatment arm against the control arm
 \item NULL if ARM has only 1 level (with informative message)
 }
@@ -32,15 +32,15 @@ Each plot includes:
 \description{
 This function creates quantile-quantile (Q-Q) plots to compare survival time
 distributions between treatment arms. For 2-arm trials, it creates a single
-Q-Q plot. For 3+ arms, it creates multiple Q-Q plots comparing each treatment
-arm against the control arm, arranged horizontally.
+Q-Q plot. For 3+ arms, it creates faceted Q-Q plots comparing each treatment
+arm against the control arm.
 }
 \details{
 The function performs the following operations:
 \itemize{
 \item Checks if ARM has at least 2 levels; returns NULL with message if not
 \item Fits Kaplan-Meier curves for each ARM using \code{survival::survfit()}
-\item Extracts survival quantiles at percentiles: 0.1, 0.2, ..., 0.9
+\item Extracts survival quantiles at percentiles: 0.05, 0.10, ..., 0.95
 \item Creates Q-Q plots comparing quantiles between arms
 \item Adds linear regression fit to assess distributional similarity
 }
@@ -100,7 +100,7 @@ dataset2_processed <- processing_dataset(
   column_event = NULL
 )
 
-# Multiple Q-Q plots (Treatment1 vs Control, Treatment2 vs Control)
+# Faceted Q-Q plots (Treatment1 vs Control, Treatment2 vs Control)
 p2 <- plot_qq_survival(
   dataset = dataset2_processed,
   control_arm = "Control"
@@ -124,7 +124,7 @@ dataset3_processed <- processing_dataset(
   column_event = NULL
 )
 
-# Three Q-Q plots (TrtA vs Control, TrtB vs Control, TrtC vs Control)
+# Three faceted Q-Q plots (TrtA vs Control, TrtB vs Control, TrtC vs Control)
 p3 <- plot_qq_survival(
   dataset = dataset3_processed,
   control_arm = "Control"
