@@ -2,15 +2,9 @@
 % Please edit documentation in R/plot_hazard_and_parametric.R
 \name{plot_hazard_and_parametric}
 \alias{plot_hazard_and_parametric}
-\title{Plot Smoothed Empirical Hazard with Parametric Distribution Overlay}
+\title{Plot Smoothed Empirical Hazard with Parametric Distribution Overlay (Facet Grid Version)}
 \usage{
-plot_hazard_and_parametric(
-  dataset,
-  distribution,
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = NULL
-)
+plot_hazard_and_parametric(dataset, distribution, conf_int = TRUE)
 }
 \arguments{
 \item{dataset}{A data frame containing survival analysis data with columns:
@@ -21,79 +15,102 @@ Must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "ga
 
 \item{conf_int}{Logical indicating whether to display 95\% confidence intervals on
 hazard curves. Default is TRUE}
-
-\item{time_scale}{Character string specifying the unit of time scale in the input dataset.
-Must be one of: "day", "week", "month", "year". Default is "week"}
-
-\item{time_horizon}{Numeric value specifying the maximum time point in the specified
-time_scale unit. If NULL (default), uses the maximum observed survival time in the
-dataset}
 }
 \value{
 A list containing:
 \describe{
-\item{plot}{A ggplot object containing multiple panels arranged by ARM.
-Each ARM has side-by-side plots for time and log(time) axes with
-smoothed empirical hazard (solid line) overlaid with parametric hazard (dashed line)}
+\item{plot}{A ggplot object with facet_grid layout. Rows = ARMs, Columns = Time scales}
 \item{hazard_data}{A named list of data frames, one for each treatment arm.
 Each data frame contains columns: time, hazard, lower_ci, upper_ci, type, ARM}
 }
 }
 \description{
 This function creates visualizations of smoothed empirical hazard functions
-overlaid with parametric distribution hazard curves. For each treatment arm,
-it generates two plots side-by-side: hazard versus time (natural scale) and
-hazard versus log(time). Separate panels are created for each treatment arm
-to assess the visual fit of the parametric model to the observed data.
+overlaid with parametric distribution hazard curves using facet_grid.
+Rows represent treatment arms, columns represent time scales (Time vs log(Time)).
 }
 \details{
 The function performs the following operations:
 \itemize{
-\item Converts input SURVTIME from time_scale to weeks internally
 \item Calculates smoothed empirical hazard using \code{bshazard::bshazard()}
 \item Fits parametric survival models independently for each ARM
-\item Creates side-by-side plots (time vs log(time)) for each ARM
-\item All time values are displayed in the input time_scale unit
-}
-
-Interpretation guidelines:
-\itemize{
-\item Close alignment between empirical and parametric curves suggests good model fit
-\item Large deviations indicate the chosen distribution may not adequately
-represent the data for that ARM
-\item log(time) axis plots help identify distributional shape violations
+\item Parametric hazard is calculated over the same time range as empirical hazard
+\item Creates facet_grid with ARM as rows and time scale as columns
+\item Each ARM has independent x-axis range based on its data
 }
 }
 \examples{
 \dontrun{
-# Example: Two-arm trial
-dataset <- generate_dummy_survival_data(
-  arm = c("Treatment", "Control"),
-  n = c(100, 100),
-  hazards = log(2) / c(20, 15),
+# Example 1: Single-arm trial
+dataset1 <- generate_dummy_survival_data(
+  arm = c("Treatment"),
+  n = c(150),
+  hazards = log(2) / 20,
   dropout_per_year = 0.1,
   seed = 123
 )
 
-dataset_processed <- processing_dataset(
-  dataset = dataset,
+dataset1_processed <- processing_dataset(
+  dataset = dataset1,
   column_arm = "ARM",
   column_survtime = "SURVTIME",
   column_cnsr = "CNSR",
   column_event = NULL
 )
 
-# Plot for Weibull distribution
-p <- plot_hazard_and_parametric(
-  dataset = dataset_processed,
+p1 <- plot_hazard_and_parametric(
+  dataset = dataset1_processed,
   distribution = "weibull",
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = 100
+  conf_int = TRUE
+)
+print(p1$plot)
+
+# Example 2: Two-arm trial
+dataset2 <- generate_dummy_survival_data(
+  arm = c("Treatment", "Control"),
+  n = c(100, 100),
+  hazards = log(2) / c(20, 15),
+  dropout_per_year = 0.1,
+  seed = 456
 )
 
-print(p$plot)
-# Access hazard data for each ARM
-head(p$hazard_data$Treatment)
+dataset2_processed <- processing_dataset(
+  dataset = dataset2,
+  column_arm = "ARM",
+  column_survtime = "SURVTIME",
+  column_cnsr = "CNSR",
+  column_event = NULL
+)
+
+p2 <- plot_hazard_and_parametric(
+  dataset = dataset2_processed,
+  distribution = "exp",
+  conf_int = TRUE
+)
+print(p2$plot)
+
+# Example 3: Three-arm trial
+dataset3 <- generate_dummy_survival_data(
+  arm = c("Treatment A", "Treatment B", "Control"),
+  n = c(80, 80, 80),
+  hazards = log(2) / c(22, 18, 15),
+  dropout_per_year = 0.1,
+  seed = 789
+)
+
+dataset3_processed <- processing_dataset(
+  dataset = dataset3,
+  column_arm = "ARM",
+  column_survtime = "SURVTIME",
+  column_cnsr = "CNSR",
+  column_event = NULL
+)
+
+p3 <- plot_hazard_and_parametric(
+  dataset = dataset3_processed,
+  distribution = "gompertz",
+  conf_int = TRUE
+)
+print(p3$plot)
 }
 }

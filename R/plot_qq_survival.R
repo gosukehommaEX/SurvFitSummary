@@ -197,7 +197,7 @@ plot_qq_survival <- function(dataset,
   treatment_arms <- arm_levels[-1]
 
   # Define percentiles for quantile extraction
-  probs <- seq(0.1, 0.9, by = 0.1)
+  probs <- seq(0.05, 0.95, by = 0.05)
 
   # Base theme for all plots
   base_theme <- ggplot2::theme_bw() +
@@ -251,14 +251,14 @@ plot_qq_survival <- function(dataset,
         fill = '#939597',
         alpha = 0.2,
         linewidth = 0.8,
-        formula = y ~ x
+        formula = y ~ x,
+        fullrange = TRUE
       ) +
       ggplot2::geom_point(
         ggplot2::aes(shape = 'Observed quantiles'),
         size = 3,
         color = '#D91E49'
       ) +
-      # Add dummy geom_segment for identity line legend (no warning)
       ggplot2::geom_segment(
         data = data.frame(x = -Inf, xend = -Inf, y = -Inf, yend = -Inf),
         ggplot2::aes(x = x, xend = xend, y = y, yend = yend, linetype = 'Identity line (y = x)'),
@@ -276,6 +276,8 @@ plot_qq_survival <- function(dataset,
           'Regression fit' = 'solid'
         )
       ) +
+      ggplot2::scale_x_continuous(limits = c(0, NA), expand = c(0, 0)) +
+      ggplot2::scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
       ggplot2::labs(
         title = paste0(trt_arm, ' vs ', control),
         x = paste0('Quantiles (', control, ')'),

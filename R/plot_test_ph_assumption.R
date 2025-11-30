@@ -247,8 +247,8 @@ plot_test_ph_assumption <- function(dataset,
     ggplot2::scale_y_continuous(limits = cloglog_limits) +
     ggplot2::labs(
       title = 'Weibull/Exponential',
-      x = 'log(t)',
-      y = 'log(-log(S(t)))',
+      x = 'log(Time)',
+      y = 'log(-log(S(Time)))',
       color = 'Treatment',
       fill = 'Treatment'
     ) +
@@ -275,8 +275,8 @@ plot_test_ph_assumption <- function(dataset,
     ggplot2::scale_y_continuous(limits = cloglog_limits) +
     ggplot2::labs(
       title = 'Gompertz',
-      x = 't',
-      y = 'log(-log(S(t)))',
+      x = 'Time',
+      y = 'log(-log(S(Time)))',
       color = 'Treatment',
       fill = 'Treatment'
     ) +
@@ -303,8 +303,8 @@ plot_test_ph_assumption <- function(dataset,
     ggplot2::scale_y_continuous(limits = probit_limits) +
     ggplot2::labs(
       title = 'Log-normal',
-      x = 'log(t)',
-      y = expression(Phi^{-1}*'(1 - S(t))'),
+      x = 'log(Time)',
+      y = expression(Phi^{-1}*'(1 - S(Time))'),
       color = 'Treatment',
       fill = 'Treatment'
     ) +

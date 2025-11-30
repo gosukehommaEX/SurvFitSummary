@@ -2,15 +2,9 @@
 % Please edit documentation in R/plot_hazard_and_parametric_multiple.R
 \name{plot_hazard_and_parametric_multiple}
 \alias{plot_hazard_and_parametric_multiple}
-\title{Plot Smoothed Empirical Hazard with Multiple Parametric Distributions (Fixed Version)}
+\title{Plot Smoothed Empirical Hazard with Multiple Parametric Distributions}
 \usage{
-plot_hazard_and_parametric_multiple(
-  dataset,
-  distributions,
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = NULL
-)
+plot_hazard_and_parametric_multiple(dataset, distributions, conf_int = TRUE)
 }
 \arguments{
 \item{dataset}{A data frame containing survival analysis data with columns:
@@ -22,13 +16,6 @@ Each element must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz",
 
 \item{conf_int}{Logical indicating whether to display 95\% confidence intervals on
 hazard curves. Default is TRUE. Applied to all distributions}
-
-\item{time_scale}{Character string specifying the unit of time scale in the input dataset.
-Must be one of: "day", "week", "month", "year". Default is "week"}
-
-\item{time_horizon}{Numeric value specifying the maximum time point in the specified
-time_scale unit. If NULL (default), uses the maximum observed survival time in the
-dataset}
 }
 \value{
 A list containing:
@@ -71,9 +58,7 @@ dataset_processed <- processing_dataset(
 result <- plot_hazard_and_parametric_multiple(
   dataset = dataset_processed,
   distributions = c("weibull", "gompertz", "lnorm"),
-  conf_int = TRUE,
-  time_scale = "week",
-  time_horizon = 100
+  conf_int = TRUE
 )
 
 # Access individual plots

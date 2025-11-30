@@ -1,4 +1,4 @@
-#' Plot Smoothed Empirical Hazard with Multiple Parametric Distributions (Fixed Version)
+#' Plot Smoothed Empirical Hazard with Multiple Parametric Distributions
 #'
 #' This function creates multiple visualizations of smoothed empirical hazard functions,
 #' each overlaid with a different parametric distribution fit. Each plot retains its own
@@ -11,11 +11,6 @@
 #'   "gengamma", "gamma". Example: c("weibull", "gompertz", "lnorm")
 #' @param conf_int Logical indicating whether to display 95% confidence intervals on
 #'   hazard curves. Default is TRUE. Applied to all distributions
-#' @param time_scale Character string specifying the unit of time scale in the input dataset.
-#'   Must be one of: "day", "week", "month", "year". Default is "week"
-#' @param time_horizon Numeric value specifying the maximum time point in the specified
-#'   time_scale unit. If NULL (default), uses the maximum observed survival time in the
-#'   dataset
 #'
 #' @return A list containing:
 #'   \describe{
@@ -29,8 +24,6 @@
 #' Unlike the previous version, each distribution plot retains its own y-axis scale,
 #' which is particularly important when distributions show very different hazard patterns
 #' (e.g., exponential vs generalized gamma).
-#'
-#' @importFrom dplyr mutate
 #'
 #' @export
 #'
@@ -56,9 +49,7 @@
 #' result <- plot_hazard_and_parametric_multiple(
 #'   dataset = dataset_processed,
 #'   distributions = c("weibull", "gompertz", "lnorm"),
-#'   conf_int = TRUE,
-#'   time_scale = "week",
-#'   time_horizon = 100
+#'   conf_int = TRUE
 #' )
 #'
 #' # Access individual plots
@@ -69,9 +60,7 @@
 
 plot_hazard_and_parametric_multiple <- function(dataset,
                                                 distributions,
-                                                conf_int = TRUE,
-                                                time_scale = "week",
-                                                time_horizon = NULL) {
+                                                conf_int = TRUE) {
 
   # Validate distributions parameter
   if (!is.character(distributions)) {
@@ -101,9 +90,7 @@ plot_hazard_and_parametric_multiple <- function(dataset,
       result <- plot_hazard_and_parametric(
         dataset = dataset,
         distribution = dist,
-        conf_int = conf_int,
-        time_scale = time_scale,
-        time_horizon = time_horizon
+        conf_int = conf_int
       )
 
       # Store plot with distribution name as key

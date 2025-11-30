@@ -48,7 +48,7 @@
 #' }
 #'
 #' @importFrom survival coxph Surv cox.zph
-#' @importFrom ggplot2 ggplot aes geom_point geom_smooth geom_hline labs theme_minimal theme element_text annotate scale_y_continuous scale_shape_manual scale_linetype_manual guide_legend guides
+#' @importFrom ggplot2 ggplot aes geom_point geom_smooth geom_hline labs theme_bw theme element_text element_blank element_rect element_line annotate coord_cartesian scale_x_continuous scale_y_continuous scale_shape_manual scale_linetype_manual scale_color_manual guide_legend guides unit
 #' @importFrom patchwork wrap_plots plot_annotation plot_layout
 #' @export
 #'
@@ -214,6 +214,10 @@ plot_schoenfeld <- function(dataset,
   y_buffer <- diff(y_limits) * 0.1
   y_limits <- c(y_limits[1] - y_buffer, y_limits[2] + y_buffer)
 
+  # Calculate common x-axis range across all plots
+  all_times <- unlist(lapply(all_schoenfeld_data, function(x) x$data$Time))
+  x_max <- max(all_times, na.rm = TRUE)
+
   # Create plot list for each treatment vs control comparison
   plot_list <- list()
 
@@ -230,7 +234,7 @@ plot_schoenfeld <- function(dataset,
     # Create annotation text (only beta and p-value)
     pval_text <- ifelse(pval < 0.001, 'p < 0.001', sprintf('p = %.3f', pval))
     annot_color <- ifelse(pval < 0.05, '#D91E49', '#658D1B')
-    annot <- sprintf('%s\nÎ² = %.3f', pval_text, beta)
+    annot <- sprintf('%s\nβ = %.3f', pval_text, beta)
 
     # Create plot
     p <- ggplot2::ggplot(schoenfeld_data, ggplot2::aes(x = Time, y = Residuals)) +
@@ -246,10 +250,10 @@ plot_schoenfeld <- function(dataset,
         size = 2
       ) +
       ggplot2::geom_smooth(
+        ggplot2::aes(color = 'LOESS smoothing (95% CI)'),
         method = 'loess',
         formula = y ~ x,
         se = TRUE,
-        color = '#F0B323',
         fill = '#F0B323',
         alpha = 0.2,
         linewidth = 1
@@ -262,7 +266,11 @@ plot_schoenfeld <- function(dataset,
         name = '',
         values = c('Reference line (y = 0)' = 'dashed')
       ) +
-      ggplot2::scale_y_continuous(limits = y_limits) +
+      ggplot2::scale_color_manual(
+        name = '',
+        values = c('LOESS smoothing (95% CI)' = '#F0B323')
+      ) +
+      ggplot2::coord_cartesian(xlim = c(0, x_max), ylim = y_limits) +
       ggplot2::labs(
         title = plot_title,
         x = 'Time',
@@ -286,8 +294,10 @@ plot_schoenfeld <- function(dataset,
       ) +
       ggplot2::guides(
         shape = ggplot2::guide_legend(order = 1),
-        linetype = ggplot2::guide_legend(order = 2)
+        linetype = ggplot2::guide_legend(order = 2),
+        color = ggplot2::guide_legend(order = 3)
       ) +
+      ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0, NA)) +
       ggplot2::annotate(
         'text',
         x = max(schoenfeld_data$Time) * 0.7,
@@ -326,21 +336,40 @@ plot_schoenfeld <- function(dataset,
       patchwork::plot_layout(guides = 'collect') +
       patchwork::plot_annotation(
         title = 'Scaled Schoenfeld Residuals',
-        subtitle = 'LOESS smoothing curve (gold line) with 95% confidence interval (shaded area)',
+        subtitle = 'Test for proportional hazards assumption using Grambsch-Therneau method',
         theme = ggplot2::theme(
-          legend.position = 'bottom',
-          plot.title = ggplot2::element_text(size = 20, color = '#666666'),
-          plot.subtitle = ggplot2::element_text(size = 16, color = '#666666')
+          plot.title = ggplot2::element_text(
+            size = 20,
+            face = 'bold',
+            color = '#666666',
+            hjust = 0.5
+          ),
+          plot.subtitle = ggplot2::element_text(
+            size = 16,
+            color = '#666666',
+            hjust = 0.5
+          ),
+          legend.position = 'bottom'
         )
       )
   } else {
     combined_plot <- plot_list[[1]] +
       patchwork::plot_annotation(
         title = 'Scaled Schoenfeld Residuals',
-        subtitle = 'LOESS smoothing curve (gold line) with 95% confidence interval (shaded area)',
+        subtitle = 'Test for proportional hazards assumption using Grambsch-Therneau method',
         theme = ggplot2::theme(
-          plot.title = ggplot2::element_text(size = 20, color = '#666666'),
-          plot.subtitle = ggplot2::element_text(size = 16, color = '#666666')
+          plot.title = ggplot2::element_text(
+            size = 20,
+            face = 'bold',
+            color = '#666666',
+            hjust = 0.5
+          ),
+          plot.subtitle = ggplot2::element_text(
+            size = 16,
+            color = '#666666',
+            hjust = 0.5
+          ),
+          legend.position = 'bottom'
         )
       )
   }
