@@ -204,7 +204,7 @@ plot_schoenfeld <- function(dataset,
     # Store annotation info
     pval_text <- ifelse(pval < 0.001, 'p < 0.001', sprintf('p = %.3f', pval))
     annot_color <- ifelse(pval < 0.05, '#D91E49', '#658D1B')
-    annot <- sprintf('%s\nβ = %.3f', pval_text, beta)
+    annot <- sprintf('%s\n\u03B2 = %.3f', pval_text, beta)
 
     schoenfeld_data$Annotation <- annot
     schoenfeld_data$Annot_Color <- annot_color

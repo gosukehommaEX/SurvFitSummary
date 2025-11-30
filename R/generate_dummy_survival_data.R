@@ -12,15 +12,17 @@
 #'   Length must match length of \code{arm}. Higher hazard = shorter survival.
 #'   Example: log(2) / c(18, 15, 10) for median survival times of 18, 15, 10 months
 #' @param dropout_per_year Numeric value between 0 and 1 specifying annual dropout rate.
-#'   Example: 0.1 means 10\% dropout per year
+#'   Example: 0.1 means 10 percent dropout per year
 #' @param seed Integer specifying random seed for reproducibility.
 #'   Use the same seed to generate identical datasets across runs
 #'
 #' @return A data frame (tibble) containing the following columns:
-#'   \item{SUBJID}{Subject identifier (character)}
-#'   \item{ARM}{Treatment arm (factor)}
-#'   \item{SURVTIME}{Observed survival time in months (numeric)}
-#'   \item{CNSR}{Censoring indicator: 1 = censored, 0 = event (numeric)}
+#'   \describe{
+#'     \item{SUBJID}{Subject identifier (character)}
+#'     \item{ARM}{Treatment arm (factor)}
+#'     \item{SURVTIME}{Observed survival time in months (numeric)}
+#'     \item{CNSR}{Censoring indicator: 1 = censored, 0 = event (numeric)}
+#'   }
 #'
 #' @details
 #' The function generates survival times from exponential distributions with
@@ -28,10 +30,8 @@
 #' generated exponentially based on the annual dropout rate. The observed
 #' survival time is the minimum of event time and dropout time.
 #'
-#' @importFrom dplyr select mutate
-#' @importFrom tibble tibble
+#' @importFrom dplyr tibble mutate if_else select
 #' @importFrom stats rexp
-#' @importFrom magrittr %>%
 #' @export
 #'
 #' @examples

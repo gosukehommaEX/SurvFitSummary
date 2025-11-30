@@ -18,17 +18,19 @@ Length must match length of \code{arm}. Higher hazard = shorter survival.
 Example: log(2) / c(18, 15, 10) for median survival times of 18, 15, 10 months}
 
 \item{dropout_per_year}{Numeric value between 0 and 1 specifying annual dropout rate.
-Example: 0.1 means 10\\% dropout per year}
+Example: 0.1 means 10 percent dropout per year}
 
 \item{seed}{Integer specifying random seed for reproducibility.
 Use the same seed to generate identical datasets across runs}
 }
 \value{
 A data frame (tibble) containing the following columns:
+\describe{
 \item{SUBJID}{Subject identifier (character)}
 \item{ARM}{Treatment arm (factor)}
 \item{SURVTIME}{Observed survival time in months (numeric)}
 \item{CNSR}{Censoring indicator: 1 = censored, 0 = event (numeric)}
+}
 }
 \description{
 This function generates simulated time-to-event data with treatment arms.

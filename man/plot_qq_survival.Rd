@@ -150,6 +150,7 @@ dataset4_processed <- processing_dataset(
 
 # Returns NULL with message
 p4 <- plot_qq_survival(dataset4_processed)
-# Message: "Q-Q plot requires at least 2 ARM levels for comparison. Found: 1 level(s). Returning NULL."
+# Message: "Q-Q plot requires at least 2 ARM levels for comparison.
+#          Found: 1 level(s). Returning NULL."
 }
 }

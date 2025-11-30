@@ -1,16 +1,48 @@
 Package: SurvFitSummary
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Fit and Visualize Parametric Survival Models with Diagnostic Plots
 Version: 1.0.0
 Authors@R: person(given = "Gosuke",
                   family = "Homma",
                   role = c("aut", "cre"),
                   email = "my.name.is.gosuke@gmail.com",
                   comment = c(ORCID = "0000-0002-6854-5627"))
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: Provides comprehensive tools for fitting parametric survival models 
+    (exponential, Weibull, lognormal, log-logistic, Gompertz, generalized gamma, 
+    and gamma distributions) to survival data. Features include automated model 
+    fitting with various configurations (dependent, independent, or both), 
+    Kaplan-Meier curve visualization with parametric overlays, hazard function 
+    estimation and plotting, proportional hazards assumption testing through 
+    Schoenfeld residuals and statistical tests, Q-Q plots for distribution 
+    assessment, and automated generation of comprehensive survival analysis reports. 
+    Supports multiple data formats including CSV, Excel, and SAS datasets.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Depends: 
+    R (>= 4.0.0)
+Imports:
+    broom,
+    bshazard,
+    dplyr,
+    flexsurv,
+    ggplot2,
+    haven,
+    magrittr,
+    patchwork,
+    purrr,
+    readr,
+    readxl,
+    rlang,
+    stats,
+    survival,
+    tibble,
+    tidyr
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+URL: https://github.com/gosukehommaEX/SurvFitSummary
+BugReports: https://github.com/gosukehommaEX/SurvFitSummary/issues
