@@ -28,15 +28,16 @@
 #'     \item{varcovmat}{Variance-covariance matrices in long format}
 #'     \item{cholesky}{Cholesky decompositions in long format}
 #'     \item{gof_statistics}{Goodness-of-fit statistics (AIC, BIC)}
-#'     \item{landmark_survival}{Landmark survival probabilities at 4-week intervals}
-#'     \item{survival_metrics}{Median, mean, and restricted mean survival times (in weeks)}
+#'     \item{landmark_survival}{Landmark survival probabilities at 4-week intervals (time in weeks)}
+#'     \item{survival_metrics}{Median, mean, and restricted mean survival times (in original time_scale units)}
 #'     \item{cox_ph_results}{Cox proportional hazards model results with HR and 95% CI}
 #'   }
 #'
 #' @details
 #' Time scale conversion: Data is assumed to be in the specified time_scale units.
-#' All analysis is performed in weeks (4-week landmark intervals). Landmark survival
-#' probabilities are automatically generated at 4-week intervals up to time_horizon.
+#' Internal analysis is performed in weeks with 4-week landmark intervals.
+#' Landmark survival probabilities show time in weeks (4-week intervals).
+#' Survival metrics (median, mean, RMST) are converted back to original time_scale units.
 #'
 #' Cox PH model is always fitted and returned, regardless of the dependent parameter.
 #' This allows comparison of parametric and semi-parametric estimates of treatment effect.
@@ -49,6 +50,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Example 1: Basic usage with month time scale
 #' dataset <- generate_dummy_survival_data(
 #'   arm = c("Treatment", "Control"),
 #'   n = c(100, 100),
@@ -73,7 +75,70 @@
 #'   time_horizon = 60
 #' )
 #'
+#' # Landmark survival: time in weeks (4-week intervals)
+#' print(results$landmark_survival)
+#'
+#' # Survival metrics: in months (original time_scale)
+#' print(results$survival_metrics)
+#'
+#' # Cox PH results
 #' print(results$cox_ph_results)
+#'
+#' # Example 2: Year time scale
+#' dataset2 <- generate_dummy_survival_data(
+#'   arm = c("DrugA", "DrugB", "Placebo"),
+#'   n = c(80, 80, 80),
+#'   hazards = log(2) / c(2.5, 2.0, 1.5),
+#'   dropout_per_year = 0.1,
+#'   seed = 456
+#' )
+#'
+#' dataset2_processed <- processing_dataset(
+#'   dataset = dataset2,
+#'   column_arm = "ARM",
+#'   column_survtime = "SURVTIME",
+#'   column_cnsr = "CNSR",
+#'   column_event = NULL
+#' )
+#'
+#' results2 <- fitting_surv_mod_multiple(
+#'   dataset = dataset2_processed,
+#'   distribution = c("weibull", "lnorm", "gengamma"),
+#'   dependent = c(TRUE, FALSE),
+#'   control_arm = "Placebo",
+#'   time_scale = "year",
+#'   time_horizon = 5
+#' )
+#'
+#' # Landmark survival: time in weeks
+#' print(results2$landmark_survival)
+#'
+#' # Survival metrics: in years
+#' print(results2$survival_metrics)
+#'
+#' # Example 3: Week time scale with dependent models only
+#' results3 <- fitting_surv_mod_multiple(
+#'   dataset = dataset_processed,
+#'   distribution = c("exp", "weibull"),
+#'   dependent = TRUE,
+#'   time_scale = "week",
+#'   time_horizon = 260
+#' )
+#'
+#' # Survival metrics: in weeks
+#' print(results3$survival_metrics)
+#'
+#' # Example 4: Day time scale
+#' results4 <- fitting_surv_mod_multiple(
+#'   dataset = dataset_processed,
+#'   distribution = "llogis",
+#'   dependent = FALSE,
+#'   time_scale = "day",
+#'   time_horizon = 1825
+#' )
+#'
+#' # Survival metrics: in days
+#' print(results4$survival_metrics)
 #' }
 
 fitting_surv_mod_multiple <- function(dataset,
@@ -141,6 +206,7 @@ fitting_surv_mod_multiple <- function(dataset,
   message("Time scale: ", time_scale, " | Data converted to weeks for analysis")
   message("Time horizon: ", time_horizon_weeks, " weeks (from ", time_horizon %||% "max observed", " ", time_scale, ")")
   message("Landmark survival probabilities at 4-week intervals: ", paste(landmark_times, collapse = ", "), " weeks")
+  message("Survival metrics will be reported in original time_scale: ", time_scale)
 
   # Create grid of parameters to iterate over
   param_grid <- expand.grid(
@@ -172,7 +238,8 @@ fitting_surv_mod_multiple <- function(dataset,
         dependent = dep,
         control_arm = control_arm,
         landmark_times = landmark_times,
-        time_horizon = time_horizon_weeks
+        time_horizon = time_horizon_weeks,
+        original_time_scale = scale_factor  # Pass scale_factor to convert metrics back
       )
     }, error = function(e) {
       stop("FITTING ERROR - distribution: ", dist, ", dependent: ", dep,
@@ -218,7 +285,7 @@ fitting_surv_mod_multiple <- function(dataset,
       all_landmark[[i]] <- lm
     }
 
-    # Store survival metrics
+    # Store survival metrics (already converted to original time scale)
     metrics <- add_model_arm_columns(fit_result$survival_metrics, model_type)
     all_metrics[[i]] <- metrics
 

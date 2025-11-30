@@ -17,6 +17,9 @@
 #'   probability estimation. If NULL (default), landmark survival is not calculated
 #' @param time_horizon Numeric value specifying the time horizon for restricted mean
 #'   survival time (RMST) calculation. If NULL (default), RMST is not calculated
+#' @param original_time_scale Numeric value for converting results back to original time scale.
+#'   If NULL (default), results are in the same units as input data. When provided,
+#'   survival metrics are divided by this value to convert back to original scale
 #'
 #' @return A list containing six components:
 #'   \describe{
@@ -39,13 +42,73 @@
 #' @importFrom stats vcov AIC BIC
 #' @importFrom broom tidy
 #' @importFrom tidyr pivot_longer expand_grid
+#' @importFrom tibble rownames_to_column
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Example 1: Dependent model (ARM as covariate)
+#' dataset <- generate_dummy_survival_data(
+#'   arm = c("Treatment", "Control"),
+#'   n = c(100, 100),
+#'   hazards = log(2) / c(20, 15),
+#'   dropout_per_year = 0.1,
+#'   seed = 123
+#' )
+#'
+#' dataset_processed <- processing_dataset(
+#'   dataset = dataset,
+#'   column_arm = "ARM",
+#'   column_survtime = "SURVTIME",
+#'   column_cnsr = "CNSR",
+#'   column_event = NULL
+#' )
+#'
+#' result_dep <- fitting_surv_mod(
+#'   dataset = dataset_processed,
+#'   distribution = "weibull",
+#'   dependent = TRUE,
+#'   control_arm = "Control",
+#'   landmark_times = c(6, 12, 18, 24),
+#'   time_horizon = 36
+#' )
+#'
+#' print(result_dep$coef_estimates)
+#' print(result_dep$landmark_survival)
+#' print(result_dep$survival_metrics)
+#'
+#' # Example 2: Independent models (separate fits per ARM)
+#' result_indep <- fitting_surv_mod(
+#'   dataset = dataset_processed,
+#'   distribution = "weibull",
+#'   dependent = FALSE,
+#'   landmark_times = c(6, 12, 18, 24),
+#'   time_horizon = 36
+#' )
+#'
+#' print(result_indep$coef_estimates)
+#' print(result_indep$gof_statistics)
+#'
+#' # Example 3: With time scale conversion
+#' # Data in weeks, convert survival metrics back to months
+#' result_scaled <- fitting_surv_mod(
+#'   dataset = dataset_processed,
+#'   distribution = "exp",
+#'   dependent = TRUE,
+#'   landmark_times = seq(4, 52, by = 4),
+#'   time_horizon = 52,
+#'   original_time_scale = 30.44 / 7  # Convert weeks to months
+#' )
+#'
+#' print(result_scaled$survival_metrics)
+#' }
 fitting_surv_mod <- function(dataset,
                              distribution,
                              dependent = TRUE,
                              control_arm = NULL,
                              landmark_times = NULL,
-                             time_horizon = NULL) {
+                             time_horizon = NULL,
+                             original_time_scale = NULL) {
 
   # Validate distribution parameter
   valid_distributions <- c("exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "gamma")
@@ -286,6 +349,16 @@ fitting_surv_mod <- function(dataset,
         }
       )
     })
+  }
+
+  # Convert survival metrics back to original time scale if specified
+  if (!is.null(original_time_scale)) {
+    survival_metrics <- survival_metrics %>%
+      dplyr::mutate(
+        `Median Survival Time` = `Median Survival Time` / original_time_scale,
+        `Mean Survival Time` = `Mean Survival Time` / original_time_scale,
+        `Restricted Mean Survival Time` = `Restricted Mean Survival Time` / original_time_scale
+      )
   }
 
   # Return results
