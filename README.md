@@ -424,10 +424,6 @@ print(fit_results$cox_ph_results)
 
 **Gosuke Homma**
 
-- Email: my.name.is.gosuke@gmail.com
-- ORCID: [0000-0002-6854-5627](https://orcid.org/0000-0002-6854-5627)
-- GitHub: [@gosukehommaEX](https://github.com/gosukehommaEX)
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
@@ -450,12 +446,3 @@ This package builds upon the excellent work of:
 - `flexsurv` package for parametric survival model fitting
 - `bshazard` package for non-parametric hazard estimation
 - `ggplot2` package for visualization
-
-## Bug Reports and Feature Requests
-
-Please report bugs and request features at:
-https://github.com/gosukehommaEX/SurvFitSummary/issues
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
