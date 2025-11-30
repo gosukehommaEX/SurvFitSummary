@@ -315,7 +315,7 @@ plot_km_and_parametric <- function(dataset,
     ) +
     ggplot2::scale_color_manual(values = colors) +
     ggplot2::labs(
-      title = 'Kaplan-Meier Curves with Parametric Distribution Overlay',
+      title = 'Kaplan-Meier Curves with Parametric Distribution',
       subtitle = paste('Distribution:', dist_names[distribution]),
       x = 'Time',
       y = 'Survival Probability',
@@ -323,15 +323,15 @@ plot_km_and_parametric <- function(dataset,
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
-      plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
-      plot.subtitle = ggplot2::element_text(size = 24, hjust = 0.5),
-      axis.title.x = ggplot2::element_text(size = 22),
-      axis.title.y = ggplot2::element_text(size = 22),
-      axis.text.x = ggplot2::element_text(size = 20),
-      axis.text.y = ggplot2::element_text(size = 20),
+      plot.title = ggplot2::element_text(size = 20, face = 'bold', hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(size = 18, hjust = 0.5),
+      axis.title.x = ggplot2::element_text(size = 16),
+      axis.title.y = ggplot2::element_text(size = 16),
+      axis.text.x = ggplot2::element_text(size = 16),
+      axis.text.y = ggplot2::element_text(size = 16),
       legend.position = 'bottom',
-      legend.text = ggplot2::element_text(size = 18),
-      legend.title = ggplot2::element_text(size = 18),
+      legend.text = ggplot2::element_text(size = 12),
+      legend.title = ggplot2::element_text(size = 12),
       legend.key = ggplot2::element_rect(colour = NA, fill = NA),
       legend.key.width = ggplot2::unit(2, "cm"),
       panel.grid.major = ggplot2::element_line(color = 'gray90'),
@@ -401,12 +401,12 @@ plot_km_and_parametric <- function(dataset,
   p <- p +
     ggplot2::annotate(
       'text',
-      x = plot_time_horizon * 0.65,
+      x = plot_time_horizon * 0.5,
       y = 0.95,
       label = legend_text,
       hjust = 0,
       vjust = 1,
-      size = 8,
+      size = 5,
       fontface = 'bold'
     )
 

@@ -223,14 +223,14 @@ plot_test_ph_assumption <- function(dataset,
   # Base theme for all plots
   base_theme <- ggplot2::theme_bw() +
     ggplot2::theme(
-      plot.title = ggplot2::element_text(size = 26, face = 'bold', hjust = 0.5),
-      plot.subtitle = ggplot2::element_text(size = 24, hjust = 0.5),
-      axis.title.x = ggplot2::element_text(size = 22),
-      axis.title.y = ggplot2::element_text(size = 22),
-      axis.text.x = ggplot2::element_text(size = 20),
-      axis.text.y = ggplot2::element_text(size = 20),
+      plot.title = ggplot2::element_text(size = 20, face = 'bold', hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(size = 18, hjust = 0.5),
+      axis.title.x = ggplot2::element_text(size = 16),
+      axis.title.y = ggplot2::element_text(size = 16),
+      axis.text.x = ggplot2::element_text(size = 16),
+      axis.text.y = ggplot2::element_text(size = 16),
       legend.position = 'bottom',
-      legend.text = ggplot2::element_text(size = 18),
+      legend.text = ggplot2::element_text(size = 12),
       legend.title = ggplot2::element_blank(),
       legend.key = ggplot2::element_rect(colour = NA, fill = NA),
       legend.key.width = ggplot2::unit(2, "cm"),
@@ -334,13 +334,13 @@ plot_test_ph_assumption <- function(dataset,
       subtitle = 'Assess linearity for distributional assumptions',
       theme = ggplot2::theme(
         plot.title = ggplot2::element_text(
-          size = 26,
+          size = 20,
           face = 'bold',
           color = '#666666',
           hjust = 0.5
         ),
         plot.subtitle = ggplot2::element_text(
-          size = 24,
+          size = 20,
           color = '#666666',
           hjust = 0.5
         ),
