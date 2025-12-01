@@ -4,7 +4,12 @@
 \alias{plot_km_and_parametric_multiple}
 \title{Plot Kaplan-Meier Curves with Multiple Parametric Distributions}
 \usage{
-plot_km_and_parametric_multiple(dataset, distributions, conf_int = TRUE)
+plot_km_and_parametric_multiple(
+  dataset,
+  distributions,
+  conf_int = TRUE,
+  risk_table_interval = NULL
+)
 }
 \arguments{
 \item{dataset}{A data frame containing survival analysis data with columns:
@@ -16,6 +21,11 @@ Each element must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz",
 
 \item{conf_int}{Logical indicating whether to display 95\% confidence intervals on
 Kaplan-Meier curves. Default is TRUE. Applied to all distributions}
+
+\item{risk_table_interval}{Numeric value specifying the time interval for risk table output.
+If NULL (default), automatically sets interval to 10\% of plot_time_horizon.
+If numeric value provided, uses that as the interval. Applied to all distributions.
+Default is NULL}
 }
 \value{
 A list containing:
@@ -40,7 +50,7 @@ fitted parametric model.
 }
 \examples{
 \dontrun{
-# Example: Compare multiple distributions
+# Example 1: Compare multiple distributions with default risk table interval
 dataset <- generate_dummy_survival_data(
   arm = c("Treatment", "Control"),
   n = c(100, 100),
@@ -70,5 +80,16 @@ print(result$plots$lnorm)
 
 # Access shared risk table
 print(result$risktable)
+
+# Example 2: Custom risk table interval
+result2 <- plot_km_and_parametric_multiple(
+  dataset = dataset_processed,
+  distributions = c("weibull", "gompertz", "lnorm"),
+  conf_int = TRUE,
+  risk_table_interval = 6
+)
+
+print(result2$plots$weibull)
+print(result2$risktable)
 }
 }

@@ -4,7 +4,12 @@
 \alias{plot_km_and_parametric}
 \title{Plot Kaplan-Meier Curves with Parametric Distribution Overlay}
 \usage{
-plot_km_and_parametric(dataset, distribution, conf_int = TRUE)
+plot_km_and_parametric(
+  dataset,
+  distribution,
+  conf_int = TRUE,
+  risk_table_interval = NULL
+)
 }
 \arguments{
 \item{dataset}{A data frame containing survival analysis data with columns:
@@ -15,6 +20,10 @@ Must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "ga
 
 \item{conf_int}{Logical indicating whether to display 95\% confidence intervals on
 Kaplan-Meier curves. Default is TRUE}
+
+\item{risk_table_interval}{Numeric value specifying the time interval for risk table output.
+If NULL (default), automatically sets interval to 10\% of plot_time_horizon.
+If numeric value provided, uses that as the interval. Default is NULL}
 }
 \value{
 A list containing:
@@ -67,7 +76,7 @@ result <- plot_km_and_parametric(
 print(result$plot)
 print(result$risktable)
 
-# Example 2: Two-arm trial
+# Example 2: Two-arm trial with custom risk table interval
 dataset <- generate_dummy_survival_data(
   arm = c("Treatment", "Control"),
   n = c(100, 100),
@@ -87,7 +96,8 @@ dataset_processed <- processing_dataset(
 result <- plot_km_and_parametric(
   dataset = dataset_processed,
   distribution = "weibull",
-  conf_int = TRUE
+  conf_int = TRUE,
+  risk_table_interval = 6
 )
 
 print(result$plot)
@@ -113,7 +123,8 @@ dataset3_processed <- processing_dataset(
 result3 <- plot_km_and_parametric(
   dataset = dataset3_processed,
   distribution = "weibull",
-  conf_int = TRUE
+  conf_int = TRUE,
+  risk_table_interval = 6
 )
 
 print(result3$plot)

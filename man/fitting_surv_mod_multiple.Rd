@@ -2,14 +2,14 @@
 % Please edit documentation in R/fitting_surv_mod_multiple.R
 \name{fitting_surv_mod_multiple}
 \alias{fitting_surv_mod_multiple}
-\title{Fit Multiple Parametric Survival Models with Time Scale Conversion}
+\title{Fit Multiple Parametric Survival Models}
 \usage{
 fitting_surv_mod_multiple(
   dataset,
   distribution,
   dependent = c(TRUE, FALSE),
   control_arm = NULL,
-  time_scale = "month",
+  landmark_increment = NULL,
   time_horizon = NULL
 )
 }
@@ -27,13 +27,12 @@ fits only that model type. Default is c(TRUE, FALSE)}
 \item{control_arm}{Character string specifying which ARM level should be used as
 the reference (control) group. If NULL (default), uses the first factor level}
 
-\item{time_scale}{Character string specifying time scale of input data.
-Must be one of: "day", "week", "month", "year". Default is "month".
-Data is assumed to be in this unit and will be converted to weeks for analysis}
+\item{landmark_increment}{Numeric value specifying the time interval for landmark survival
+probability estimation. If NULL (default), landmark survival is not calculated.
+Results will be calculated at times 0, landmark_increment, 2*landmark_increment, etc.}
 
-\item{time_horizon}{Numeric value specifying the time horizon (in original time_scale units)
-for landmark survival probabilities and RMST calculation. If NULL (default),
-uses maximum observed survival time. Automatically converted to weeks}
+\item{time_horizon}{Numeric value specifying the time horizon for restricted mean
+survival time (RMST) calculation. If NULL (default), RMST is not calculated}
 }
 \value{
 A list containing seven data frames:
@@ -42,30 +41,28 @@ A list containing seven data frames:
 \item{varcovmat}{Variance-covariance matrices in long format}
 \item{cholesky}{Cholesky decompositions in long format}
 \item{gof_statistics}{Goodness-of-fit statistics (AIC, BIC)}
-\item{landmark_survival}{Landmark survival probabilities at 4-week intervals (time in weeks)}
-\item{survival_metrics}{Median, mean, and restricted mean survival times (in original time_scale units)}
+\item{landmark_survival}{Landmark survival probabilities with columns:
+model_type, ARM, Time, KM, distribution1, distribution2, ...}
+\item{survival_metrics}{Median, mean, and restricted mean survival times}
 \item{cox_ph_results}{Cox proportional hazards model results with HR and 95\% CI}
 }
 }
 \description{
 This function fits multiple parametric survival models to time-to-event data
 using various distributions. It supports both dependent and independent models
-simultaneously, converts time scales, and automatically generates landmark
-survival probabilities at 4-week intervals. Cox PH model is always fitted
-regardless of dependent parameter value.
+simultaneously. Cox PH model is always fitted regardless of dependent parameter value.
 }
 \details{
-Time scale conversion: Data is assumed to be in the specified time_scale units.
-Internal analysis is performed in weeks with 4-week landmark intervals.
-Landmark survival probabilities show time in weeks (4-week intervals).
-Survival metrics (median, mean, RMST) are converted back to original time_scale units.
+Landmark survival probabilities are calculated for each distribution at specified time intervals
+for each ARM. The Kaplan-Meier estimate is included for each ARM as a reference.
+Results are combined across distributions using model_type, ARM, and Time as join keys.
 
 Cox PH model is always fitted and returned, regardless of the dependent parameter.
 This allows comparison of parametric and semi-parametric estimates of treatment effect.
 }
 \examples{
 \dontrun{
-# Example 1: Basic usage with month time scale
+# Example 1: Basic usage with multiple distributions
 dataset <- generate_dummy_survival_data(
   arm = c("Treatment", "Control"),
   n = c(100, 100),
@@ -86,73 +83,41 @@ results <- fitting_surv_mod_multiple(
   dataset = dataset_processed,
   distribution = c("exp", "weibull", "gompertz"),
   dependent = "both",
-  time_scale = "month",
-  time_horizon = 60
+  landmark_increment = 6,
+  time_horizon = 36
 )
 
-# Landmark survival: time in weeks (4-week intervals)
+# Landmark survival with multiple distributions and ARMs
 print(results$landmark_survival)
 
-# Survival metrics: in months (original time_scale)
+# Survival metrics
 print(results$survival_metrics)
 
 # Cox PH results
 print(results$cox_ph_results)
 
-# Example 2: Year time scale
-dataset2 <- generate_dummy_survival_data(
-  arm = c("DrugA", "DrugB", "Placebo"),
-  n = c(80, 80, 80),
-  hazards = log(2) / c(2.5, 2.0, 1.5),
-  dropout_per_year = 0.1,
-  seed = 456
-)
-
-dataset2_processed <- processing_dataset(
-  dataset = dataset2,
-  column_arm = "ARM",
-  column_survtime = "SURVTIME",
-  column_cnsr = "CNSR",
-  column_event = NULL
-)
-
+# Example 2: Multiple distributions with dependent models only
 results2 <- fitting_surv_mod_multiple(
-  dataset = dataset2_processed,
+  dataset = dataset_processed,
   distribution = c("weibull", "lnorm", "gengamma"),
-  dependent = c(TRUE, FALSE),
-  control_arm = "Placebo",
-  time_scale = "year",
-  time_horizon = 5
+  dependent = TRUE,
+  control_arm = "Control",
+  landmark_increment = 3,
+  time_horizon = 36
 )
 
-# Landmark survival: time in weeks
 print(results2$landmark_survival)
-
-# Survival metrics: in years
 print(results2$survival_metrics)
 
-# Example 3: Week time scale with dependent models only
+# Example 3: Single distribution
 results3 <- fitting_surv_mod_multiple(
   dataset = dataset_processed,
-  distribution = c("exp", "weibull"),
-  dependent = TRUE,
-  time_scale = "week",
-  time_horizon = 260
+  distribution = "exp",
+  dependent = c(TRUE, FALSE),
+  landmark_increment = 6,
+  time_horizon = 36
 )
 
-# Survival metrics: in weeks
-print(results3$survival_metrics)
-
-# Example 4: Day time scale
-results4 <- fitting_surv_mod_multiple(
-  dataset = dataset_processed,
-  distribution = "llogis",
-  dependent = FALSE,
-  time_scale = "day",
-  time_horizon = 1825
-)
-
-# Survival metrics: in days
-print(results4$survival_metrics)
+print(results3$landmark_survival)
 }
 }

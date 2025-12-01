@@ -9,9 +9,8 @@ fitting_surv_mod(
   distribution,
   dependent = TRUE,
   control_arm = NULL,
-  landmark_times = NULL,
-  time_horizon = NULL,
-  original_time_scale = NULL
+  landmark_increment = NULL,
+  time_horizon = NULL
 )
 }
 \arguments{
@@ -28,15 +27,12 @@ with ~ 1 formula. Default is TRUE}
 \item{control_arm}{Character string specifying which ARM level should be used as
 the reference (control) group. If NULL (default), uses the first factor level}
 
-\item{landmark_times}{Numeric vector specifying time points for landmark survival
-probability estimation. If NULL (default), landmark survival is not calculated}
+\item{landmark_increment}{Numeric value specifying the time interval for landmark survival
+probability estimation. If NULL (default), landmark survival is not calculated.
+Results will be calculated at times 0, landmark_increment, 2*landmark_increment, etc.}
 
 \item{time_horizon}{Numeric value specifying the time horizon for restricted mean
 survival time (RMST) calculation. If NULL (default), RMST is not calculated}
-
-\item{original_time_scale}{Numeric value for converting results back to original time scale.
-If NULL (default), results are in the same units as input data. When provided,
-survival metrics are divided by this value to convert back to original scale}
 }
 \value{
 A list containing six components:
@@ -49,7 +45,8 @@ row_param, col_param, value}
 \item{cholesky}{Data frame in long format with columns: distribution, ARM,
 row_param, col_param, value}
 \item{gof_statistics}{Data frame with goodness-of-fit statistics (AIC, BIC)}
-\item{landmark_survival}{Data frame with landmark survival probabilities (NULL if not specified)}
+\item{landmark_survival}{Data frame with columns: model_type, ARM, Time, KM (Kaplan-Meier),
+and distribution name, at intervals specified by landmark_increment (NULL if not specified)}
 \item{survival_metrics}{Data frame with median, mean, and RMST}
 }
 }
@@ -82,7 +79,7 @@ result_dep <- fitting_surv_mod(
   distribution = "weibull",
   dependent = TRUE,
   control_arm = "Control",
-  landmark_times = c(6, 12, 18, 24),
+  landmark_increment = 6,
   time_horizon = 36
 )
 
@@ -95,22 +92,20 @@ result_indep <- fitting_surv_mod(
   dataset = dataset_processed,
   distribution = "weibull",
   dependent = FALSE,
-  landmark_times = c(6, 12, 18, 24),
+  landmark_increment = 6,
   time_horizon = 36
 )
 
 print(result_indep$coef_estimates)
 print(result_indep$gof_statistics)
 
-# Example 3: With time scale conversion
-# Data in weeks, convert survival metrics back to months
+# Example 3: With different increment
 result_scaled <- fitting_surv_mod(
   dataset = dataset_processed,
   distribution = "exp",
   dependent = TRUE,
-  landmark_times = seq(4, 52, by = 4),
-  time_horizon = 52,
-  original_time_scale = 30.44 / 7  # Convert weeks to months
+  landmark_increment = 4,
+  time_horizon = 52
 )
 
 print(result_scaled$survival_metrics)
