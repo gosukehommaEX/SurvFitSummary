@@ -13,13 +13,11 @@
 #'   with ~ 1 formula. Default is TRUE
 #' @param control_arm Character string specifying which ARM level should be used as
 #'   the reference (control) group. If NULL (default), uses the first factor level
-#' @param landmark_times Numeric vector specifying time points for landmark survival
-#'   probability estimation. If NULL (default), landmark survival is not calculated
+#' @param landmark_increment Numeric value specifying the time interval for landmark survival
+#'   probability estimation. If NULL (default), landmark survival is not calculated.
+#'   Results will be calculated at times 0, landmark_increment, 2*landmark_increment, etc.
 #' @param time_horizon Numeric value specifying the time horizon for restricted mean
 #'   survival time (RMST) calculation. If NULL (default), RMST is not calculated
-#' @param original_time_scale Numeric value for converting results back to original time scale.
-#'   If NULL (default), results are in the same units as input data. When provided,
-#'   survival metrics are divided by this value to convert back to original scale
 #'
 #' @return A list containing six components:
 #'   \describe{
@@ -31,14 +29,15 @@
 #'     \item{cholesky}{Data frame in long format with columns: distribution, ARM,
 #'       row_param, col_param, value}
 #'     \item{gof_statistics}{Data frame with goodness-of-fit statistics (AIC, BIC)}
-#'     \item{landmark_survival}{Data frame with landmark survival probabilities (NULL if not specified)}
+#'     \item{landmark_survival}{Data frame with columns: model_type, ARM, Time, KM (Kaplan-Meier),
+#'       and distribution name, at intervals specified by landmark_increment (NULL if not specified)}
 #'     \item{survival_metrics}{Data frame with median, mean, and RMST}
 #'   }
 #'
 #' @importFrom dplyr as_tibble select mutate bind_cols group_by reframe filter rename tibble
 #' @importFrom purrr map_dfr
 #' @importFrom flexsurv flexsurvreg
-#' @importFrom survival Surv
+#' @importFrom survival Surv survfit
 #' @importFrom stats vcov AIC BIC
 #' @importFrom broom tidy
 #' @importFrom tidyr pivot_longer expand_grid
@@ -69,7 +68,7 @@
 #'   distribution = "weibull",
 #'   dependent = TRUE,
 #'   control_arm = "Control",
-#'   landmark_times = c(6, 12, 18, 24),
+#'   landmark_increment = 6,
 #'   time_horizon = 36
 #' )
 #'
@@ -82,22 +81,20 @@
 #'   dataset = dataset_processed,
 #'   distribution = "weibull",
 #'   dependent = FALSE,
-#'   landmark_times = c(6, 12, 18, 24),
+#'   landmark_increment = 6,
 #'   time_horizon = 36
 #' )
 #'
 #' print(result_indep$coef_estimates)
 #' print(result_indep$gof_statistics)
 #'
-#' # Example 3: With time scale conversion
-#' # Data in weeks, convert survival metrics back to months
+#' # Example 3: With different increment
 #' result_scaled <- fitting_surv_mod(
 #'   dataset = dataset_processed,
 #'   distribution = "exp",
 #'   dependent = TRUE,
-#'   landmark_times = seq(4, 52, by = 4),
-#'   time_horizon = 52,
-#'   original_time_scale = 30.44 / 7  # Convert weeks to months
+#'   landmark_increment = 4,
+#'   time_horizon = 52
 #' )
 #'
 #' print(result_scaled$survival_metrics)
@@ -106,9 +103,8 @@ fitting_surv_mod <- function(dataset,
                              distribution,
                              dependent = TRUE,
                              control_arm = NULL,
-                             landmark_times = NULL,
-                             time_horizon = NULL,
-                             original_time_scale = NULL) {
+                             landmark_increment = NULL,
+                             time_horizon = NULL) {
 
   # Validate distribution parameter
   valid_distributions <- c("exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "gamma")
@@ -145,7 +141,8 @@ fitting_surv_mod <- function(dataset,
 
   # Model fitting with conditional formula
   model_fit <- dataset %>%
-    {if(dependent) . else dplyr::group_by(., ARM)} %>%
+    {if(dependent) .
+      else dplyr::group_by(., ARM)} %>%
     dplyr::reframe(
       distribution = distribution,
       fit_result = list(
@@ -275,29 +272,52 @@ fitting_surv_mod <- function(dataset,
     })
   }
 
-  # Landmark survival probabilities
+  # Landmark survival probabilities (ARM-specific)
   landmark_survival <- NULL
-  if(!is.null(landmark_times)) {
-    landmark_survival <- if(dependent) {
-      fit_result <- model_fit$fit_result[[1]]
-      purrr::map_dfr(arm_levels_subset, function(arm_val) {
+  if(!is.null(landmark_increment)) {
+    # Calculate maximum time from dataset
+    max_time <- max(dataset$SURVTIME, na.rm = TRUE)
+
+    # Generate time sequence from 0 with specified increment
+    landmark_times <- seq(0, max_time, by = landmark_increment)
+
+    # Calculate ARM-specific landmark survival
+    landmark_results <- purrr::map_dfr(arm_levels_subset, function(arm_val) {
+      # Fit Kaplan-Meier for this ARM
+      km_fit <- survival::survfit(
+        survival::Surv(SURVTIME, EVENT) ~ 1,
+        data = dataset %>% dplyr::filter(ARM == arm_val)
+      )
+
+      # Get K-M survival probabilities at landmark times
+      km_surv <- summary(km_fit, times = landmark_times, extend = TRUE)
+      km_probs <- km_surv$surv
+
+      # Get parametric model predictions for this ARM
+      if(dependent) {
+        fit_result <- model_fit$fit_result[[1]]
         newdata <- data.frame(ARM = arm_val)
-        summ <- summary(fit_result, newdata = newdata, t = landmark_times, type = 'survival')
-        dplyr::tibble(ARM = arm_val, summ[[1]])
-      })
-    } else {
-      purrr::map_dfr(1:nrow(model_fit), function(i) {
-        summ <- summary(model_fit$fit_result[[i]], t = landmark_times, type = 'survival')[[1]]
-        dplyr::tibble(ARM = model_fit$ARM[i], summ)
-      })
-    }
-    landmark_survival <- landmark_survival %>%
-      dplyr::rename(
-        'Survival Probability' = est,
-        'L95%' = lcl,
-        'U95%' = ucl
-      ) %>%
-      dplyr::mutate(distribution = distribution, .before = ARM)
+        param_summ <- summary(fit_result, newdata = newdata, t = landmark_times, type = 'survival')
+        param_probs <- param_summ[[1]]$est
+      } else {
+        # Find the index for this ARM in model_fit
+        arm_idx <- which(model_fit$ARM == arm_val)
+        summ <- summary(model_fit$fit_result[[arm_idx]], t = landmark_times, type = 'survival')
+        param_probs <- summ[[1]]$est
+      }
+
+      # Create output data frame for this ARM
+      result_df <- dplyr::tibble(
+        model_type = ifelse(dependent, "dependent", "independent"),
+        ARM = arm_val,
+        Time = landmark_times,
+        KM = km_probs
+      )
+      result_df[[distribution]] <- param_probs
+      result_df
+    })
+
+    landmark_survival <- landmark_results
   }
 
   # Survival metrics
@@ -351,23 +371,13 @@ fitting_surv_mod <- function(dataset,
     })
   }
 
-  # Convert survival metrics back to original time scale if specified
-  if (!is.null(original_time_scale)) {
-    survival_metrics <- survival_metrics %>%
-      dplyr::mutate(
-        `Median Survival Time` = `Median Survival Time` / original_time_scale,
-        `Mean Survival Time` = `Mean Survival Time` / original_time_scale,
-        `Restricted Mean Survival Time` = `Restricted Mean Survival Time` / original_time_scale
-      )
-  }
-
-  # Return results
-  return(list(
+  # Return results as list
+  list(
     coef_estimates = coef_estimates,
     varcovmat = varcovmat,
     cholesky = cholesky,
     gof_statistics = gof_stats,
     landmark_survival = landmark_survival,
     survival_metrics = survival_metrics
-  ))
+  )
 }

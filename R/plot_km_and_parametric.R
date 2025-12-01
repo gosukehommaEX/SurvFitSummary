@@ -401,7 +401,7 @@ plot_km_and_parametric <- function(dataset,
   p <- p +
     ggplot2::annotate(
       'text',
-      x = plot_time_horizon * 0.5,
+      x = plot_time_horizon * 0.57,
       y = 0.95,
       label = legend_text,
       hjust = 0,
