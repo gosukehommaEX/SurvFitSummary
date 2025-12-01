@@ -10,6 +10,9 @@
 #'   Must be one of: "exp", "weibull", "lnorm", "llogis", "gompertz", "gengamma", "gamma"
 #' @param conf_int Logical indicating whether to display 95% confidence intervals on
 #'   Kaplan-Meier curves. Default is TRUE
+#' @param risk_table_interval Numeric value specifying the time interval for risk table output.
+#'   If NULL (default), automatically sets interval to 10% of plot_time_horizon.
+#'   If numeric value provided, uses that as the interval. Default is NULL
 #'
 #' @return A list containing:
 #'   \describe{
@@ -66,7 +69,7 @@
 #' print(result$plot)
 #' print(result$risktable)
 #'
-#' # Example 2: Two-arm trial
+#' # Example 2: Two-arm trial with custom risk table interval
 #' dataset <- generate_dummy_survival_data(
 #'   arm = c("Treatment", "Control"),
 #'   n = c(100, 100),
@@ -86,7 +89,8 @@
 #' result <- plot_km_and_parametric(
 #'   dataset = dataset_processed,
 #'   distribution = "weibull",
-#'   conf_int = TRUE
+#'   conf_int = TRUE,
+#'   risk_table_interval = 6
 #' )
 #'
 #' print(result$plot)
@@ -112,7 +116,8 @@
 #' result3 <- plot_km_and_parametric(
 #'   dataset = dataset3_processed,
 #'   distribution = "weibull",
-#'   conf_int = TRUE
+#'   conf_int = TRUE,
+#'   risk_table_interval = 6
 #' )
 #'
 #' print(result3$plot)
@@ -121,7 +126,8 @@
 
 plot_km_and_parametric <- function(dataset,
                                    distribution,
-                                   conf_int = TRUE) {
+                                   conf_int = TRUE,
+                                   risk_table_interval = NULL) {
 
   # Load required packages
   if (!requireNamespace("survival", quietly = TRUE)) {
@@ -282,8 +288,15 @@ plot_km_and_parametric <- function(dataset,
     parametric_data <- rbind(parametric_data, temp_df)
   }
 
-  # Calculate number at risk at regular intervals (10% of plot_time_horizon)
-  interval <- max(1, round(plot_time_horizon / 10))
+  # Calculate number at risk at specified intervals
+  if (is.null(risk_table_interval)) {
+    # Default: 10% of plot_time_horizon
+    interval <- max(1, round(plot_time_horizon / 10))
+  } else {
+    # User-specified interval
+    interval <- risk_table_interval
+  }
+
   risk_times <- seq(0, plot_time_horizon, by = interval)
 
   risk_table <- data.frame()

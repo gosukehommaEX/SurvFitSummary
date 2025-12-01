@@ -11,6 +11,10 @@
 #'   "gengamma", "gamma". Example: c("weibull", "gompertz", "lnorm")
 #' @param conf_int Logical indicating whether to display 95% confidence intervals on
 #'   Kaplan-Meier curves. Default is TRUE. Applied to all distributions
+#' @param risk_table_interval Numeric value specifying the time interval for risk table output.
+#'   If NULL (default), automatically sets interval to 10% of plot_time_horizon.
+#'   If numeric value provided, uses that as the interval. Applied to all distributions.
+#'   Default is NULL
 #'
 #' @return A list containing:
 #'   \describe{
@@ -33,7 +37,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Example: Compare multiple distributions
+#' # Example 1: Compare multiple distributions with default risk table interval
 #' dataset <- generate_dummy_survival_data(
 #'   arm = c("Treatment", "Control"),
 #'   n = c(100, 100),
@@ -63,17 +67,26 @@
 #'
 #' # Access shared risk table
 #' print(result$risktable)
+#'
+#' # Example 2: Custom risk table interval
+#' result2 <- plot_km_and_parametric_multiple(
+#'   dataset = dataset_processed,
+#'   distributions = c("weibull", "gompertz", "lnorm"),
+#'   conf_int = TRUE,
+#'   risk_table_interval = 6
+#' )
+#'
+#' print(result2$plots$weibull)
+#' print(result2$risktable)
 #' }
-
 plot_km_and_parametric_multiple <- function(dataset,
                                             distributions,
-                                            conf_int = TRUE) {
-
+                                            conf_int = TRUE,
+                                            risk_table_interval = NULL) {
   # Validate distributions parameter
   if (!is.character(distributions)) {
     stop("distributions must be a character vector")
   }
-
   if (length(distributions) == 0) {
     stop("distributions must contain at least one distribution")
   }
@@ -93,11 +106,12 @@ plot_km_and_parametric_multiple <- function(dataset,
   for (i in seq_along(distributions)) {
     dist <- distributions[i]
 
-    # Call plot_km_and_parametric
+    # Call plot_km_and_parametric with risk_table_interval
     result <- plot_km_and_parametric(
       dataset = dataset,
       distribution = dist,
-      conf_int = conf_int
+      conf_int = conf_int,
+      risk_table_interval = risk_table_interval
     )
 
     # Store plot with distribution name as key
