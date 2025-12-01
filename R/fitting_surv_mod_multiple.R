@@ -137,6 +137,11 @@ fitting_surv_mod_multiple <- function(dataset,
     dependent <- FALSE
   }
 
+  # If single ARM, set control_arm to NULL (not used for independent model)
+  if (length(arm_levels) == 1) {
+    control_arm <- NULL
+  }
+
   # Create grid of parameters to iterate over
   param_grid <- expand.grid(
     distribution = distribution,
@@ -238,27 +243,41 @@ fitting_surv_mod_multiple <- function(dataset,
       dplyr::arrange(model_type, ARM, Time)
   }
 
-  # Fit Cox PH model
-  cox_fit <- survival::coxph(
-    survival::Surv(SURVTIME, EVENT) ~ ARM,
-    data = dataset
-  )
-  cox_summary <- summary(cox_fit)
-  cox_ci <- cox_summary$conf.int
-  cox_results <- data.frame(
-    term = rownames(cox_ci),
-    HR = round(cox_ci[, 1], 3),
-    check.names = FALSE
-  )
-  cox_results[["L95%"]] <- round(cox_ci[, 3], 3)
-  cox_results[["U95%"]] <- round(cox_ci[, 4], 3)
-  cox_results[["p.value"]] <- round(cox_summary$coefficients[, "Pr(>|z|)"], 4)
-  cox_results <- cox_results %>%
-    dplyr::select(term, HR, `L95%`, `U95%`, `p.value`) %>%
-    dplyr::mutate(
+  # Fit Cox PH model (only if multiple ARMs)
+  cox_results <- NULL
+  if (length(arm_levels) > 1) {
+    cox_fit <- survival::coxph(
+      survival::Surv(SURVTIME, EVENT) ~ ARM,
+      data = dataset
+    )
+    cox_summary <- summary(cox_fit)
+    cox_ci <- cox_summary$conf.int
+    cox_results <- data.frame(
+      term = rownames(cox_ci),
+      HR = round(cox_ci[, 1], 3),
+      check.names = FALSE
+    )
+    cox_results[["L95%"]] <- round(cox_ci[, 3], 3)
+    cox_results[["U95%"]] <- round(cox_ci[, 4], 3)
+    cox_results[["p.value"]] <- round(cox_summary$coefficients[, "Pr(>|z|)"], 4)
+    cox_results <- cox_results %>%
+      dplyr::select(term, HR, `L95%`, `U95%`, `p.value`) %>%
+      dplyr::mutate(
+        event_count = sum(dataset$EVENT, na.rm = TRUE),
+        sample_size = nrow(dataset)
+      )
+  } else {
+    # Single ARM: return empty Cox results
+    cox_results <- dplyr::tibble(
+      term = character(0),
+      HR = numeric(0),
+      `L95%` = numeric(0),
+      `U95%` = numeric(0),
+      `p.value` = numeric(0),
       event_count = sum(dataset$EVENT, na.rm = TRUE),
       sample_size = nrow(dataset)
     )
+  }
 
   # Return results as list
   list(

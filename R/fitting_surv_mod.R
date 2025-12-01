@@ -122,7 +122,7 @@ fitting_surv_mod <- function(dataset,
   }
 
   # Handle control_arm specification
-  if (!is.null(control_arm)) {
+  if (!is.null(control_arm) && length(arm_levels) > 1) {
     if (!control_arm %in% arm_levels) {
       stop("Specified control_arm '", control_arm, "' not found in ARM levels: ",
            paste(arm_levels, collapse = ", "))
@@ -130,7 +130,8 @@ fitting_surv_mod <- function(dataset,
     dataset$ARM <- relevel(factor(dataset$ARM), ref = control_arm)
     arm_levels <- levels(dataset$ARM)
     message("ARM releveled with '", control_arm, "' as reference group")
-  } else {
+  } else if (dependent && length(arm_levels) > 1) {
+    # Only convert to factor for dependent model with multiple arms
     if (!is.factor(dataset$ARM)) {
       dataset$ARM <- as.factor(dataset$ARM)
     }
