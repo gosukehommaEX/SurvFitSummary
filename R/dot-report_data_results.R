@@ -1,8 +1,8 @@
 #' Data Overview and Hazard Ratios in the Word Report
 #'
 #' @description
-#' Internal helper: the start of the Results section of the report
-#' template, with the data summary, the Kaplan-Meier curves (all arms in
+#' Internal helper: the start of the Results section of the report,
+#' with the data summary, the Kaplan-Meier curves (all arms in
 #' one plot and each arm alone, each with and/or without confidence
 #' intervals), the Kaplan-Meier table of each arm and the hazard ratios.
 #'

@@ -1,9 +1,8 @@
 #' Theme of the Plots of the Package
 #'
 #' @description
-#' Internal helper: a classic theme (axes without grid, as in the survival
-#' analysis report template) with a base font size large enough for figures
-#' in Word reports.
+#' Internal helper: a classic theme (axes without grid) with a base font
+#' size large enough for figures in Word reports.
 #'
 #' @param legend_position Position of the legend, for example
 #'   \code{"right"} or \code{"bottom"}.

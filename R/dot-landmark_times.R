@@ -1,9 +1,9 @@
-#' Landmark Times of the Report Template
+#' Default Landmark Times of the Predicted Survival
 #'
 #' @description
-#' Internal helper that returns the times at which the report template
-#' reports the predicted survival (6 months and 1, 2, 5 and 10 years), in
-#' the time unit of the data (1 year = 365.25 days = 12 months).
+#' Internal helper that returns the default times at which the predicted
+#' survival is reported (6 months and 1, 2, 5 and 10 years), in the time
+#' unit of the data (1 year = 365.25 days = 12 months).
 #'
 #' @param time_unit \code{"days"}, \code{"weeks"}, \code{"months"} or
 #'   \code{"years"}.

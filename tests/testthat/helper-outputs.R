@@ -1,7 +1,8 @@
 # Reading back the Excel and Word files written by the tests.
 
 read_sheet <- function(file, sheet) {
-  openxlsx::read.xlsx(file, sheet = sheet, check.names = FALSE)
+  as.data.frame(readxl::read_excel(file, sheet = sheet, guess_max = 1e5,
+                                   .name_repair = "minimal"))
 }
 
 # A sheet read back against the data frame written: numbers to within the

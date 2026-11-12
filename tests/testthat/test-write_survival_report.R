@@ -1,6 +1,6 @@
 # The report is first built as a list of elements (.report_blocks()), then
 # written with officer (.render_report()). The structure is checked against
-# the report template; the numbers in the tables against the data and the
+# the layout of the report; the numbers in the tables against the data and the
 # values computed independently by inst/validation/python/expected_fits.py
 # (to within the rounding of the report); the Word files are read back
 # with officer.
@@ -27,7 +27,7 @@ block_field <- function(blocks, field) {
   }, character(1))
 }
 
-test_that("reporting times of the template by default", {
+test_that("default reporting times", {
   x <- get_fits("report")
   s <- .report_settings(x, NULL, NULL, NULL, NULL)
   expect_identical(s$interval, 12)
@@ -45,7 +45,7 @@ test_that("reporting times of the template by default", {
   expect_identical(s$time_horizon, 48)
 })
 
-test_that("the headings follow the report template", {
+test_that("the headings follow the layout of the report", {
   blocks <- report_plan()
   type <- block_field(blocks, "type")
   level <- block_field(blocks, "level")
@@ -77,7 +77,7 @@ test_that("the headings follow the report template", {
   )
   expect_identical(text[type == "title"], "Survival Analysis Report")
   expect_identical(text[type == "subtitle"], "Generated on: 2026-11-12")
-  expect_true(any(grepl("^Data: \\[user to complete", text)))
+  expect_true(any(grepl("^Data: \\[to be completed", text)))
 })
 
 test_that("figures with and without confidence intervals", {

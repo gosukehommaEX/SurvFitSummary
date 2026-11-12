@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Internal helper: the title, the date and the Overview section of the
-#' report template. Items not given by the user are left as placeholders in
-#' square brackets, as in the template.
+#' report. Items not given by the user are left as placeholders in square
+#' brackets, for the user to complete.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param s List returned by \code{.report_settings()}.
@@ -42,19 +42,19 @@
     b("heading", "Overview", level = 1L),
     b("paragraph", paste(
       "Data:", filled(overview$data_label, paste(
-        "[user to complete: name of trial or of dataset, including data",
-        "cut-off date and if ITT or a subgroup]"
+        "[to be completed: trial or data set, data cut-off date and",
+        "analysis population]"
       ))
     )),
     b("paragraph", paste(
       "Outcome:", filled(overview$outcome, paste(
-        "[user to complete: PFS, OS, time to treatment discontinuation or",
-        "death, or other]"
+        "[to be completed: outcome, for example overall survival or",
+        "progression-free survival]"
       ))
     )),
     b("paragraph", paste("Treatment arms:", arms_text)),
     b("paragraph", paste("Time unit:", unit_title)),
-    b("paragraph", paste("Time intervals for reporting:",
+    b("paragraph", paste("Reporting interval:",
                          format(s$interval), s$unit))
   ))
   hr <- s$hazard_ratios

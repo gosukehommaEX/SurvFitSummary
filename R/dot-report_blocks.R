@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Internal helper of \code{\link{write_survival_report}}: the elements of
-#' the report in the order of the report template (title and overview,
+#' the report in the order of the report (title and overview,
 #' methods, data overview, diagnostics, standard parametric models,
 #' spline-based extrapolation and notes on model fitting). Figures are not
 #' drawn here.

@@ -21,7 +21,7 @@ by the user, the proportion of log event times at or below the knot),
 Reports the internal knots of the Royston-Parmar spline models of each
 fit (each arm of the independent fits and both arms together for the
 dependent fit) with the Kaplan-Meier estimate at each knot, as in the
-table of knot placement of the survival analysis report template.
+table of knot placement of a survival analysis report.
 }
 \details{
 The knots are the same for the hazard, odds and normal scales. The number

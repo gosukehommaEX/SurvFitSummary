@@ -2,13 +2,13 @@
 #'
 #' @description
 #' Internal helper: the Diagnostics part of the Results section of the
-#' report template, with the smoothed empirical hazards (all arms and each
-#' arm, with and/or without confidence intervals), the distribution
-#' diagnostic plots, and, with two or more arms, the scaled Schoenfeld
-#' residuals, the Grambsch-Therneau test and the QQ plot, each with a text
-#' on how to read it. The text of the template on the QQ plot is corrected:
-#' a straight line through the origin indicates a constant ratio of the
-#' survival times (accelerated failure time), not proportional hazards.
+#' report, with the smoothed empirical hazards (all arms and each arm, with
+#' and/or without confidence intervals), the distribution diagnostic plots,
+#' and, with two or more arms, the scaled Schoenfeld residuals, the
+#' Grambsch-Therneau test and the QQ plot, each with a text on how to read
+#' it. A straight line through the origin in the QQ plot indicates a
+#' constant ratio of the survival times (accelerated failure time), which
+#' is not the same as proportional hazards.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param s List returned by \code{.report_settings()}.
@@ -85,16 +85,13 @@
                                 time_unit = x$time_unit)),
         height = 6),
       b("paragraph", paste0(
-        "In the Schoenfeld residuals plot, the pink line is the estimated ",
-        "log HR from the Cox proportional hazards model, each plotted point ",
-        "represents the scaled Schoenfeld residual for treatment for a ",
-        "patient with an event, the black line represents the predicted ",
-        "values from the regression of the scaled Schoenfeld residuals for ",
-        "treatment as a function of time, and the dotted lines are the ",
-        level, " confidence interval around the predictions. A flat ",
-        "prediction curve (black line) indicates that the treatment effect ",
-        "is independent of time, which supports the proportional hazards ",
-        "assumption."
+        "The plot shows the scaled Schoenfeld residuals of the treatment ",
+        "effect at the event times (points), the log hazard ratio (HR) of ",
+        "the Cox model (pink line), a natural spline regression of the ",
+        "residuals on time (black line) and its ", level, " confidence ",
+        "interval (dotted lines). A regression line close to horizontal ",
+        "indicates a treatment effect that does not change over time, ",
+        "consistent with proportional hazards."
       )),
       b("paragraph", paste0(
         "The Grambsch-Therneau test of the proportional hazards assumption ",

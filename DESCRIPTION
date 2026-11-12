@@ -27,13 +27,13 @@ Imports:
     flexsurv (>= 2.3),
     ggplot2 (>= 3.4.0),
     officer,
-    openxlsx,
     patchwork,
     splines,
     stats,
     survival,
     utils,
-    withr
+    withr,
+    writexl
 Suggests:
     haven,
     knitr,

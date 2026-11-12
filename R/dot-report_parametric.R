@@ -1,7 +1,7 @@
 #' Standard Parametric Models in the Word Report
 #'
 #' @description
-#' Internal helper: the section of the report template on the standard
+#' Internal helper: the section of the report on the standard
 #' parametric models. For each arm fitted separately and for both arms
 #' fitted together: the smoothed empirical hazard and the Kaplan-Meier
 #' curve overlaid with all the models, the table of AIC and BIC in

@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Internal helper: the report presents the models of each arm fitted
-#' separately and then the models of both arms fitted together, as in the
-#' report template. Models that failed are left out.
+#' separately and then the models of both arms fitted together. Models
+#' that failed are left out.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param family \code{"parametric"} or \code{"spline"}.

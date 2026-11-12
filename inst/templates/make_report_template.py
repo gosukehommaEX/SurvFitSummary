@@ -2,8 +2,7 @@
 write_survival_report() uses by default.
 
 The document has no content (one empty paragraph); only its page set-up and
-styles are used. They follow the survival analysis report template of the
-health economics team: A4 page with 2.5 cm margins, Arial 10 pt text,
+styles are used: A4 page with 2.5 cm margins, Arial 10 pt text,
 numbered headings (1., 1.1., 1.1.1.) in dark red with a rule under
 Heading 1, an unnumbered Heading 4, bold 9 pt captions, and tables with
 grey grid lines and a dark red header row with white bold text. Table text

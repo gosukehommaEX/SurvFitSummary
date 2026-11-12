@@ -6,7 +6,7 @@
 #' \code{\link{write_survival_report}} and fills in their defaults: the
 #' reporting interval of the Kaplan-Meier tables (the spacing of the time
 #' axis of the plots of the data), the landmark times of the predicted
-#' survival (6 months and 1, 2, 5 and 10 years, as in the report template),
+#' survival (6 months and 1, 2, 5 and 10 years),
 #' the time horizon (the last landmark time) and the hazard ratios (Cox
 #' models without adjustment when none are given).
 #'

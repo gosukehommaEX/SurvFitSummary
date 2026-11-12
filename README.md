@@ -13,9 +13,8 @@ assesses the proportional hazards assumption, and fits standard parametric
 and Royston-Parmar spline models to each arm and to both arms with the arm
 as a covariate, with tables of parameters, covariance matrices, Cholesky
 factors, goodness of fit and predicted survival. The results are written
-to an Excel workbook and to a Word report with the structure of the
-survival analysis report template (NICE DSU TSD 14 models and spline-based
-extrapolation).
+to an Excel workbook and to a Word report for health technology
+assessment (NICE DSU TSD 14 models and spline-based extrapolation).
 
 Version 2.0.0 is under development; the functions of version 1.0.0 were
 replaced (see `NEWS.md`).
@@ -53,7 +52,7 @@ devtools::install_github("gosukehommaEX/SurvFitSummary")
 | `plot_schoenfeld()` | Scaled Schoenfeld residuals with the log hazard ratio and a regression on time |
 | `plot_qq_survival()` | Quantile-quantile plot of the survival times of two arms |
 | `write_survival_workbook()` | Excel workbook with the tables of the analysis, including the parameters with their covariance matrices |
-| `write_survival_report()` | Word report following the survival analysis report template, with figures with and without confidence intervals |
+| `write_survival_report()` | Word report with methods, diagnostics, model fits and extrapolations, with figures with and without confidence intervals |
 
 ## Examples
 

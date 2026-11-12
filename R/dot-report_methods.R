@@ -1,13 +1,11 @@
 #' Methods Section of the Word Report
 #'
 #' @description
-#' Internal helper: the Methods section of the report template, with the
-#' methods, settings and software versions of the analysis filled in. The
-#' text of the template is used, with these corrections: the extrapolation
-#' of restricted cubic splines beyond the last knot is linear in log time
-#' on the scale of the model (log cumulative hazard, log cumulative odds or
-#' normal quantile), not on the scale of the hazard; AIC and BIC are not
-#' residuals.
+#' Internal helper: the Methods section of the report, with the methods,
+#' settings and software versions of the analysis filled in: Kaplan-Meier
+#' analysis, hazard ratios, diagnostics (with a table of the shapes of the
+#' hazard functions of the standard parametric models), standard parametric
+#' models, spline-based models and software.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param s List returned by \code{.report_settings()}.
@@ -26,19 +24,18 @@
     b("heading", "Methods", level = 1L),
     b("heading", "Kaplan-Meier analysis", level = 2L),
     b("paragraph", paste0(
-      "The Kaplan-Meier (KM) method is used to estimate the KM ",
-      "probabilities and median time to event. ", level, " confidence ",
-      "intervals (CI) of the survival probabilities are computed with the ",
-      "log transformation and the Greenwood variance (the default of the ",
-      "survival R package), and the CI of the median is obtained from the ",
-      "pointwise CI of the KM curve (Brookmeyer and Crowley, 1982)."
+      "Survival probabilities and the median time to event are estimated ",
+      "with the Kaplan-Meier (KM) method. ", level, " confidence intervals ",
+      "(CI) of the survival probabilities use the log transformation and ",
+      "the Greenwood variance (the default of the survival R package); the ",
+      "CI of the median is obtained from the pointwise CI of the KM curve ",
+      "(Brookmeyer and Crowley, 1982)."
     )),
     b("paragraph", paste0(
-      "Summary data from the KM analysis are presented at ",
-      format(s$interval), "-", unit_one, " intervals, including the number ",
-      "of events and the number of censored observations in each ",
-      "interval, the number at risk, the survival probability, its ",
-      "standard error (SE) and its ", level, " CI."
+      "The KM estimates are tabulated every ", format(s$interval), " ",
+      s$unit, ": the number at risk, the numbers of events and of censored ",
+      "observations since the previous time, and the survival probability ",
+      "with its standard error (SE) and ", level, " CI."
     ))
   )
 
@@ -58,27 +55,28 @@
     blocks <- c(blocks, list(
       b("heading", "Hazard Ratios", level = 2L),
       b("paragraph", paste0(
-        "The hazard ratio (HR) of each treatment arm versus the control ",
-        "arm (", x$arms[1L], ") is estimated using a Cox proportional ",
-        "hazards model, with its ", level, " Wald CI and the p-value of ",
-        "the Wald test. The following models are reported: ",
+        "Hazard ratios (HR) of each treatment arm versus the control arm (",
+        x$arms[1L], ") come from Cox proportional hazards models, with ",
+        level, " Wald CI and Wald test p-values. Models: ",
         paste(described, collapse = "; "), "."
       ))
     ))
   }
 
-  characteristics <- data.frame(
-    "Distribution" = c("Exponential", "Weibull/Gompertz", "Gamma",
-                       "Log-logistic/lognormal", "Generalised gamma"),
-    "Characteristic of hazard function" = c(
-      "Constant over time",
-      paste("Can decrease or increase monotonically, but cannot change",
-            "direction"),
-      paste("Generalisation of exponential distribution. Monotonic, tends",
-            "to constant hazard asymptotically"),
-      "Can be non-monotonic",
-      paste("Can simplify to Weibull, exponential, and lognormal",
-            "distributions. Can be non-monotonic")
+  shapes <- data.frame(
+    "Distribution" = c("Exponential", "Weibull", "Gompertz", "Gamma",
+                       "Log-logistic", "Lognormal", "Generalized gamma"),
+    "Shape of the hazard function" = c(
+      "Constant",
+      "Constant, or increasing or decreasing over the whole time",
+      "Constant, or increasing or decreasing exponentially",
+      paste("Constant, or increasing or decreasing towards a constant",
+            "value"),
+      "Decreasing, or first increasing and then decreasing",
+      "First increasing and then decreasing",
+      paste("Increasing, decreasing, first increasing and then decreasing,",
+            "or the reverse; includes the Weibull, exponential, lognormal",
+            "and gamma distributions")
     ),
     check.names = FALSE, stringsAsFactors = FALSE
   )
@@ -93,36 +91,35 @@
       "model, with ", level, " pointwise CI."
     )),
     b("paragraph", paste(
-      "The hazard plots can provide insights on the appropriate survival",
-      "model, depending on their profile over time as per the table below."
+      "The shape of the empirical hazard over time helps to choose among",
+      "the standard parametric models, whose hazard functions can take the",
+      "shapes listed below."
     )),
-    b("table", paste("Characteristics of the hazard functions of the",
-                     "standard parametric models"),
-      table = characteristics),
+    b("table", paste("Shapes of the hazard functions of the standard",
+                     "parametric models"), table = shapes),
     b("heading", "Distributional assumptions", level = 3L),
     b("paragraph", paste(
-      "The appropriateness of standard parametric models can be assessed",
-      "with parametric distribution diagnostic plots, in which a",
-      "transformation of the KM estimate S(t) is close to a straight line",
-      "when the data follow the distribution: log(-log(S(t))) against log",
-      "time for the Weibull distribution (with slope 1 for the exponential",
-      "distribution), log((1 - S(t)) / S(t)) against log time for the",
-      "log-logistic distribution, the standard normal quantile of",
-      "1 - S(t) against log time for the lognormal distribution, and the",
-      "logarithm of the smoothed empirical hazard against time for the",
-      "Gompertz distribution."
+      "Diagnostic plots show whether a distribution is compatible with the",
+      "data: a transformation of the KM estimate S(t) is close to a",
+      "straight line when the data follow the distribution. The plots are",
+      "log(-log(S(t))) against log time for the Weibull distribution (with",
+      "slope 1 for the exponential distribution), log((1 - S(t)) / S(t))",
+      "against log time for the log-logistic distribution, the standard",
+      "normal quantile of 1 - S(t) against log time for the lognormal",
+      "distribution, and the logarithm of the smoothed empirical hazard",
+      "against time for the Gompertz distribution."
     ))
   ))
   if (two_arms) {
     blocks <- c(blocks, list(
       b("heading", "Proportional hazards assessment", level = 3L),
       b("paragraph", paste(
-        "The proportional hazards assumption is examined using the plot of",
-        "the scaled Schoenfeld residuals, the Grambsch-Therneau test (with",
-        "time transformed by the KM estimate), the plot of log(cumulative",
-        "hazard) versus log(time), the plot of the smoothed empirical",
-        "hazard versus time, and the quantile-quantile (QQ) plot of the",
-        "times of survival percentiles."
+        "Proportional hazards are assessed with the scaled Schoenfeld",
+        "residuals of the treatment effect and the Grambsch-Therneau test",
+        "(with time transformed by the KM estimate), the plot of",
+        "log(cumulative hazard) against log(time), the smoothed empirical",
+        "hazards of the arms over time, and the quantile-quantile (QQ) plot",
+        "of the survival times."
       ))
     ))
   }
@@ -134,10 +131,10 @@
     blocks <- c(blocks, list(
       b("heading", "Standard parametric models", level = 2L),
       b("paragraph", paste0(
-        "Time to event analysis is conducted using the standard parametric ",
-        "models, as described in NICE TSD 14: ", .and_list(parametric),
-        ". The models are fitted by maximum likelihood with the flexsurv R ",
-        "package to each arm separately",
+        "The parametric models fitted are: ", .and_list(parametric),
+        " (NICE DSU Technical Support Document 14; Latimer, 2011). They are ",
+        "fitted by maximum likelihood with the flexsurv R package to each ",
+        "arm separately",
         if (dependent) {
           paste(" and to both arms together, with the treatment arm as a",
                 "covariate on the location parameter of the distribution")
@@ -177,70 +174,47 @@
     blocks <- c(blocks, list(
       b("heading", "Spline-based extrapolation", level = 2L),
       b("paragraph", paste(
-        "Spline-based extrapolation consists of fitting piecewise",
-        "polynomials (and specifically restricted cubic splines) to",
-        "survival data. Introduced by Royston and Parmar (2002),",
-        "spline-based extrapolation allows the shape of the hazard function",
-        "to vary over time without making strong parametric assumptions",
-        "about its form, resulting in a more adaptable model, whilst",
-        "maintaining smoothness."
-      )),
-      b("paragraph", paste(
-        "A cubic spline is a piecewise polynomial function of degree three.",
-        "It is continuous and has continuous first and second derivatives",
-        "at the points where the pieces join, known as knots. The function",
-        "is forced to be smooth by imposing constraints such that the",
-        "gradient and the rate of change of the gradient of the function",
-        "also agree at the knots. The number and placement of these knots",
-        "determines the flexibility of the spline, allowing the model to",
-        "adapt to different patterns in the data."
-      )),
-      b("paragraph", paste(
-        "Restricted cubic splines enforce that the spline is linear beyond",
-        "the boundary knots, avoiding unrealistic fluctuations at the tails",
-        "of the distribution. The boundary knots are placed at the smallest",
-        "and largest log event times. Beyond the last event time, the",
-        "modelled function is therefore linear in log time, so that the",
-        "projection beyond the data follows a Weibull (hazard scale),",
-        "log-logistic (odds scale) or lognormal (normal scale) form."
-      )),
-      b("paragraph", paste(
-        "The number of knots and their placement are critical for fitting",
-        "cubic splines. Royston and Parmar recommended using 3 to 5 knots,",
-        "with their positions typically set at percentiles of the observed",
-        "survival times (e.g., at the 25th, 50th, and 75th percentiles).",
-        "The choice of knot locations balances the trade-off between",
-        "flexibility and overfitting."
-      )),
-      b("paragraph", paste0(
-        "For this analysis, models with ", .and_list(words), " internal ",
-        if (length(n_knots) == 1L && n_knots == 1L) "knot are" else
-          "knots are",
-        " fitted. ", knot_text
+        "Spline-based models (Royston and Parmar, 2002) describe a",
+        "transformation of the survival function as a smooth function of",
+        "log time, so that the shape of the hazard is estimated from the",
+        "data instead of being fixed by a parametric family."
       )),
       b("paragraph", paste0(
         "On the ", .and_list(scale_names[scales]),
         if (length(scales) == 1L) " scale, " else " scales, ",
         .and_list(modelled[scales]),
         if (length(scales) == 1L) {
-          " is modelled as a restricted cubic spline function of log time"
+          " is modelled as a restricted cubic spline function of log time."
         } else {
           paste(", respectively, are modelled as restricted cubic spline",
-                "functions of log time")
-        },
-        " (Royston and Parmar, 2002)."
+                "functions of log time.")
+        }
+      )),
+      b("paragraph", paste(
+        "A restricted cubic spline consists of cubic polynomials between",
+        "the knots, joined so that the function and its first and second",
+        "derivatives are continuous at the knots, and is linear beyond the",
+        "boundary knots, which are placed at the smallest and largest log",
+        "event times. More knots give a more flexible function, at the risk",
+        "of overfitting. Because the function is linear in log time after",
+        "the last event time, the extrapolation follows a Weibull (hazard",
+        "scale), log-logistic (odds scale) or lognormal (normal scale) form."
       )),
       b("paragraph", paste0(
-        "After specifying each model, the parameters (the spline ",
-        "coefficients",
+        "Models with ", .and_list(words), " internal ",
+        if (length(n_knots) == 1L && n_knots == 1L) "knot are" else
+          "knots are",
+        " fitted. ", knot_text
+      )),
+      b("paragraph", paste0(
+        "The spline coefficients",
         if (dependent) {
-          paste(" and, for the models of both arms, the effect of the",
-                "treatment arm on the first spline coefficient, gamma0")
+          paste(" (and, for the models of both arms, the effect of the",
+                "treatment arm on the first coefficient, gamma0)")
         },
-        ") are estimated by maximum likelihood with the flexsurv R ",
-        "package. The fits are assessed with the AIC and the BIC, by ",
-        "comparing the predicted survival curves with the Kaplan-Meier ",
-        "curves, and by comparing the predicted hazards with the smoothed ",
+        " are estimated by maximum likelihood with the flexsurv R package. ",
+        "The models are compared with the AIC and the BIC, and their ",
+        "survival and hazard curves with the KM curves and the smoothed ",
         "empirical hazards."
       ))
     ))

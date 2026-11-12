@@ -1,15 +1,15 @@
 #' Write the Survival Analysis Report to a Word Document
 #'
 #' @description
-#' Writes a Word report with the structure of the survival analysis report
-#' template of the health economics team (NICE TSD 14 models and
-#' spline-based extrapolation), with print-ready names of the models:
+#' Writes a Word report on the extrapolation of survival data for health
+#' technology assessment (the standard parametric models of NICE DSU TSD 14
+#' and spline-based models), with print-ready names of the models:
 #' \enumerate{
 #'   \item Overview: data, outcome, arms, time unit, reporting interval and
 #'     the variables of the hazard ratios. Items not given are left as
 #'     placeholders in square brackets.
 #'   \item Methods: Kaplan-Meier analysis, hazard ratios, diagnostics
-#'     (with the table of the characteristics of the hazard functions),
+#'     (with a table of the shapes of the hazard functions),
 #'     standard parametric models, spline-based extrapolation and software
 #'     versions.
 #'   \item Results: data summary, Kaplan-Meier curves (all arms and each
@@ -38,7 +38,7 @@
 #'   tables. The default \code{NULL} uses the spacing of the time axis of
 #'   the plots of the data (for example 12 months).
 #' @param landmarks Times of the predicted survival of the spline models.
-#'   The default \code{NULL} uses those of the report template: 6 months and
+#'   The default \code{NULL} uses 6 months and
 #'   1, 2, 5 and 10 years, in the time unit of the data.
 #' @param time_horizon Time to which the models are extrapolated in the
 #'   plots. The default \code{NULL} uses the last landmark time.
@@ -54,8 +54,8 @@
 #' @param template \code{NULL} or the path of a \code{.docx} file whose
 #'   page set-up and styles are used (for example an empty document with
 #'   the styles of the organisation). The default \code{NULL} uses the
-#'   template of the package, which follows the styles of the report
-#'   template: A4 page, Arial 10 pt, numbered headings in dark red, bold
+#'   template of the package: A4 page, Arial 10 pt, numbered headings in
+#'   dark red, bold
 #'   captions, and tables with a dark red header row (made by
 #'   \code{inst/templates/make_report_template.py}). The styles
 #'   \code{"Title"}, \code{"Subtitle"}, \code{"heading 1"} to

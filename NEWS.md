@@ -85,23 +85,23 @@ of version 1.0.0 are replaced step by step.
   transformed scales with the rows of their covariance matrix, covariance
   matrices and Cholesky factors, survival summary, predicted survival and
   knots), with print-ready model names.
-* New `write_survival_report()`: Word report with the structure of the
-  survival analysis report template (overview, methods, data overview,
+* New `write_survival_report()`: Word report on the extrapolation of
+  survival data for health technology assessment (overview, methods, data
+  overview,
   diagnostics, standard parametric models and spline-based extrapolation
   for each arm and for both arms), with figures without and with confidence
   intervals, smoothed hazard plots without fitted models, and print-ready
   model names. The styles come from a template in the package
-  (`inst/templates/report_template.docx`: A4, Arial, numbered headings and
-  tables in the style of the report template), or from a document given in
-  `template`. Replaces the Word export of the Shiny application of version
+  (`inst/templates/report_template.docx`: A4, Arial, numbered headings),
+  or from a document given in `template`. Replaces the Word export of the Shiny application of version
   1.0.0.
 * New example dataset `inst/extdata/fit_example.csv` (two arms of 300
   patients) and independent reference values for the tests
   (`inst/validation/python/expected_fits.py`, numpy and scipy).
 * The license is GPL (>= 2) instead of MIT.
 * broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
-  longer used; flexsurv (>= 2.3), ggplot2 (>= 3.4.0), officer, openxlsx,
-  patchwork and splines are imported; haven and readxl are suggested
+  longer used; flexsurv (>= 2.3), ggplot2 (>= 3.4.0), officer, patchwork,
+  splines and writexl are imported; haven, readxl and xml2 are suggested
   packages.
 
 # SurvFitSummary 1.0.0

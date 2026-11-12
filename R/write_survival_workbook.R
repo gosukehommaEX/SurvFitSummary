@@ -1,10 +1,11 @@
 #' Write the Results to an Excel Workbook
 #'
 #' @description
-#' Writes the tables of the analysis to an Excel workbook, one table per
-#' sheet, with unrounded numbers and the print-ready names of the models
-#' (for example \code{"Log-logistic"} or \code{"Hazards, 2 knots"}). The
-#' sheets are:
+#' Writes the tables of the analysis to an Excel workbook (with the writexl
+#' package), one table per sheet with bold column names, with unrounded
+#' numbers (empty cells for missing values) and the print-ready names of
+#' the models (for example \code{"Log-logistic"} or
+#' \code{"Hazards, 2 knots"}). The sheets are:
 #' \describe{
 #'   \item{Settings}{Time unit, confidence level, reporting times and the
 #'     versions of R and of the packages.}
@@ -39,7 +40,7 @@
 #'   and of the predictions. The default \code{NULL} uses the spacing of the
 #'   time axis of the plots of the data (for example 12 months).
 #' @param landmarks Times at which the survival is predicted. The default
-#'   \code{NULL} uses those of the report template: 6 months and 1, 2, 5 and
+#'   \code{NULL} uses 6 months and 1, 2, 5 and
 #'   10 years, in the time unit of the data.
 #' @param time_horizon Time horizon of the predictions and of the
 #'   restricted mean. The default \code{NULL} uses the last landmark time.
@@ -135,16 +136,11 @@ write_survival_workbook <- function(x,
   keep <- vapply(sheets, function(d) !is.null(d) && nrow(d) > 0L,
                  logical(1))
   keep[["Model status"]] <- TRUE
-  sheets <- sheets[keep]
-  wb <- openxlsx::createWorkbook()
-  header <- openxlsx::createStyle(textDecoration = "bold")
-  for (name in names(sheets)) {
-    openxlsx::addWorksheet(wb, name)
-    openxlsx::writeData(wb, name, sheets[[name]], headerStyle = header)
-    openxlsx::freezePane(wb, name, firstRow = TRUE)
-    openxlsx::setColWidths(wb, name, cols = seq_along(sheets[[name]]),
-                           widths = "auto")
-  }
-  openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
+  sheets <- lapply(sheets[keep], function(d) {
+    d[] <- lapply(d, function(v) if (is.factor(v)) as.character(v) else v)
+    d
+  })
+  writexl::write_xlsx(sheets, path = file, col_names = TRUE,
+                      format_headers = TRUE)
   invisible(file)
 }

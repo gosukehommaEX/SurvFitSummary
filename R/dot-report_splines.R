@@ -1,7 +1,7 @@
 #' Spline Models in the Word Report
 #'
 #' @description
-#' Internal helper: the section of the report template on spline-based
+#' Internal helper: the section of the report on spline-based
 #' extrapolation. For each arm fitted separately and for both arms fitted
 #' together: the placement of the knots, the AIC, BIC, median, mean and
 #' predicted survival at the landmark times of each model (one table per

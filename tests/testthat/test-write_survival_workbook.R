@@ -19,7 +19,7 @@ test_that("each table of the package is written to its sheet", {
   x <- get_fits("report")
   path <- workbook_file()
   expect_identical(
-    openxlsx::getSheetNames(path),
+    readxl::excel_sheets(path),
     c("Settings", "Data summary", "KM table", "Hazard ratios", "PH test",
       "Model status", "Fit statistics", "Parameters",
       "Parameters (transformed)", "Covariance", "Cholesky",
@@ -109,7 +109,7 @@ test_that("settings given by the user, one arm and confidence intervals", {
   write_survival_workbook(x, path, interval = 6, landmarks = c(48, 36),
                           time_horizon = 60, n_sim = 20)
   expect_false(any(c("Hazard ratios", "PH test", "Spline knots") %in%
-                     openxlsx::getSheetNames(path)))
+                     readxl::excel_sheets(path)))
   expect_same_sheet(read_sheet(path, "KM table"),
                     km_table(x$data, interval = 6))
   pred <- read_sheet(path, "Landmark survival")
