@@ -12,8 +12,9 @@
 #'   \code{"years"}.
 #' @param break_by \code{NULL} or the spacing of the breaks.
 #'
-#' @return A list with \code{breaks} (from 0 up to \code{max_time}) and
-#'   \code{label} (for example \code{"Time (Months)"}).
+#' @return A list with \code{breaks} (from 0 up to \code{max_time}),
+#'   \code{by} (their spacing) and \code{label} (for example
+#'   \code{"Time (Months)"}).
 #'
 #' @keywords internal
 #' @noRd
@@ -39,6 +40,7 @@
   }
   list(
     breaks = seq(0, max_time * (1 + 1e-10), by = break_by),
+    by = break_by,
     label = paste0("Time (", toupper(substr(time_unit, 1L, 1L)),
                    substring(time_unit, 2L), ")")
   )

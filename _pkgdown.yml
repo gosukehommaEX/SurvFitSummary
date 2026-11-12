@@ -32,3 +32,7 @@ reference:
       - plot_distribution_diagnostics
       - plot_schoenfeld
       - plot_qq_survival
+  - title: Excel and Word outputs
+    contents:
+      - write_survival_workbook
+      - write_survival_report

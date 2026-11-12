@@ -15,7 +15,8 @@ Description: Fits standard parametric survival models (exponential, Weibull,
     models, the Grambsch-Therneau test and smoothed empirical hazards, and
     reports parameter estimates on the natural and transformed scales,
     covariance matrices, Cholesky factors, goodness-of-fit statistics and
-    extrapolated survival for health technology assessment.
+    extrapolated survival for health technology assessment, with an Excel
+    workbook and a Word report.
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -25,6 +26,8 @@ Imports:
     bshazard,
     flexsurv (>= 2.3),
     ggplot2 (>= 3.4.0),
+    officer,
+    openxlsx,
     patchwork,
     splines,
     stats,
@@ -36,7 +39,8 @@ Suggests:
     knitr,
     readxl,
     rmarkdown,
-    testthat (>= 3.1.5)
+    testthat (>= 3.1.5),
+    xml2
 URL: https://github.com/gosukehommaEX/SurvFitSummary
 BugReports: https://github.com/gosukehommaEX/SurvFitSummary/issues
 Config/testthat/edition: 3

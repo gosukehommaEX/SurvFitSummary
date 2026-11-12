@@ -12,11 +12,13 @@ estimates, Cox proportional hazards models and smoothed empirical hazards,
 assesses the proportional hazards assumption, and fits standard parametric
 and Royston-Parmar spline models to each arm and to both arms with the arm
 as a covariate, with tables of parameters, covariance matrices, Cholesky
-factors, goodness of fit and predicted survival.
+factors, goodness of fit and predicted survival. The results are written
+to an Excel workbook and to a Word report with the structure of the
+survival analysis report template (NICE DSU TSD 14 models and spline-based
+extrapolation).
 
-Version 2.0.0 is under development. The Excel and Word outputs will be
-added in the next step; the functions of version 1.0.0 were replaced (see
-`NEWS.md`).
+Version 2.0.0 is under development; the functions of version 1.0.0 were
+replaced (see `NEWS.md`).
 
 ## Installation
 
@@ -50,6 +52,8 @@ devtools::install_github("gosukehommaEX/SurvFitSummary")
 | `plot_distribution_diagnostics()` | Transformations of the Kaplan-Meier estimate and of the hazard that are linear for the Weibull, log-logistic, lognormal and Gompertz distributions |
 | `plot_schoenfeld()` | Scaled Schoenfeld residuals with the log hazard ratio and a regression on time |
 | `plot_qq_survival()` | Quantile-quantile plot of the survival times of two arms |
+| `write_survival_workbook()` | Excel workbook with the tables of the analysis, including the parameters with their covariance matrices |
+| `write_survival_report()` | Word report following the survival analysis report template, with figures with and without confidence intervals |
 
 ## Examples
 
@@ -86,6 +90,10 @@ plot_hazard_fits(fits, models = "Log-logistic")
 plot_distribution_diagnostics(fit_data)
 plot_schoenfeld(fit_data)
 plot_qq_survival(fit_data)
+
+write_survival_workbook(fits, "survival_results.xlsx")
+write_survival_report(fits, "survival_report.docx",
+                      outcome = "Overall survival")
 ```
 
 ## References

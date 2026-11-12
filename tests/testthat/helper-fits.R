@@ -37,7 +37,9 @@ fit_sets <- list(
   genf_orig = list(distributions = "genf.orig", spline_scales = NULL),
   hazard = list(distributions = NULL, spline_scales = "hazard"),
   odds = list(distributions = NULL, spline_scales = "odds"),
-  normal = list(distributions = NULL, spline_scales = "normal")
+  normal = list(distributions = NULL, spline_scales = "normal"),
+  report = list(distributions = c("exp", "weibull"),
+                spline_scales = "hazard", spline_knots = 1L)
 )
 fit_cache <- new.env(parent = emptyenv())
 get_fits <- function(set) {

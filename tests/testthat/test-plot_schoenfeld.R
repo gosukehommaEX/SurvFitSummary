@@ -47,6 +47,8 @@ test_that("panel title with the test and breaks of the time axis", {
   expect_length(layer_index(p, "GeomText"), 0)
   breaks <- ggplot2::layer_scales(p)$x$get_breaks()
   expect_equal(breaks[!is.na(breaks)], seq(0, 60, by = 12))
+  # Legends of the points and of the lines one above the other
+  expect_identical(p$theme$legend.box, "vertical")
 })
 
 test_that("one panel per comparison with the control arm", {

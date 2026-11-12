@@ -159,6 +159,9 @@ plot_schoenfeld <- function(data,
     ggplot2::labs(x = axis$label,
                   y = "Scaled Schoenfeld residual, beta(t)") +
     .plot_theme(legend_position = "bottom") +
+    # The legend of the points above that of the lines, so that the legend
+    # is not wider than the plot
+    ggplot2::theme(legend.box = "vertical") +
     ggplot2::guides(shape = ggplot2::guide_legend(order = 1),
                     colour = ggplot2::guide_legend(order = 2),
                     linetype = ggplot2::guide_legend(order = 2))
