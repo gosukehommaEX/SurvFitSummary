@@ -53,13 +53,39 @@ of version 1.0.0 are replaced step by step.
 * New `survival_summary()`: median, mean and restricted mean survival.
 * New `spline_knot_table()`: placement of the knots with the number at risk
   and the Kaplan-Meier estimate at each knot.
+* New plots, replacing `plot_km_and_parametric()`,
+  `plot_km_and_parametric_multiple()`, `plot_hazard_and_parametric()`,
+  `plot_hazard_and_parametric_multiple()`, `plot_test_ph_assumption()`,
+  `plot_schoenfeld()` and `plot_qq_survival()` of version 1.0.0. They draw
+  from the fitted object, so plots with and without confidence bands do not
+  refit the models, use print-ready model names with the AIC in the legend,
+  and start the axes at (0, 0).
+  * `plot_km()`: Kaplan-Meier curves with numbers at risk; each curve ends
+    at the largest observed time of its arm (in version 1.0.0 the curves
+    were extended to the longest arm).
+  * `plot_empirical_hazard()`: smoothed empirical hazard without fitted
+    models.
+  * `plot_survival_fits()` and `plot_hazard_fits()`: Kaplan-Meier curve or
+    smoothed empirical hazard with the fitted parametric and spline models,
+    extrapolated to a time horizon, for one arm with several models or one
+    model with several arms (independent or dependent fits).
+  * `plot_distribution_diagnostics()`: log(-log S(t)), log-odds and probit
+    of the Kaplan-Meier estimate against log time, and the log of the
+    smoothed hazard against time (in version 1.0.0 the Gompertz plot used
+    log(-log S(t)) against time, which is not linear for the Gompertz).
+  * `plot_schoenfeld()`: the reference line is the estimated log hazard
+    ratio, around which the scaled residuals are centred (it was 0 in
+    version 1.0.0), and the regression on time is a natural spline with its
+    confidence interval as in `survival::plot.cox.zph()`.
+  * `plot_qq_survival()`: the axes are set from the data (they were fixed
+    at 0 to 100 in version 1.0.0).
 * New example dataset `inst/extdata/fit_example.csv` (two arms of 300
   patients) and independent reference values for the tests
   (`inst/validation/python/expected_fits.py`, numpy and scipy).
 * The license is GPL (>= 2) instead of MIT.
 * broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
-  longer used; flexsurv (>= 2.3) is imported; haven and readxl are
-  suggested packages.
+  longer used; flexsurv (>= 2.3), ggplot2 (>= 3.4.0), patchwork and
+  splines are imported; haven and readxl are suggested packages.
 
 # SurvFitSummary 1.0.0
 

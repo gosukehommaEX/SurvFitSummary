@@ -24,6 +24,9 @@ Depends:
 Imports:
     bshazard,
     flexsurv (>= 2.3),
+    ggplot2 (>= 3.4.0),
+    patchwork,
+    splines,
     stats,
     survival,
     utils,

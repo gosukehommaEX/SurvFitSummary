@@ -19,6 +19,11 @@ Standard parametric and Royston-Parmar spline models are fitted with
 \code{\link{parameter_table}}, \code{\link{covariance_table}},
 \code{\link{gof_table}}, \code{\link{predict_survival}},
 \code{\link{survival_summary}} and \code{\link{spline_knot_table}}.
+
+The plots are \code{\link{plot_km}}, \code{\link{plot_empirical_hazard}},
+\code{\link{plot_survival_fits}}, \code{\link{plot_hazard_fits}},
+\code{\link{plot_distribution_diagnostics}},
+\code{\link{plot_schoenfeld}} and \code{\link{plot_qq_survival}}.
 }
 \seealso{
 Useful links:

@@ -1,7 +1,8 @@
 """Independent reference values for the model fitting tests of SurvFitSummary
 (tests/testthat/test-fit_survival_models.R, test-parameter_table.R,
 test-covariance_table.R, test-gof_table.R, test-predict_survival.R,
-test-survival_summary.R and test-spline_knot_table.R).
+test-survival_summary.R, test-spline_knot_table.R and
+test-plot_qq_survival.R).
 
 The computations use numpy and scipy only (no survival analysis library). The
 twelve parametric distributions are written in the parameterisation of the R
@@ -19,11 +20,12 @@ covariance matrix on the transformed scale and the delta method gives the
 covariance matrix on the natural scale. Medians are found by root finding,
 means and restricted means by numerical integration (means also from closed
 forms where they exist), Kaplan-Meier estimates with Greenwood standard
-errors.
+errors, and Kaplan-Meier quantiles with the midpoint rule of
+survival::quantile.survfit.
 
 Input: ../../extdata/fit_example.csv (written by make_fit_example.py).
 Output: expected/parameters.csv, covariance.csv, gof.csv, predictions.csv,
-summary.csv and knots.csv, read by the tests.
+summary.csv, knots.csv and qq.csv, read by the tests.
 
 Run: python3 -I expected_fits.py   (about two minutes; prints the check of
 the numerical Hessian)
@@ -600,6 +602,7 @@ LABELS = {"exp": "Exponential", "weibull": "Weibull", "weibullPH": "Weibull (PH)
 SCALE_LABELS = {"hazard": "Hazards", "odds": "Odds", "normal": "Normal"}
 TIMES = [0.0, 6.0, 12.0, 24.0, 36.0, 60.0, 120.0]
 HORIZON = 60.0
+QQ_PROBS = [round(0.05 * k, 2) for k in range(1, 20)]
 ARM_LEVELS = ["Control", "Treatment"]
 
 
@@ -622,6 +625,22 @@ def read_data(path=DATA):
     time = np.array([float(r["AVAL"]) for r in rows])
     event = 1 - np.array([int(r["CNSR"]) for r in rows])
     return arm, time, event
+
+
+def km_quantile(time, event, p, tol=np.sqrt(np.finfo(float).eps)):
+    """Kaplan-Meier quantile as in survival::quantile.survfit: the first
+    time at which the curve is at or below 1 - p; when the curve equals 1 - p
+    over an interval, the midpoint of that interval (up to the next drop)."""
+    rows = km(time, event)
+    target = 1 - p
+    for k, (u, s, v) in enumerate(rows):
+        if s <= target + tol:
+            if abs(s - target) < tol:
+                later = [uu for (uu, ss, vv) in rows[k + 1:] if ss < target - tol]
+                assert later, "flat at 1 - p up to the last event"
+                return (u + later[0]) / 2, True
+            return u, False
+    return None, False
 
 
 def closed_form_mean(dist, nat):
@@ -758,6 +777,13 @@ def main():
                               "mean_check"], sum_rows)
     write_csv("knots.csv", ["fit_type", "arm", "n_knots", "knot", "quantile", "log_time", "time",
                             "n_risk", "surv_est", "surv_se"], knot_rows)
+    qq_rows = []
+    for a in ARM_LEVELS:
+        m = arm == a
+        for p in QQ_PROBS:
+            q, midpoint = km_quantile(time[m], event[m], p)
+            qq_rows.append([a, p, q, int(midpoint)])
+    write_csv("qq.csv", ["arm", "prob", "quantile", "midpoint"], qq_rows)
     worst = max(hessian_check)
     print(f"Covariance matrices of {len(hessian_check)} models: largest difference from the "
           f"half or double step {worst[0]:.1e} of sqrt(V_ii V_jj) ({', '.join(worst[1:])})")

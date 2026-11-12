@@ -14,9 +14,9 @@ and Royston-Parmar spline models to each arm and to both arms with the arm
 as a covariate, with tables of parameters, covariance matrices, Cholesky
 factors, goodness of fit and predicted survival.
 
-Version 2.0.0 is under development. The plots and the Excel and Word
-outputs will be added in the next steps; the functions of version 1.0.0
-were replaced (see `NEWS.md`).
+Version 2.0.0 is under development. The Excel and Word outputs will be
+added in the next step; the functions of version 1.0.0 were replaced (see
+`NEWS.md`).
 
 ## Installation
 
@@ -43,6 +43,13 @@ devtools::install_github("gosukehommaEX/SurvFitSummary")
 | `predict_survival()` | Survival, hazard or cumulative hazard at given times, with the Kaplan-Meier estimate |
 | `survival_summary()` | Median, mean and restricted mean survival |
 | `spline_knot_table()` | Placement of the knots of the spline models |
+| `plot_km()` | Kaplan-Meier curves with numbers at risk, each ending at the last observed time of its arm |
+| `plot_empirical_hazard()` | Smoothed empirical hazard without fitted models |
+| `plot_survival_fits()` | Kaplan-Meier curve with fitted survival curves extrapolated to a time horizon |
+| `plot_hazard_fits()` | Smoothed empirical hazard with fitted hazards |
+| `plot_distribution_diagnostics()` | Transformations of the Kaplan-Meier estimate and of the hazard that are linear for the Weibull, log-logistic, lognormal and Gompertz distributions |
+| `plot_schoenfeld()` | Scaled Schoenfeld residuals with the log hazard ratio and a regression on time |
+| `plot_qq_survival()` | Quantile-quantile plot of the survival times of two arms |
 
 ## Examples
 
@@ -72,6 +79,13 @@ covariance_table(fits, type = "cholesky", scale = "transformed")
 predict_survival(fits, times = seq(0, 60, by = 6))
 survival_summary(fits, time_horizon = 60)
 spline_knot_table(fits)
+
+plot_km(fit_data, conf_int = TRUE)
+plot_survival_fits(fits, arms = "Control", time_horizon = 120)
+plot_hazard_fits(fits, models = "Log-logistic")
+plot_distribution_diagnostics(fit_data)
+plot_schoenfeld(fit_data)
+plot_qq_survival(fit_data)
 ```
 
 ## References
