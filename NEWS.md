@@ -1,3 +1,33 @@
+# SurvFitSummary 2.0.0
+
+Version 2.0.0 redesigns the package (development in progress). The functions
+of version 1.0.0 are replaced step by step.
+
+* `processing_dataset()` keeps covariate and stratification columns
+  (`column_covariates`, `column_strata`), returns `ARM` as a factor with the
+  control arm (`control_arm`) as the first level, checks that the times are
+  positive and that the indicator contains only 0 and 1, removes rows with
+  missing values with a warning, and also reads SAS transport (`.xpt`)
+  files. CSV files are read with `utils::read.csv()`.
+* `generate_dummy_survival_data()` restores the random number generator
+  state of the session (the simulated values are unchanged).
+* New `summarise_data()`: numbers of patients, events and censored
+  observations, and the median with its confidence interval, by arm.
+* New `km_table()`: Kaplan-Meier estimates with standard errors and
+  confidence intervals, and the numbers at risk, events and censored
+  observations at regular times.
+* New `estimate_hazard_ratio()`: hazard ratios from unadjusted, adjusted,
+  unstratified and stratified Cox models, with the control arm as the
+  reference (in version 1.0.0 the reference arm of the Cox model did not
+  follow `control_arm`).
+* New `test_proportional_hazards()`: Grambsch-Therneau test of
+  proportional hazards.
+* New `estimate_empirical_hazard()`: smoothed empirical hazard by arm with
+  `bshazard::bshazard()`.
+* The license is GPL (>= 2) instead of MIT.
+* broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
+  longer used; haven and readxl are suggested packages.
+
 # SurvFitSummary 1.0.0
 
 ## Initial Release (2025-11-30)

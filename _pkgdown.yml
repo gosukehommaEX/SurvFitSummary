@@ -1,0 +1,15 @@
+url: https://gosukehommaEX.github.io/SurvFitSummary/
+template:
+  bootstrap: 5
+reference:
+  - title: Data
+    contents:
+      - processing_dataset
+      - generate_dummy_survival_data
+  - title: Kaplan-Meier, Cox and empirical hazard
+    contents:
+      - summarise_data
+      - km_table
+      - estimate_hazard_ratio
+      - test_proportional_hazards
+      - estimate_empirical_hazard

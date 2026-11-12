@@ -4,3 +4,11 @@
 ^README\.Rmd$
 ^\.github$
 ^data-raw$
+^\.gitignore$
+^README\.md$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^doc$
+^Meta$

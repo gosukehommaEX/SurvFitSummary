@@ -7,69 +7,34 @@
 generate_dummy_survival_data(arm, n, hazards, dropout_per_year, seed)
 }
 \arguments{
-\item{arm}{Character vector specifying treatment arm names.
-Example: c("Treatment A", "Treatment B", "Control")}
+\item{arm}{Character vector with the names of the treatment arms.}
 
-\item{n}{Integer vector specifying number of subjects per arm.
-Length must match length of \code{arm}. Example: c(50, 100, 150)}
+\item{n}{Integer vector with the number of subjects in each arm.}
 
-\item{hazards}{Numeric vector specifying hazard rates for each ARM.
-Length must match length of \code{arm}. Higher hazard = shorter survival.
-Example: log(2) / c(18, 15, 10) for median survival times of 18, 15, 10 months}
+\item{hazards}{Numeric vector with the hazard rate of the event in each
+arm, per month.}
 
-\item{dropout_per_year}{Numeric value between 0 and 1 specifying annual dropout rate.
-Example: 0.1 means 10 percent dropout per year}
+\item{dropout_per_year}{Proportion of subjects who drop out within one
+year, a single number in [0, 1). The dropout hazard per month is
+\code{-log(1 - dropout_per_year) / 12}.}
 
-\item{seed}{Integer specifying random seed for reproducibility.
-Use the same seed to generate identical datasets across runs}
+\item{seed}{Single integer, the random seed.}
 }
 \value{
-A data frame (tibble) containing the following columns:
-\describe{
-\item{SUBJID}{Subject identifier (character)}
-\item{ARM}{Treatment arm (factor)}
-\item{SURVTIME}{Observed survival time in months (numeric)}
-\item{CNSR}{Censoring indicator: 1 = censored, 0 = event (numeric)}
-}
+A data frame with the columns \code{SUBJID}, \code{ARM},
+\code{SURVTIME} (minimum of the event and dropout times, in months) and
+\code{CNSR} (1 = censored by dropout, 0 = event).
 }
 \description{
-This function generates simulated time-to-event data with treatment arms.
-It is useful for testing survival analysis workflows and parametric survival
-modeling functions.
-}
-\details{
-The function generates survival times from exponential distributions with
-specified hazard rates for each treatment arm. Dropout times are also
-generated exponentially based on the annual dropout rate. The observed
-survival time is the minimum of event time and dropout time.
+Simulates exponential event times for each treatment arm and exponential
+dropout times, and returns the observed time and the censoring indicator.
+The random number generator state of the session is restored afterwards.
 }
 \examples{
-\dontrun{
-# Example 1: Two-arm trial
-data1 <- generate_dummy_survival_data(
-  arm = c("Treatment", "Control"),
-  n = c(100, 100),
-  hazards = log(2) / c(20, 15),  # Median survival: 20 vs 15 months
-  dropout_per_year = 0.1,
-  seed = 123
+dat <- generate_dummy_survival_data(
+  arm = c("Control", "Treatment"), n = c(100, 100),
+  hazards = log(2) / c(12, 18), dropout_per_year = 0.1, seed = 123
 )
+head(dat)
 
-# Example 2: Three-arm trial
-data2 <- generate_dummy_survival_data(
-  arm = c("Trt_A", "Trt_B", "Control"),
-  n = c(50, 100, 150),
-  hazards = log(2) / c(18, 15, 10),
-  dropout_per_year = 0.1,
-  seed = 456
-)
-
-# Example 3: Single arm study
-data3 <- generate_dummy_survival_data(
-  arm = c("Active"),
-  n = c(75),
-  hazards = log(2) / 24,
-  dropout_per_year = 0.15,
-  seed = 789
-)
-}
 }
