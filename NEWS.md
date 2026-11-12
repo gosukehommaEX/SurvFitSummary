@@ -24,9 +24,42 @@ of version 1.0.0 are replaced step by step.
   proportional hazards.
 * New `estimate_empirical_hazard()`: smoothed empirical hazard by arm with
   `bshazard::bshazard()`.
+* New `fit_survival_models()` replaces `fitting_surv_mod()` and
+  `fitting_surv_mod_multiple()`: fits all the parametric and Royston-Parmar
+  spline models once, for each arm and for both arms with the arm as a
+  covariate, and returns an object of class `survfitsummary` used by all the
+  tables. Twelve distributions are available (exponential, Weibull in the
+  accelerated failure time and proportional hazards forms, Rayleigh,
+  lognormal, log-logistic, Gompertz, gamma, generalized gamma and
+  generalized F, each also in its original parameterisation); the default
+  is the seven standard models of NICE DSU TSD 14. Spline models on the
+  hazard, odds and normal scales with 1 to 3 knots at quantiles of the log
+  event times or at times given by the user. A model that fails or warns is
+  recorded with its message and the other models are still fitted; the
+  optimiser uses a smaller tolerance (`reltol = 1e-10`). Print-ready model
+  names (for example "Log-logistic", "Generalized Gamma", "Hazards, 2
+  knots").
+* New `parameter_table()`: estimates, standard errors and confidence
+  intervals on the natural and transformed scales.
+* New `covariance_table()`: covariance matrices and their lower triangular
+  Cholesky factors on the transformed and natural (delta method) scales (in
+  version 1.0.0 the Cholesky factor was upper triangular).
+* New `gof_table()`: log-likelihood, AIC and BIC sorted by AIC; the fixed
+  shape of the Rayleigh model is not counted.
+* New `predict_survival()`: survival, hazard or cumulative hazard at given
+  times for each arm, with simulated confidence limits (`seed`, without
+  changing the random number generator of the session) and the
+  Kaplan-Meier estimate, `NA` after the largest observed time of the arm.
+* New `survival_summary()`: median, mean and restricted mean survival.
+* New `spline_knot_table()`: placement of the knots with the number at risk
+  and the Kaplan-Meier estimate at each knot.
+* New example dataset `inst/extdata/fit_example.csv` (two arms of 300
+  patients) and independent reference values for the tests
+  (`inst/validation/python/expected_fits.py`, numpy and scipy).
 * The license is GPL (>= 2) instead of MIT.
 * broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
-  longer used; haven and readxl are suggested packages.
+  longer used; flexsurv (>= 2.3) is imported; haven and readxl are
+  suggested packages.
 
 # SurvFitSummary 1.0.0
 

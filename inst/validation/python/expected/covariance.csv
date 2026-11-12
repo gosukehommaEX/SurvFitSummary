@@ -1,0 +1,1655 @@
+fit_type,arm,model,scale,row,col,value
+independent,Control,Exponential,natural,rate,rate,2.4671345659e-05
+independent,Control,Exponential,transformed,rate,rate,0.00369003690027
+independent,Control,Weibull,natural,shape,shape,0.00368842689646
+independent,Control,Weibull,natural,shape,scale,0.0100030127356
+independent,Control,Weibull,natural,scale,shape,0.0100030127356
+independent,Control,Weibull,natural,scale,scale,0.37812339735
+independent,Control,Weibull,transformed,shape,shape,0.00204578912868
+independent,Control,Weibull,transformed,shape,scale,0.000568872913335
+independent,Control,Weibull,transformed,scale,shape,0.000568872913335
+independent,Control,Weibull,transformed,scale,scale,0.00220486870157
+independent,Control,Weibull (PH),natural,shape,shape,0.0036884269004
+independent,Control,Weibull (PH),natural,shape,scale,-0.000332457377977
+independent,Control,Weibull (PH),natural,scale,shape,-0.000332457377977
+independent,Control,Weibull (PH),natural,scale,scale,3.36561259463e-05
+independent,Control,Weibull (PH),transformed,shape,shape,0.00204578913087
+independent,Control,Weibull (PH),transformed,shape,scale,-0.00782976410878
+independent,Control,Weibull (PH),transformed,scale,shape,-0.00782976410878
+independent,Control,Weibull (PH),transformed,scale,scale,0.0336565691661
+independent,Control,Rayleigh,natural,scale,scale,0.208352247619
+independent,Control,Rayleigh,transformed,scale,scale,0.000922509225088
+independent,Control,Lognormal,natural,meanlog,meanlog,0.00295982401419
+independent,Control,Lognormal,natural,meanlog,sdlog,8.99131170927e-05
+independent,Control,Lognormal,natural,sdlog,meanlog,8.99131170927e-05
+independent,Control,Lognormal,natural,sdlog,sdlog,0.00153636961524
+independent,Control,Lognormal,transformed,meanlog,meanlog,0.00295982401419
+independent,Control,Lognormal,transformed,meanlog,sdlog,9.82108058121e-05
+independent,Control,Lognormal,transformed,sdlog,meanlog,9.82108058121e-05
+independent,Control,Lognormal,transformed,sdlog,sdlog,0.0018330239964
+independent,Control,Log-logistic,natural,shape,shape,0.0105885006094
+independent,Control,Log-logistic,natural,shape,scale,0.00146163452782
+independent,Control,Log-logistic,natural,scale,shape,0.00146163452782
+independent,Control,Log-logistic,natural,scale,scale,0.221694416971
+independent,Control,Log-logistic,transformed,shape,shape,0.00257468672657
+independent,Control,Log-logistic,transformed,shape,scale,7.71382485425e-05
+independent,Control,Log-logistic,transformed,scale,shape,7.71382485425e-05
+independent,Control,Log-logistic,transformed,scale,scale,0.00253937469963
+independent,Control,Gompertz,natural,shape,shape,2.94364780712e-05
+independent,Control,Gompertz,natural,shape,rate,-2.22124643518e-05
+independent,Control,Gompertz,natural,rate,shape,-2.22124643518e-05
+independent,Control,Gompertz,natural,rate,rate,3.3519671954e-05
+independent,Control,Gompertz,transformed,shape,shape,2.94364780712e-05
+independent,Control,Gompertz,transformed,shape,rate,-0.000329606794816
+independent,Control,Gompertz,transformed,rate,shape,-0.000329606794816
+independent,Control,Gompertz,transformed,rate,rate,0.0073807175222
+independent,Control,Gamma,natural,shape,shape,0.0170701433418
+independent,Control,Gamma,natural,shape,rate,0.00146300893895
+independent,Control,Gamma,natural,rate,shape,0.00146300893895
+independent,Control,Gamma,natural,rate,rate,0.00016818915351
+independent,Control,Gamma,transformed,shape,shape,0.00598288070215
+independent,Control,Gamma,transformed,shape,rate,0.00615351357801
+independent,Control,Gamma,transformed,rate,shape,0.00615351357801
+independent,Control,Gamma,transformed,rate,rate,0.00848940351446
+independent,Control,Generalized Gamma,natural,mu,mu,0.0048251627896
+independent,Control,Generalized Gamma,natural,mu,sigma,-0.00121628947698
+independent,Control,Generalized Gamma,natural,mu,Q,0.00649608208833
+independent,Control,Generalized Gamma,natural,sigma,mu,-0.00121628947698
+independent,Control,Generalized Gamma,natural,sigma,sigma,0.00154930577883
+independent,Control,Generalized Gamma,natural,sigma,Q,-0.00229378789393
+independent,Control,Generalized Gamma,natural,Q,mu,0.00649608208833
+independent,Control,Generalized Gamma,natural,Q,sigma,-0.00229378789393
+independent,Control,Generalized Gamma,natural,Q,Q,0.016613614552
+independent,Control,Generalized Gamma,transformed,mu,mu,0.0048251627896
+independent,Control,Generalized Gamma,transformed,mu,sigma,-0.00156408136755
+independent,Control,Generalized Gamma,transformed,mu,Q,0.00649608208833
+independent,Control,Generalized Gamma,transformed,sigma,mu,-0.00156408136755
+independent,Control,Generalized Gamma,transformed,sigma,sigma,0.00256201652685
+independent,Control,Generalized Gamma,transformed,sigma,Q,-0.00294968506587
+independent,Control,Generalized Gamma,transformed,Q,mu,0.00649608208833
+independent,Control,Generalized Gamma,transformed,Q,sigma,-0.00294968506587
+independent,Control,Generalized Gamma,transformed,Q,Q,0.016613614552
+independent,Control,Generalized Gamma (original),natural,shape,shape,0.0368231878236
+independent,Control,Generalized Gamma (original),natural,shape,scale,0.64263263137
+independent,Control,Generalized Gamma (original),natural,shape,k,-0.124976925741
+independent,Control,Generalized Gamma (original),natural,scale,shape,0.64263263137
+independent,Control,Generalized Gamma (original),natural,scale,scale,11.5569113055
+independent,Control,Generalized Gamma (original),natural,scale,k,-2.25646885329
+independent,Control,Generalized Gamma (original),natural,k,shape,-0.124976925741
+independent,Control,Generalized Gamma (original),natural,k,scale,-2.25646885329
+independent,Control,Generalized Gamma (original),natural,k,k,0.4458054661
+independent,Control,Generalized Gamma (original),transformed,shape,shape,0.0419968844465
+independent,Control,Generalized Gamma (original),transformed,shape,scale,0.114516931977
+independent,Control,Generalized Gamma (original),transformed,shape,k,-0.0707680463045
+independent,Control,Generalized Gamma (original),transformed,scale,shape,0.114516931977
+independent,Control,Generalized Gamma (original),transformed,scale,scale,0.321780669013
+independent,Control,Generalized Gamma (original),transformed,scale,k,-0.199640179605
+independent,Control,Generalized Gamma (original),transformed,k,shape,-0.0707680463045
+independent,Control,Generalized Gamma (original),transformed,k,scale,-0.199640179605
+independent,Control,Generalized Gamma (original),transformed,k,k,0.125332711799
+independent,Control,Generalized F,natural,mu,mu,0.00514753193305
+independent,Control,Generalized F,natural,mu,sigma,-0.0025585093711
+independent,Control,Generalized F,natural,mu,Q,0.0119362426145
+independent,Control,Generalized F,natural,mu,P,0.017301216378
+independent,Control,Generalized F,natural,sigma,mu,-0.0025585093711
+independent,Control,Generalized F,natural,sigma,sigma,0.0084436579097
+independent,Control,Generalized F,natural,sigma,Q,-0.010869586101
+independent,Control,Generalized F,natural,sigma,P,-0.0813682866175
+independent,Control,Generalized F,natural,Q,mu,0.0119362426145
+independent,Control,Generalized F,natural,Q,sigma,-0.010869586101
+independent,Control,Generalized F,natural,Q,Q,0.0459968039316
+independent,Control,Generalized F,natural,Q,P,0.0865630758114
+independent,Control,Generalized F,natural,P,mu,0.017301216378
+independent,Control,Generalized F,natural,P,sigma,-0.0813682866175
+independent,Control,Generalized F,natural,P,Q,0.0865630758114
+independent,Control,Generalized F,natural,P,P,0.905037941279
+independent,Control,Generalized F,transformed,mu,mu,0.00514753193305
+independent,Control,Generalized F,transformed,mu,sigma,-0.00464330734083
+independent,Control,Generalized F,transformed,mu,Q,0.0119362426145
+independent,Control,Generalized F,transformed,mu,P,0.0106299302771
+independent,Control,Generalized F,transformed,sigma,mu,-0.00464330734083
+independent,Control,Generalized F,transformed,sigma,sigma,0.0278106709719
+independent,Control,Generalized F,transformed,sigma,Q,-0.0197266539278
+independent,Control,Generalized F,transformed,sigma,P,-0.0907296776632
+independent,Control,Generalized F,transformed,Q,mu,0.0119362426145
+independent,Control,Generalized F,transformed,Q,sigma,-0.0197266539278
+independent,Control,Generalized F,transformed,Q,Q,0.0459968039316
+independent,Control,Generalized F,transformed,Q,P,0.053184668658
+independent,Control,Generalized F,transformed,P,mu,0.0106299302771
+independent,Control,Generalized F,transformed,P,sigma,-0.0907296776632
+independent,Control,Generalized F,transformed,P,Q,0.053184668658
+independent,Control,Generalized F,transformed,P,P,0.341644428548
+independent,Control,Generalized F (original),natural,mu,mu,0.00514753076765
+independent,Control,Generalized F (original),natural,mu,sigma,-0.00320373810573
+independent,Control,Generalized F (original),natural,mu,s1,-0.00573497400492
+independent,Control,Generalized F (original),natural,mu,s2,-0.00732710865042
+independent,Control,Generalized F (original),natural,sigma,mu,-0.00320373810573
+independent,Control,Generalized F (original),natural,sigma,sigma,0.0139160591988
+independent,Control,Generalized F (original),natural,sigma,s1,0.0206710411536
+independent,Control,Generalized F (original),natural,sigma,s2,0.0622231775358
+independent,Control,Generalized F (original),natural,s1,mu,-0.00573497400492
+independent,Control,Generalized F (original),natural,s1,sigma,0.0206710411536
+independent,Control,Generalized F (original),natural,s1,s1,0.03163427774
+independent,Control,Generalized F (original),natural,s1,s2,0.091031759306
+independent,Control,Generalized F (original),natural,s2,mu,-0.00732710865042
+independent,Control,Generalized F (original),natural,s2,sigma,0.0622231775358
+independent,Control,Generalized F (original),natural,s2,s1,0.091031759306
+independent,Control,Generalized F (original),natural,s2,s2,0.302171672149
+independent,Control,Generalized F (original),transformed,mu,mu,0.00514753076765
+independent,Control,Generalized F (original),transformed,mu,sigma,-0.0115414858833
+independent,Control,Generalized F (original),transformed,mu,s1,-0.0160100786815
+independent,Control,Generalized F (original),transformed,mu,s2,-0.00841618829767
+independent,Control,Generalized F (original),transformed,sigma,mu,-0.0115414858833
+independent,Control,Generalized F (original),transformed,sigma,sigma,0.180603309073
+independent,Control,Generalized F (original),transformed,sigma,s1,0.207887837705
+independent,Control,Generalized F (original),transformed,sigma,s2,0.257477755844
+independent,Control,Generalized F (original),transformed,s1,mu,-0.0160100786815
+independent,Control,Generalized F (original),transformed,s1,sigma,0.207887837705
+independent,Control,Generalized F (original),transformed,s1,s1,0.246536910007
+independent,Control,Generalized F (original),transformed,s1,s2,0.291902463782
+independent,Control,Generalized F (original),transformed,s2,mu,-0.00841618829767
+independent,Control,Generalized F (original),transformed,s2,sigma,0.257477755844
+independent,Control,Generalized F (original),transformed,s2,s1,0.291902463782
+independent,Control,Generalized F (original),transformed,s2,s2,0.398675338638
+independent,Control,"Hazards, 1 knot",natural,gamma0,gamma0,0.0852631471763
+independent,Control,"Hazards, 1 knot",natural,gamma0,gamma1,-0.0643023448582
+independent,Control,"Hazards, 1 knot",natural,gamma0,gamma2,-0.00381133525108
+independent,Control,"Hazards, 1 knot",natural,gamma1,gamma0,-0.0643023448582
+independent,Control,"Hazards, 1 knot",natural,gamma1,gamma1,0.060209293443
+independent,Control,"Hazards, 1 knot",natural,gamma1,gamma2,0.00402632087989
+independent,Control,"Hazards, 1 knot",natural,gamma2,gamma0,-0.00381133525108
+independent,Control,"Hazards, 1 knot",natural,gamma2,gamma1,0.00402632087989
+independent,Control,"Hazards, 1 knot",natural,gamma2,gamma2,0.000287762739642
+independent,Control,"Hazards, 1 knot",transformed,gamma0,gamma0,0.0852631471763
+independent,Control,"Hazards, 1 knot",transformed,gamma0,gamma1,-0.0643023448582
+independent,Control,"Hazards, 1 knot",transformed,gamma0,gamma2,-0.00381133525108
+independent,Control,"Hazards, 1 knot",transformed,gamma1,gamma0,-0.0643023448582
+independent,Control,"Hazards, 1 knot",transformed,gamma1,gamma1,0.060209293443
+independent,Control,"Hazards, 1 knot",transformed,gamma1,gamma2,0.00402632087989
+independent,Control,"Hazards, 1 knot",transformed,gamma2,gamma0,-0.00381133525108
+independent,Control,"Hazards, 1 knot",transformed,gamma2,gamma1,0.00402632087989
+independent,Control,"Hazards, 1 knot",transformed,gamma2,gamma2,0.000287762739642
+independent,Control,"Hazards, 2 knots",natural,gamma0,gamma0,0.0741328609503
+independent,Control,"Hazards, 2 knots",natural,gamma0,gamma1,-0.0543747723862
+independent,Control,"Hazards, 2 knots",natural,gamma0,gamma2,-0.00249046512544
+independent,Control,"Hazards, 2 knots",natural,gamma0,gamma3,-0.000382674997541
+independent,Control,"Hazards, 2 knots",natural,gamma1,gamma0,-0.0543747723862
+independent,Control,"Hazards, 2 knots",natural,gamma1,gamma1,0.0848440617438
+independent,Control,"Hazards, 2 knots",natural,gamma1,gamma2,0.025238291096
+independent,Control,"Hazards, 2 knots",natural,gamma1,gamma3,-0.0264966229848
+independent,Control,"Hazards, 2 knots",natural,gamma2,gamma0,-0.00249046512544
+independent,Control,"Hazards, 2 knots",natural,gamma2,gamma1,0.025238291096
+independent,Control,"Hazards, 2 knots",natural,gamma2,gamma2,0.015633133269
+independent,Control,"Hazards, 2 knots",natural,gamma2,gamma3,-0.0185362873166
+independent,Control,"Hazards, 2 knots",natural,gamma3,gamma0,-0.000382674997539
+independent,Control,"Hazards, 2 knots",natural,gamma3,gamma1,-0.0264966229848
+independent,Control,"Hazards, 2 knots",natural,gamma3,gamma2,-0.0185362873166
+independent,Control,"Hazards, 2 knots",natural,gamma3,gamma3,0.022271863611
+independent,Control,"Hazards, 2 knots",transformed,gamma0,gamma0,0.0741328609503
+independent,Control,"Hazards, 2 knots",transformed,gamma0,gamma1,-0.0543747723862
+independent,Control,"Hazards, 2 knots",transformed,gamma0,gamma2,-0.00249046512544
+independent,Control,"Hazards, 2 knots",transformed,gamma0,gamma3,-0.000382674997541
+independent,Control,"Hazards, 2 knots",transformed,gamma1,gamma0,-0.0543747723862
+independent,Control,"Hazards, 2 knots",transformed,gamma1,gamma1,0.0848440617438
+independent,Control,"Hazards, 2 knots",transformed,gamma1,gamma2,0.025238291096
+independent,Control,"Hazards, 2 knots",transformed,gamma1,gamma3,-0.0264966229848
+independent,Control,"Hazards, 2 knots",transformed,gamma2,gamma0,-0.00249046512544
+independent,Control,"Hazards, 2 knots",transformed,gamma2,gamma1,0.025238291096
+independent,Control,"Hazards, 2 knots",transformed,gamma2,gamma2,0.015633133269
+independent,Control,"Hazards, 2 knots",transformed,gamma2,gamma3,-0.0185362873166
+independent,Control,"Hazards, 2 knots",transformed,gamma3,gamma0,-0.000382674997539
+independent,Control,"Hazards, 2 knots",transformed,gamma3,gamma1,-0.0264966229848
+independent,Control,"Hazards, 2 knots",transformed,gamma3,gamma2,-0.0185362873166
+independent,Control,"Hazards, 2 knots",transformed,gamma3,gamma3,0.022271863611
+independent,Control,"Hazards, 3 knots",natural,gamma0,gamma0,0.0775474074951
+independent,Control,"Hazards, 3 knots",natural,gamma0,gamma1,-0.0566147808696
+independent,Control,"Hazards, 3 knots",natural,gamma0,gamma2,0.00392822859965
+independent,Control,"Hazards, 3 knots",natural,gamma0,gamma3,-0.0170193450469
+independent,Control,"Hazards, 3 knots",natural,gamma0,gamma4,0.0122056157955
+independent,Control,"Hazards, 3 knots",natural,gamma1,gamma0,-0.0566147808695
+independent,Control,"Hazards, 3 knots",natural,gamma1,gamma1,0.142170951659
+independent,Control,"Hazards, 3 knots",natural,gamma1,gamma2,0.0553341584251
+independent,Control,"Hazards, 3 knots",natural,gamma1,gamma3,-0.0894660808635
+independent,Control,"Hazards, 3 knots",natural,gamma1,gamma4,0.0425470596558
+independent,Control,"Hazards, 3 knots",natural,gamma2,gamma0,0.00392822859966
+independent,Control,"Hazards, 3 knots",natural,gamma2,gamma1,0.055334158425
+independent,Control,"Hazards, 3 knots",natural,gamma2,gamma2,0.050808762669
+independent,Control,"Hazards, 3 knots",natural,gamma2,gamma3,-0.110047452624
+independent,Control,"Hazards, 3 knots",natural,gamma2,gamma4,0.0702974363618
+independent,Control,"Hazards, 3 knots",natural,gamma3,gamma0,-0.0170193450469
+independent,Control,"Hazards, 3 knots",natural,gamma3,gamma1,-0.0894660808631
+independent,Control,"Hazards, 3 knots",natural,gamma3,gamma2,-0.110047452624
+independent,Control,"Hazards, 3 knots",natural,gamma3,gamma3,0.261942292474
+independent,Control,"Hazards, 3 knots",natural,gamma3,gamma4,-0.181656912134
+independent,Control,"Hazards, 3 knots",natural,gamma4,gamma0,0.0122056157955
+independent,Control,"Hazards, 3 knots",natural,gamma4,gamma1,0.0425470596554
+independent,Control,"Hazards, 3 knots",natural,gamma4,gamma2,0.0702974363616
+independent,Control,"Hazards, 3 knots",natural,gamma4,gamma3,-0.181656912134
+independent,Control,"Hazards, 3 knots",natural,gamma4,gamma4,0.134284026644
+independent,Control,"Hazards, 3 knots",transformed,gamma0,gamma0,0.0775474074951
+independent,Control,"Hazards, 3 knots",transformed,gamma0,gamma1,-0.0566147808696
+independent,Control,"Hazards, 3 knots",transformed,gamma0,gamma2,0.00392822859965
+independent,Control,"Hazards, 3 knots",transformed,gamma0,gamma3,-0.0170193450469
+independent,Control,"Hazards, 3 knots",transformed,gamma0,gamma4,0.0122056157955
+independent,Control,"Hazards, 3 knots",transformed,gamma1,gamma0,-0.0566147808695
+independent,Control,"Hazards, 3 knots",transformed,gamma1,gamma1,0.142170951659
+independent,Control,"Hazards, 3 knots",transformed,gamma1,gamma2,0.0553341584251
+independent,Control,"Hazards, 3 knots",transformed,gamma1,gamma3,-0.0894660808635
+independent,Control,"Hazards, 3 knots",transformed,gamma1,gamma4,0.0425470596558
+independent,Control,"Hazards, 3 knots",transformed,gamma2,gamma0,0.00392822859966
+independent,Control,"Hazards, 3 knots",transformed,gamma2,gamma1,0.055334158425
+independent,Control,"Hazards, 3 knots",transformed,gamma2,gamma2,0.050808762669
+independent,Control,"Hazards, 3 knots",transformed,gamma2,gamma3,-0.110047452624
+independent,Control,"Hazards, 3 knots",transformed,gamma2,gamma4,0.0702974363618
+independent,Control,"Hazards, 3 knots",transformed,gamma3,gamma0,-0.0170193450469
+independent,Control,"Hazards, 3 knots",transformed,gamma3,gamma1,-0.0894660808631
+independent,Control,"Hazards, 3 knots",transformed,gamma3,gamma2,-0.110047452624
+independent,Control,"Hazards, 3 knots",transformed,gamma3,gamma3,0.261942292474
+independent,Control,"Hazards, 3 knots",transformed,gamma3,gamma4,-0.181656912134
+independent,Control,"Hazards, 3 knots",transformed,gamma4,gamma0,0.0122056157955
+independent,Control,"Hazards, 3 knots",transformed,gamma4,gamma1,0.0425470596554
+independent,Control,"Hazards, 3 knots",transformed,gamma4,gamma2,0.0702974363616
+independent,Control,"Hazards, 3 knots",transformed,gamma4,gamma3,-0.181656912134
+independent,Control,"Hazards, 3 knots",transformed,gamma4,gamma4,0.134284026644
+independent,Control,"Odds, 1 knot",natural,gamma0,gamma0,0.0717036921356
+independent,Control,"Odds, 1 knot",natural,gamma0,gamma1,-0.0459779060058
+independent,Control,"Odds, 1 knot",natural,gamma0,gamma2,-0.00236589513007
+independent,Control,"Odds, 1 knot",natural,gamma1,gamma0,-0.0459779060058
+independent,Control,"Odds, 1 knot",natural,gamma1,gamma1,0.0562377507048
+independent,Control,"Odds, 1 knot",natural,gamma1,gamma2,0.00453661920433
+independent,Control,"Odds, 1 knot",natural,gamma2,gamma0,-0.00236589513007
+independent,Control,"Odds, 1 knot",natural,gamma2,gamma1,0.00453661920433
+independent,Control,"Odds, 1 knot",natural,gamma2,gamma2,0.000442906409895
+independent,Control,"Odds, 1 knot",transformed,gamma0,gamma0,0.0717036921356
+independent,Control,"Odds, 1 knot",transformed,gamma0,gamma1,-0.0459779060058
+independent,Control,"Odds, 1 knot",transformed,gamma0,gamma2,-0.00236589513007
+independent,Control,"Odds, 1 knot",transformed,gamma1,gamma0,-0.0459779060058
+independent,Control,"Odds, 1 knot",transformed,gamma1,gamma1,0.0562377507048
+independent,Control,"Odds, 1 knot",transformed,gamma1,gamma2,0.00453661920433
+independent,Control,"Odds, 1 knot",transformed,gamma2,gamma0,-0.00236589513007
+independent,Control,"Odds, 1 knot",transformed,gamma2,gamma1,0.00453661920433
+independent,Control,"Odds, 1 knot",transformed,gamma2,gamma2,0.000442906409895
+independent,Control,"Odds, 2 knots",natural,gamma0,gamma0,0.0778093846216
+independent,Control,"Odds, 2 knots",natural,gamma0,gamma1,-0.0537971761828
+independent,Control,"Odds, 2 knots",natural,gamma0,gamma2,0.00080491184091
+independent,Control,"Odds, 2 knots",natural,gamma0,gamma3,-0.00480760178651
+independent,Control,"Odds, 2 knots",natural,gamma1,gamma0,-0.0537971761828
+independent,Control,"Odds, 2 knots",natural,gamma1,gamma1,0.0970831894193
+independent,Control,"Odds, 2 knots",natural,gamma1,gamma2,0.0385272813192
+independent,Control,"Odds, 2 knots",natural,gamma1,gamma3,-0.0433548662795
+independent,Control,"Odds, 2 knots",natural,gamma2,gamma0,0.000804911840909
+independent,Control,"Odds, 2 knots",natural,gamma2,gamma1,0.0385272813192
+independent,Control,"Odds, 2 knots",natural,gamma2,gamma2,0.0484911937121
+independent,Control,"Odds, 2 knots",natural,gamma2,gamma3,-0.0628184476789
+independent,Control,"Odds, 2 knots",natural,gamma3,gamma0,-0.00480760178651
+independent,Control,"Odds, 2 knots",natural,gamma3,gamma1,-0.0433548662795
+independent,Control,"Odds, 2 knots",natural,gamma3,gamma2,-0.0628184476789
+independent,Control,"Odds, 2 knots",natural,gamma3,gamma3,0.0821388762593
+independent,Control,"Odds, 2 knots",transformed,gamma0,gamma0,0.0778093846216
+independent,Control,"Odds, 2 knots",transformed,gamma0,gamma1,-0.0537971761828
+independent,Control,"Odds, 2 knots",transformed,gamma0,gamma2,0.00080491184091
+independent,Control,"Odds, 2 knots",transformed,gamma0,gamma3,-0.00480760178651
+independent,Control,"Odds, 2 knots",transformed,gamma1,gamma0,-0.0537971761828
+independent,Control,"Odds, 2 knots",transformed,gamma1,gamma1,0.0970831894193
+independent,Control,"Odds, 2 knots",transformed,gamma1,gamma2,0.0385272813192
+independent,Control,"Odds, 2 knots",transformed,gamma1,gamma3,-0.0433548662795
+independent,Control,"Odds, 2 knots",transformed,gamma2,gamma0,0.000804911840909
+independent,Control,"Odds, 2 knots",transformed,gamma2,gamma1,0.0385272813192
+independent,Control,"Odds, 2 knots",transformed,gamma2,gamma2,0.0484911937121
+independent,Control,"Odds, 2 knots",transformed,gamma2,gamma3,-0.0628184476789
+independent,Control,"Odds, 2 knots",transformed,gamma3,gamma0,-0.00480760178651
+independent,Control,"Odds, 2 knots",transformed,gamma3,gamma1,-0.0433548662795
+independent,Control,"Odds, 2 knots",transformed,gamma3,gamma2,-0.0628184476789
+independent,Control,"Odds, 2 knots",transformed,gamma3,gamma3,0.0821388762593
+independent,Control,"Odds, 3 knots",natural,gamma0,gamma0,0.081375560763
+independent,Control,"Odds, 3 knots",natural,gamma0,gamma1,-0.0528982906027
+independent,Control,"Odds, 3 knots",natural,gamma0,gamma2,0.0104405864863
+independent,Control,"Odds, 3 knots",natural,gamma0,gamma3,-0.034172623922
+independent,Control,"Odds, 3 knots",natural,gamma0,gamma4,0.0251227159014
+independent,Control,"Odds, 3 knots",natural,gamma1,gamma0,-0.0528982906027
+independent,Control,"Odds, 3 knots",natural,gamma1,gamma1,0.150561800384
+independent,Control,"Odds, 3 knots",natural,gamma1,gamma2,0.0694596321053
+independent,Control,"Odds, 3 knots",natural,gamma1,gamma3,-0.128571410412
+independent,Control,"Odds, 3 knots",natural,gamma1,gamma4,0.073318852985
+independent,Control,"Odds, 3 knots",natural,gamma2,gamma0,0.0104405864863
+independent,Control,"Odds, 3 knots",natural,gamma2,gamma1,0.0694596321053
+independent,Control,"Odds, 3 knots",natural,gamma2,gamma2,0.0891883014891
+independent,Control,"Odds, 3 knots",natural,gamma2,gamma3,-0.230426463668
+independent,Control,"Odds, 3 knots",natural,gamma2,gamma4,0.172321553272
+independent,Control,"Odds, 3 knots",natural,gamma3,gamma0,-0.034172623922
+independent,Control,"Odds, 3 knots",natural,gamma3,gamma1,-0.128571410412
+independent,Control,"Odds, 3 knots",natural,gamma3,gamma2,-0.230426463668
+independent,Control,"Odds, 3 knots",natural,gamma3,gamma3,0.692728256604
+independent,Control,"Odds, 3 knots",natural,gamma3,gamma4,-0.577345132513
+independent,Control,"Odds, 3 knots",natural,gamma4,gamma0,0.0251227159014
+independent,Control,"Odds, 3 knots",natural,gamma4,gamma1,0.073318852985
+independent,Control,"Odds, 3 knots",natural,gamma4,gamma2,0.172321553272
+independent,Control,"Odds, 3 knots",natural,gamma4,gamma3,-0.577345132513
+independent,Control,"Odds, 3 knots",natural,gamma4,gamma4,0.513311100294
+independent,Control,"Odds, 3 knots",transformed,gamma0,gamma0,0.081375560763
+independent,Control,"Odds, 3 knots",transformed,gamma0,gamma1,-0.0528982906027
+independent,Control,"Odds, 3 knots",transformed,gamma0,gamma2,0.0104405864863
+independent,Control,"Odds, 3 knots",transformed,gamma0,gamma3,-0.034172623922
+independent,Control,"Odds, 3 knots",transformed,gamma0,gamma4,0.0251227159014
+independent,Control,"Odds, 3 knots",transformed,gamma1,gamma0,-0.0528982906027
+independent,Control,"Odds, 3 knots",transformed,gamma1,gamma1,0.150561800384
+independent,Control,"Odds, 3 knots",transformed,gamma1,gamma2,0.0694596321053
+independent,Control,"Odds, 3 knots",transformed,gamma1,gamma3,-0.128571410412
+independent,Control,"Odds, 3 knots",transformed,gamma1,gamma4,0.073318852985
+independent,Control,"Odds, 3 knots",transformed,gamma2,gamma0,0.0104405864863
+independent,Control,"Odds, 3 knots",transformed,gamma2,gamma1,0.0694596321053
+independent,Control,"Odds, 3 knots",transformed,gamma2,gamma2,0.0891883014891
+independent,Control,"Odds, 3 knots",transformed,gamma2,gamma3,-0.230426463668
+independent,Control,"Odds, 3 knots",transformed,gamma2,gamma4,0.172321553272
+independent,Control,"Odds, 3 knots",transformed,gamma3,gamma0,-0.034172623922
+independent,Control,"Odds, 3 knots",transformed,gamma3,gamma1,-0.128571410412
+independent,Control,"Odds, 3 knots",transformed,gamma3,gamma2,-0.230426463668
+independent,Control,"Odds, 3 knots",transformed,gamma3,gamma3,0.692728256604
+independent,Control,"Odds, 3 knots",transformed,gamma3,gamma4,-0.577345132513
+independent,Control,"Odds, 3 knots",transformed,gamma4,gamma0,0.0251227159014
+independent,Control,"Odds, 3 knots",transformed,gamma4,gamma1,0.073318852985
+independent,Control,"Odds, 3 knots",transformed,gamma4,gamma2,0.172321553272
+independent,Control,"Odds, 3 knots",transformed,gamma4,gamma3,-0.577345132513
+independent,Control,"Odds, 3 knots",transformed,gamma4,gamma4,0.513311100294
+independent,Control,"Normal, 1 knot",natural,gamma0,gamma0,0.0136338487835
+independent,Control,"Normal, 1 knot",natural,gamma0,gamma1,-0.00699440224853
+independent,Control,"Normal, 1 knot",natural,gamma0,gamma2,-0.000269047774367
+independent,Control,"Normal, 1 knot",natural,gamma1,gamma0,-0.00699440224853
+independent,Control,"Normal, 1 knot",natural,gamma1,gamma1,0.0110439848225
+independent,Control,"Normal, 1 knot",natural,gamma1,gamma2,0.00094284925189
+independent,Control,"Normal, 1 knot",natural,gamma2,gamma0,-0.000269047774367
+independent,Control,"Normal, 1 knot",natural,gamma2,gamma1,0.00094284925189
+independent,Control,"Normal, 1 knot",natural,gamma2,gamma2,9.9449060626e-05
+independent,Control,"Normal, 1 knot",transformed,gamma0,gamma0,0.0136338487835
+independent,Control,"Normal, 1 knot",transformed,gamma0,gamma1,-0.00699440224853
+independent,Control,"Normal, 1 knot",transformed,gamma0,gamma2,-0.000269047774367
+independent,Control,"Normal, 1 knot",transformed,gamma1,gamma0,-0.00699440224853
+independent,Control,"Normal, 1 knot",transformed,gamma1,gamma1,0.0110439848225
+independent,Control,"Normal, 1 knot",transformed,gamma1,gamma2,0.00094284925189
+independent,Control,"Normal, 1 knot",transformed,gamma2,gamma0,-0.000269047774367
+independent,Control,"Normal, 1 knot",transformed,gamma2,gamma1,0.00094284925189
+independent,Control,"Normal, 1 knot",transformed,gamma2,gamma2,9.9449060626e-05
+independent,Control,"Normal, 2 knots",natural,gamma0,gamma0,0.0143850832848
+independent,Control,"Normal, 2 knots",natural,gamma0,gamma1,-0.00523186560559
+independent,Control,"Normal, 2 knots",natural,gamma0,gamma2,0.0027803532029
+independent,Control,"Normal, 2 knots",natural,gamma0,gamma3,-0.00393404966366
+independent,Control,"Normal, 2 knots",natural,gamma1,gamma0,-0.00523186560559
+independent,Control,"Normal, 2 knots",natural,gamma1,gamma1,0.0152286358512
+independent,Control,"Normal, 2 knots",natural,gamma1,gamma2,0.00719117278911
+independent,Control,"Normal, 2 knots",natural,gamma1,gamma3,-0.00824601568659
+independent,Control,"Normal, 2 knots",natural,gamma2,gamma0,0.0027803532029
+independent,Control,"Normal, 2 knots",natural,gamma2,gamma1,0.00719117278911
+independent,Control,"Normal, 2 knots",natural,gamma2,gamma2,0.0111557292971
+independent,Control,"Normal, 2 knots",natural,gamma2,gamma3,-0.0144676842043
+independent,Control,"Normal, 2 knots",natural,gamma3,gamma0,-0.00393404966366
+independent,Control,"Normal, 2 knots",natural,gamma3,gamma1,-0.00824601568658
+independent,Control,"Normal, 2 knots",natural,gamma3,gamma2,-0.0144676842043
+independent,Control,"Normal, 2 knots",natural,gamma3,gamma3,0.0189003555817
+independent,Control,"Normal, 2 knots",transformed,gamma0,gamma0,0.0143850832848
+independent,Control,"Normal, 2 knots",transformed,gamma0,gamma1,-0.00523186560559
+independent,Control,"Normal, 2 knots",transformed,gamma0,gamma2,0.0027803532029
+independent,Control,"Normal, 2 knots",transformed,gamma0,gamma3,-0.00393404966366
+independent,Control,"Normal, 2 knots",transformed,gamma1,gamma0,-0.00523186560559
+independent,Control,"Normal, 2 knots",transformed,gamma1,gamma1,0.0152286358512
+independent,Control,"Normal, 2 knots",transformed,gamma1,gamma2,0.00719117278911
+independent,Control,"Normal, 2 knots",transformed,gamma1,gamma3,-0.00824601568659
+independent,Control,"Normal, 2 knots",transformed,gamma2,gamma0,0.0027803532029
+independent,Control,"Normal, 2 knots",transformed,gamma2,gamma1,0.00719117278911
+independent,Control,"Normal, 2 knots",transformed,gamma2,gamma2,0.0111557292971
+independent,Control,"Normal, 2 knots",transformed,gamma2,gamma3,-0.0144676842043
+independent,Control,"Normal, 2 knots",transformed,gamma3,gamma0,-0.00393404966366
+independent,Control,"Normal, 2 knots",transformed,gamma3,gamma1,-0.00824601568658
+independent,Control,"Normal, 2 knots",transformed,gamma3,gamma2,-0.0144676842043
+independent,Control,"Normal, 2 knots",transformed,gamma3,gamma3,0.0189003555817
+independent,Control,"Normal, 3 knots",natural,gamma0,gamma0,0.0154644099711
+independent,Control,"Normal, 3 knots",natural,gamma0,gamma1,-0.00369032416613
+independent,Control,"Normal, 3 knots",natural,gamma0,gamma2,0.00572218256131
+independent,Control,"Normal, 3 knots",natural,gamma0,gamma3,-0.0132349142732
+independent,Control,"Normal, 3 knots",natural,gamma0,gamma4,0.00833995132567
+independent,Control,"Normal, 3 knots",natural,gamma1,gamma0,-0.00369032416613
+independent,Control,"Normal, 3 knots",natural,gamma1,gamma1,0.0231326464844
+independent,Control,"Normal, 3 knots",natural,gamma1,gamma2,0.0134331921354
+independent,Control,"Normal, 3 knots",natural,gamma1,gamma3,-0.0256026169084
+independent,Control,"Normal, 3 knots",natural,gamma1,gamma4,0.0146525664655
+independent,Control,"Normal, 3 knots",natural,gamma2,gamma0,0.0057221825613
+independent,Control,"Normal, 3 knots",natural,gamma2,gamma1,0.0134331921354
+independent,Control,"Normal, 3 knots",natural,gamma2,gamma2,0.0256190145932
+independent,Control,"Normal, 3 knots",natural,gamma2,gamma3,-0.0677899897773
+independent,Control,"Normal, 3 knots",natural,gamma2,gamma4,0.0509142739734
+independent,Control,"Normal, 3 knots",natural,gamma3,gamma0,-0.0132349142732
+independent,Control,"Normal, 3 knots",natural,gamma3,gamma1,-0.0256026169084
+independent,Control,"Normal, 3 knots",natural,gamma3,gamma2,-0.0677899897773
+independent,Control,"Normal, 3 knots",natural,gamma3,gamma3,0.200313432274
+independent,Control,"Normal, 3 knots",natural,gamma3,gamma4,-0.162955453455
+independent,Control,"Normal, 3 knots",natural,gamma4,gamma0,0.00833995132566
+independent,Control,"Normal, 3 knots",natural,gamma4,gamma1,0.0146525664655
+independent,Control,"Normal, 3 knots",natural,gamma4,gamma2,0.0509142739734
+independent,Control,"Normal, 3 knots",natural,gamma4,gamma3,-0.162955453455
+independent,Control,"Normal, 3 knots",natural,gamma4,gamma4,0.139457929182
+independent,Control,"Normal, 3 knots",transformed,gamma0,gamma0,0.0154644099711
+independent,Control,"Normal, 3 knots",transformed,gamma0,gamma1,-0.00369032416613
+independent,Control,"Normal, 3 knots",transformed,gamma0,gamma2,0.00572218256131
+independent,Control,"Normal, 3 knots",transformed,gamma0,gamma3,-0.0132349142732
+independent,Control,"Normal, 3 knots",transformed,gamma0,gamma4,0.00833995132567
+independent,Control,"Normal, 3 knots",transformed,gamma1,gamma0,-0.00369032416613
+independent,Control,"Normal, 3 knots",transformed,gamma1,gamma1,0.0231326464844
+independent,Control,"Normal, 3 knots",transformed,gamma1,gamma2,0.0134331921354
+independent,Control,"Normal, 3 knots",transformed,gamma1,gamma3,-0.0256026169084
+independent,Control,"Normal, 3 knots",transformed,gamma1,gamma4,0.0146525664655
+independent,Control,"Normal, 3 knots",transformed,gamma2,gamma0,0.0057221825613
+independent,Control,"Normal, 3 knots",transformed,gamma2,gamma1,0.0134331921354
+independent,Control,"Normal, 3 knots",transformed,gamma2,gamma2,0.0256190145932
+independent,Control,"Normal, 3 knots",transformed,gamma2,gamma3,-0.0677899897773
+independent,Control,"Normal, 3 knots",transformed,gamma2,gamma4,0.0509142739734
+independent,Control,"Normal, 3 knots",transformed,gamma3,gamma0,-0.0132349142732
+independent,Control,"Normal, 3 knots",transformed,gamma3,gamma1,-0.0256026169084
+independent,Control,"Normal, 3 knots",transformed,gamma3,gamma2,-0.0677899897773
+independent,Control,"Normal, 3 knots",transformed,gamma3,gamma3,0.200313432274
+independent,Control,"Normal, 3 knots",transformed,gamma3,gamma4,-0.162955453455
+independent,Control,"Normal, 3 knots",transformed,gamma4,gamma0,0.00833995132566
+independent,Control,"Normal, 3 knots",transformed,gamma4,gamma1,0.0146525664655
+independent,Control,"Normal, 3 knots",transformed,gamma4,gamma2,0.0509142739734
+independent,Control,"Normal, 3 knots",transformed,gamma4,gamma3,-0.162955453455
+independent,Control,"Normal, 3 knots",transformed,gamma4,gamma4,0.139457929182
+independent,Treatment,Exponential,natural,rate,rate,1.02888409426e-05
+independent,Treatment,Exponential,transformed,rate,rate,0.00416666666667
+independent,Treatment,Weibull,natural,shape,shape,0.0042000213646
+independent,Treatment,Weibull,natural,shape,scale,0.0114167380249
+independent,Treatment,Weibull,natural,scale,shape,0.0114167380249
+independent,Treatment,Weibull,natural,scale,scale,1.09462498165
+independent,Treatment,Weibull,transformed,shape,shape,0.00248261655779
+independent,Treatment,Weibull,transformed,shape,scale,0.000422383713435
+independent,Treatment,Weibull,transformed,scale,shape,0.000422383713435
+independent,Treatment,Weibull,transformed,scale,scale,0.00253476361382
+independent,Treatment,Weibull (PH),natural,shape,shape,0.00420002136073
+independent,Treatment,Weibull (PH),natural,shape,scale,-0.000260079463494
+independent,Treatment,Weibull (PH),natural,scale,shape,-0.000260079463494
+independent,Treatment,Weibull (PH),natural,scale,scale,1.76612010673e-05
+independent,Treatment,Weibull (PH),transformed,shape,shape,0.00248261655551
+independent,Treatment,Weibull (PH),transformed,shape,scale,-0.0103465629661
+independent,Treatment,Weibull (PH),transformed,scale,shape,-0.0103465629661
+independent,Treatment,Weibull (PH),transformed,scale,scale,0.0472870450327
+independent,Treatment,Rayleigh,natural,scale,scale,0.553587970806
+independent,Treatment,Rayleigh,transformed,scale,scale,0.00104166666666
+independent,Treatment,Lognormal,natural,meanlog,meanlog,0.00374799619297
+independent,Treatment,Lognormal,natural,meanlog,sdlog,0.000290679305934
+independent,Treatment,Lognormal,natural,sdlog,meanlog,0.000290679305934
+independent,Treatment,Lognormal,natural,sdlog,sdlog,0.00211073452553
+independent,Treatment,Lognormal,transformed,meanlog,meanlog,0.00374799619297
+independent,Treatment,Lognormal,transformed,meanlog,sdlog,0.000290094764529
+independent,Treatment,Lognormal,transformed,sdlog,meanlog,0.000290094764529
+independent,Treatment,Lognormal,transformed,sdlog,sdlog,0.00210225390008
+independent,Treatment,Log-logistic,natural,shape,shape,0.0102560652169
+independent,Treatment,Log-logistic,natural,shape,scale,-0.002051006124
+independent,Treatment,Log-logistic,natural,scale,shape,-0.002051006124
+independent,Treatment,Log-logistic,natural,scale,scale,0.646095914089
+independent,Treatment,Log-logistic,transformed,shape,shape,0.00290643341285
+independent,Treatment,Log-logistic,transformed,shape,scale,-7.49181962288e-05
+independent,Treatment,Log-logistic,transformed,scale,shape,-7.49181962288e-05
+independent,Treatment,Log-logistic,transformed,scale,scale,0.00304199223814
+independent,Treatment,Gompertz,natural,shape,shape,2.30791056388e-05
+independent,Treatment,Gompertz,natural,shape,rate,-1.44121135817e-05
+independent,Treatment,Gompertz,natural,rate,shape,-1.44121135817e-05
+independent,Treatment,Gompertz,natural,rate,rate,1.56689663859e-05
+independent,Treatment,Gompertz,transformed,shape,shape,2.30791056388e-05
+independent,Treatment,Gompertz,transformed,shape,rate,-0.000360237278782
+independent,Treatment,Gompertz,transformed,rate,shape,-0.000360237278782
+independent,Treatment,Gompertz,transformed,rate,rate,0.00978954040594
+independent,Treatment,Gamma,natural,shape,shape,0.0155605483664
+independent,Treatment,Gamma,natural,shape,rate,0.000871982751067
+independent,Treatment,Gamma,natural,rate,shape,0.000871982751067
+independent,Treatment,Gamma,natural,rate,rate,6.57571159674e-05
+independent,Treatment,Gamma,transformed,shape,shape,0.00647717569487
+independent,Treatment,Gamma,transformed,shape,rate,0.00699973087608
+independent,Treatment,Gamma,transformed,rate,shape,0.00699973087608
+independent,Treatment,Gamma,transformed,rate,rate,0.0101795569101
+independent,Treatment,Generalized Gamma,natural,mu,mu,0.00601497013261
+independent,Treatment,Generalized Gamma,natural,mu,sigma,-0.00191769151457
+independent,Treatment,Generalized Gamma,natural,mu,Q,0.00853891110341
+independent,Treatment,Generalized Gamma,natural,sigma,mu,-0.00191769151457
+independent,Treatment,Generalized Gamma,natural,sigma,sigma,0.00245689990914
+independent,Treatment,Generalized Gamma,natural,sigma,Q,-0.00433902215197
+independent,Treatment,Generalized Gamma,natural,Q,mu,0.00853891110341
+independent,Treatment,Generalized Gamma,natural,Q,sigma,-0.00433902215197
+independent,Treatment,Generalized Gamma,natural,Q,Q,0.0219454257275
+independent,Treatment,Generalized Gamma,transformed,mu,mu,0.00601497013261
+independent,Treatment,Generalized Gamma,transformed,mu,sigma,-0.00236198925097
+independent,Treatment,Generalized Gamma,transformed,mu,Q,0.00853891110341
+independent,Treatment,Generalized Gamma,transformed,sigma,mu,-0.00236198925097
+independent,Treatment,Generalized Gamma,transformed,sigma,sigma,0.00372722666851
+independent,Treatment,Generalized Gamma,transformed,sigma,Q,-0.00534430256629
+independent,Treatment,Generalized Gamma,transformed,Q,mu,0.00853891110341
+independent,Treatment,Generalized Gamma,transformed,Q,sigma,-0.00534430256629
+independent,Treatment,Generalized Gamma,transformed,Q,Q,0.0219454257275
+independent,Treatment,Generalized Gamma (original),natural,shape,shape,0.049111783093
+independent,Treatment,Generalized Gamma (original),natural,shape,scale,1.41648189899
+independent,Treatment,Generalized Gamma (original),natural,shape,k,-0.141004665492
+independent,Treatment,Generalized Gamma (original),natural,scale,shape,1.41648189899
+independent,Treatment,Generalized Gamma (original),natural,scale,scale,42.1873288883
+independent,Treatment,Generalized Gamma (original),natural,scale,k,-4.20493872625
+independent,Treatment,Generalized Gamma (original),natural,k,shape,-0.141004665492
+independent,Treatment,Generalized Gamma (original),natural,k,scale,-4.20493872625
+independent,Treatment,Generalized Gamma (original),natural,k,k,0.42362155315
+independent,Treatment,Generalized Gamma (original),transformed,shape,shape,0.0547073007287
+independent,Treatment,Generalized Gamma (original),transformed,shape,scale,0.136703044923
+independent,Treatment,Generalized Gamma (original),transformed,shape,k,-0.088065407614
+independent,Treatment,Generalized Gamma (original),transformed,scale,shape,0.136703044923
+independent,Treatment,Generalized Gamma (original),transformed,scale,scale,0.35274166614
+independent,Treatment,Generalized Gamma (original),transformed,scale,k,-0.227530233695
+independent,Treatment,Generalized Gamma (original),transformed,k,shape,-0.088065407614
+independent,Treatment,Generalized Gamma (original),transformed,k,scale,-0.227530233695
+independent,Treatment,Generalized Gamma (original),transformed,k,k,0.148341339831
+independent,Treatment,Generalized F,natural,mu,mu,0.00647599044475
+independent,Treatment,Generalized F,natural,mu,sigma,0.0010214257069
+independent,Treatment,Generalized F,natural,mu,Q,0.013317327149
+independent,Treatment,Generalized F,natural,mu,P,-0.0284493296053
+independent,Treatment,Generalized F,natural,sigma,mu,0.0010214257069
+independent,Treatment,Generalized F,natural,sigma,sigma,0.0152922381708
+independent,Treatment,Generalized F,natural,sigma,Q,-0.00342350341303
+independent,Treatment,Generalized F,natural,sigma,P,-0.211301240431
+independent,Treatment,Generalized F,natural,Q,mu,0.013317327149
+independent,Treatment,Generalized F,natural,Q,sigma,-0.00342350341303
+independent,Treatment,Generalized F,natural,Q,Q,0.0490195027823
+independent,Treatment,Generalized F,natural,Q,P,0.00459459593511
+independent,Treatment,Generalized F,natural,P,mu,-0.0284493296053
+independent,Treatment,Generalized F,natural,P,sigma,-0.211301240431
+independent,Treatment,Generalized F,natural,P,Q,0.00459459593511
+independent,Treatment,Generalized F,natural,P,P,3.16883984457
+independent,Treatment,Generalized F,transformed,mu,mu,0.00647599044475
+independent,Treatment,Generalized F,transformed,mu,sigma,0.00188099187372
+independent,Treatment,Generalized F,transformed,mu,Q,0.013317327149
+independent,Treatment,Generalized F,transformed,mu,P,-0.0108428251368
+independent,Treatment,Generalized F,transformed,sigma,mu,0.00188099187372
+independent,Treatment,Generalized F,transformed,sigma,sigma,0.051859858126
+independent,Treatment,Generalized F,transformed,sigma,Q,-0.00630450365219
+independent,Treatment,Generalized F,transformed,sigma,P,-0.148303909246
+independent,Treatment,Generalized F,transformed,Q,mu,0.013317327149
+independent,Treatment,Generalized F,transformed,Q,sigma,-0.00630450365219
+independent,Treatment,Generalized F,transformed,Q,Q,0.0490195027823
+independent,Treatment,Generalized F,transformed,Q,P,0.00175112738999
+independent,Treatment,Generalized F,transformed,P,mu,-0.0108428251368
+independent,Treatment,Generalized F,transformed,P,sigma,-0.148303909246
+independent,Treatment,Generalized F,transformed,P,Q,0.00175112738999
+independent,Treatment,Generalized F,transformed,P,P,0.460300158267
+independent,Treatment,Generalized F (original),natural,mu,mu,0.00647598212914
+independent,Treatment,Generalized F (original),natural,mu,sigma,0.00132896298928
+independent,Treatment,Generalized F (original),natural,mu,s1,0.000712001642848
+independent,Treatment,Generalized F (original),natural,mu,s2,0.00755242184074
+independent,Treatment,Generalized F (original),natural,sigma,mu,0.00132896298928
+independent,Treatment,Generalized F (original),natural,sigma,sigma,0.0159084121608
+independent,Treatment,Generalized F (original),natural,sigma,s1,0.0220104948534
+independent,Treatment,Generalized F (original),natural,sigma,s2,0.0425973125665
+independent,Treatment,Generalized F (original),natural,s1,mu,0.000712001642848
+independent,Treatment,Generalized F (original),natural,s1,sigma,0.0220104948534
+independent,Treatment,Generalized F (original),natural,s1,s1,0.0311629120764
+independent,Treatment,Generalized F (original),natural,s1,s2,0.0584107771849
+independent,Treatment,Generalized F (original),natural,s2,mu,0.00755242184074
+independent,Treatment,Generalized F (original),natural,s2,sigma,0.0425973125665
+independent,Treatment,Generalized F (original),natural,s2,s1,0.0584107771849
+independent,Treatment,Generalized F (original),natural,s2,s2,0.119447584369
+independent,Treatment,Generalized F (original),transformed,mu,mu,0.00647598212914
+independent,Treatment,Generalized F (original),transformed,mu,sigma,0.00575364692917
+independent,Treatment,Generalized F (original),transformed,mu,s1,0.00241018602382
+independent,Treatment,Generalized F (original),transformed,mu,s2,0.0161776945452
+independent,Treatment,Generalized F (original),transformed,sigma,mu,0.00575364692917
+independent,Treatment,Generalized F (original),transformed,sigma,sigma,0.298186156902
+independent,Treatment,Generalized F (original),transformed,sigma,s1,0.32257425021
+independent,Treatment,Generalized F (original),transformed,sigma,s2,0.395041674979
+independent,Treatment,Generalized F (original),transformed,s1,mu,0.00241018602382
+independent,Treatment,Generalized F (original),transformed,s1,sigma,0.32257425021
+independent,Treatment,Generalized F (original),transformed,s1,s1,0.357089574151
+independent,Treatment,Generalized F (original),transformed,s1,s2,0.423538549018
+independent,Treatment,Generalized F (original),transformed,s2,mu,0.0161776945452
+independent,Treatment,Generalized F (original),transformed,s2,sigma,0.395041674979
+independent,Treatment,Generalized F (original),transformed,s2,s1,0.423538549018
+independent,Treatment,Generalized F (original),transformed,s2,s2,0.548072680521
+independent,Treatment,"Hazards, 1 knot",natural,gamma0,gamma0,0.135967357308
+independent,Treatment,"Hazards, 1 knot",natural,gamma0,gamma1,-0.087572457181
+independent,Treatment,"Hazards, 1 knot",natural,gamma0,gamma2,-0.00525742038013
+independent,Treatment,"Hazards, 1 knot",natural,gamma1,gamma0,-0.087572457181
+independent,Treatment,"Hazards, 1 knot",natural,gamma1,gamma1,0.0663443647345
+independent,Treatment,"Hazards, 1 knot",natural,gamma1,gamma2,0.00441971502142
+independent,Treatment,"Hazards, 1 knot",natural,gamma2,gamma0,-0.00525742038013
+independent,Treatment,"Hazards, 1 knot",natural,gamma2,gamma1,0.00441971502142
+independent,Treatment,"Hazards, 1 knot",natural,gamma2,gamma2,0.000314934704909
+independent,Treatment,"Hazards, 1 knot",transformed,gamma0,gamma0,0.135967357308
+independent,Treatment,"Hazards, 1 knot",transformed,gamma0,gamma1,-0.087572457181
+independent,Treatment,"Hazards, 1 knot",transformed,gamma0,gamma2,-0.00525742038013
+independent,Treatment,"Hazards, 1 knot",transformed,gamma1,gamma0,-0.087572457181
+independent,Treatment,"Hazards, 1 knot",transformed,gamma1,gamma1,0.0663443647345
+independent,Treatment,"Hazards, 1 knot",transformed,gamma1,gamma2,0.00441971502142
+independent,Treatment,"Hazards, 1 knot",transformed,gamma2,gamma0,-0.00525742038013
+independent,Treatment,"Hazards, 1 knot",transformed,gamma2,gamma1,0.00441971502142
+independent,Treatment,"Hazards, 1 knot",transformed,gamma2,gamma2,0.000314934704909
+independent,Treatment,"Hazards, 2 knots",natural,gamma0,gamma0,0.110010611542
+independent,Treatment,"Hazards, 2 knots",natural,gamma0,gamma1,-0.0698751742653
+independent,Treatment,"Hazards, 2 knots",natural,gamma0,gamma2,-0.00460991663897
+independent,Treatment,"Hazards, 2 knots",natural,gamma0,gamma3,0.00143754259264
+independent,Treatment,"Hazards, 2 knots",natural,gamma1,gamma0,-0.0698751742653
+independent,Treatment,"Hazards, 2 knots",natural,gamma1,gamma1,0.0771939563066
+independent,Treatment,"Hazards, 2 knots",natural,gamma1,gamma2,0.0225283866062
+independent,Treatment,"Hazards, 2 knots",natural,gamma1,gamma3,-0.0239395089673
+independent,Treatment,"Hazards, 2 knots",natural,gamma2,gamma0,-0.00460991663897
+independent,Treatment,"Hazards, 2 knots",natural,gamma2,gamma1,0.0225283866062
+independent,Treatment,"Hazards, 2 knots",natural,gamma2,gamma2,0.0157693995553
+independent,Treatment,"Hazards, 2 knots",natural,gamma2,gamma3,-0.0191599829517
+independent,Treatment,"Hazards, 2 knots",natural,gamma3,gamma0,0.00143754259264
+independent,Treatment,"Hazards, 2 knots",natural,gamma3,gamma1,-0.0239395089673
+independent,Treatment,"Hazards, 2 knots",natural,gamma3,gamma2,-0.0191599829517
+independent,Treatment,"Hazards, 2 knots",natural,gamma3,gamma3,0.0235697553513
+independent,Treatment,"Hazards, 2 knots",transformed,gamma0,gamma0,0.110010611542
+independent,Treatment,"Hazards, 2 knots",transformed,gamma0,gamma1,-0.0698751742653
+independent,Treatment,"Hazards, 2 knots",transformed,gamma0,gamma2,-0.00460991663897
+independent,Treatment,"Hazards, 2 knots",transformed,gamma0,gamma3,0.00143754259264
+independent,Treatment,"Hazards, 2 knots",transformed,gamma1,gamma0,-0.0698751742653
+independent,Treatment,"Hazards, 2 knots",transformed,gamma1,gamma1,0.0771939563066
+independent,Treatment,"Hazards, 2 knots",transformed,gamma1,gamma2,0.0225283866062
+independent,Treatment,"Hazards, 2 knots",transformed,gamma1,gamma3,-0.0239395089673
+independent,Treatment,"Hazards, 2 knots",transformed,gamma2,gamma0,-0.00460991663897
+independent,Treatment,"Hazards, 2 knots",transformed,gamma2,gamma1,0.0225283866062
+independent,Treatment,"Hazards, 2 knots",transformed,gamma2,gamma2,0.0157693995553
+independent,Treatment,"Hazards, 2 knots",transformed,gamma2,gamma3,-0.0191599829517
+independent,Treatment,"Hazards, 2 knots",transformed,gamma3,gamma0,0.00143754259264
+independent,Treatment,"Hazards, 2 knots",transformed,gamma3,gamma1,-0.0239395089673
+independent,Treatment,"Hazards, 2 knots",transformed,gamma3,gamma2,-0.0191599829517
+independent,Treatment,"Hazards, 2 knots",transformed,gamma3,gamma3,0.0235697553513
+independent,Treatment,"Hazards, 3 knots",natural,gamma0,gamma0,0.112495058275
+independent,Treatment,"Hazards, 3 knots",natural,gamma0,gamma1,-0.0681218591146
+independent,Treatment,"Hazards, 3 knots",natural,gamma0,gamma2,0.00624582579525
+independent,Treatment,"Hazards, 3 knots",natural,gamma0,gamma3,-0.0229734705774
+independent,Treatment,"Hazards, 3 knots",natural,gamma0,gamma4,0.0157528997014
+independent,Treatment,"Hazards, 3 knots",natural,gamma1,gamma0,-0.0681218591146
+independent,Treatment,"Hazards, 3 knots",natural,gamma1,gamma1,0.0968613716018
+independent,Treatment,"Hazards, 3 knots",natural,gamma1,gamma2,0.0477803694269
+independent,Treatment,"Hazards, 3 knots",natural,gamma1,gamma3,-0.07588653226
+independent,Treatment,"Hazards, 3 knots",natural,gamma1,gamma4,0.0334628808526
+independent,Treatment,"Hazards, 3 knots",natural,gamma2,gamma0,0.00624582579522
+independent,Treatment,"Hazards, 3 knots",natural,gamma2,gamma1,0.0477803694269
+independent,Treatment,"Hazards, 3 knots",natural,gamma2,gamma2,0.0825410335027
+independent,Treatment,"Hazards, 3 knots",natural,gamma2,gamma3,-0.176209629812
+independent,Treatment,"Hazards, 3 knots",natural,gamma2,gamma4,0.108657959033
+independent,Treatment,"Hazards, 3 knots",natural,gamma3,gamma0,-0.0229734705773
+independent,Treatment,"Hazards, 3 knots",natural,gamma3,gamma1,-0.0758865322601
+independent,Treatment,"Hazards, 3 knots",natural,gamma3,gamma2,-0.176209629812
+independent,Treatment,"Hazards, 3 knots",natural,gamma3,gamma3,0.402500948189
+independent,Treatment,"Hazards, 3 knots",natural,gamma3,gamma4,-0.2655071054
+independent,Treatment,"Hazards, 3 knots",natural,gamma4,gamma0,0.0157528997013
+independent,Treatment,"Hazards, 3 knots",natural,gamma4,gamma1,0.0334628808527
+independent,Treatment,"Hazards, 3 knots",natural,gamma4,gamma2,0.108657959033
+independent,Treatment,"Hazards, 3 knots",natural,gamma4,gamma3,-0.2655071054
+independent,Treatment,"Hazards, 3 knots",natural,gamma4,gamma4,0.186154429982
+independent,Treatment,"Hazards, 3 knots",transformed,gamma0,gamma0,0.112495058275
+independent,Treatment,"Hazards, 3 knots",transformed,gamma0,gamma1,-0.0681218591146
+independent,Treatment,"Hazards, 3 knots",transformed,gamma0,gamma2,0.00624582579525
+independent,Treatment,"Hazards, 3 knots",transformed,gamma0,gamma3,-0.0229734705774
+independent,Treatment,"Hazards, 3 knots",transformed,gamma0,gamma4,0.0157528997014
+independent,Treatment,"Hazards, 3 knots",transformed,gamma1,gamma0,-0.0681218591146
+independent,Treatment,"Hazards, 3 knots",transformed,gamma1,gamma1,0.0968613716018
+independent,Treatment,"Hazards, 3 knots",transformed,gamma1,gamma2,0.0477803694269
+independent,Treatment,"Hazards, 3 knots",transformed,gamma1,gamma3,-0.07588653226
+independent,Treatment,"Hazards, 3 knots",transformed,gamma1,gamma4,0.0334628808526
+independent,Treatment,"Hazards, 3 knots",transformed,gamma2,gamma0,0.00624582579522
+independent,Treatment,"Hazards, 3 knots",transformed,gamma2,gamma1,0.0477803694269
+independent,Treatment,"Hazards, 3 knots",transformed,gamma2,gamma2,0.0825410335027
+independent,Treatment,"Hazards, 3 knots",transformed,gamma2,gamma3,-0.176209629812
+independent,Treatment,"Hazards, 3 knots",transformed,gamma2,gamma4,0.108657959033
+independent,Treatment,"Hazards, 3 knots",transformed,gamma3,gamma0,-0.0229734705773
+independent,Treatment,"Hazards, 3 knots",transformed,gamma3,gamma1,-0.0758865322601
+independent,Treatment,"Hazards, 3 knots",transformed,gamma3,gamma2,-0.176209629812
+independent,Treatment,"Hazards, 3 knots",transformed,gamma3,gamma3,0.402500948189
+independent,Treatment,"Hazards, 3 knots",transformed,gamma3,gamma4,-0.2655071054
+independent,Treatment,"Hazards, 3 knots",transformed,gamma4,gamma0,0.0157528997013
+independent,Treatment,"Hazards, 3 knots",transformed,gamma4,gamma1,0.0334628808527
+independent,Treatment,"Hazards, 3 knots",transformed,gamma4,gamma2,0.108657959033
+independent,Treatment,"Hazards, 3 knots",transformed,gamma4,gamma3,-0.2655071054
+independent,Treatment,"Hazards, 3 knots",transformed,gamma4,gamma4,0.186154429982
+independent,Treatment,"Odds, 1 knot",natural,gamma0,gamma0,0.111805880911
+independent,Treatment,"Odds, 1 knot",natural,gamma0,gamma1,-0.0667567029886
+independent,Treatment,"Odds, 1 knot",natural,gamma0,gamma2,-0.00381346008444
+independent,Treatment,"Odds, 1 knot",natural,gamma1,gamma0,-0.0667567029886
+independent,Treatment,"Odds, 1 knot",natural,gamma1,gamma1,0.0589867517092
+independent,Treatment,"Odds, 1 knot",natural,gamma1,gamma2,0.00451944544954
+independent,Treatment,"Odds, 1 knot",natural,gamma2,gamma0,-0.00381346008444
+independent,Treatment,"Odds, 1 knot",natural,gamma2,gamma1,0.00451944544954
+independent,Treatment,"Odds, 1 knot",natural,gamma2,gamma2,0.000413257116878
+independent,Treatment,"Odds, 1 knot",transformed,gamma0,gamma0,0.111805880911
+independent,Treatment,"Odds, 1 knot",transformed,gamma0,gamma1,-0.0667567029886
+independent,Treatment,"Odds, 1 knot",transformed,gamma0,gamma2,-0.00381346008444
+independent,Treatment,"Odds, 1 knot",transformed,gamma1,gamma0,-0.0667567029886
+independent,Treatment,"Odds, 1 knot",transformed,gamma1,gamma1,0.0589867517092
+independent,Treatment,"Odds, 1 knot",transformed,gamma1,gamma2,0.00451944544954
+independent,Treatment,"Odds, 1 knot",transformed,gamma2,gamma0,-0.00381346008444
+independent,Treatment,"Odds, 1 knot",transformed,gamma2,gamma1,0.00451944544954
+independent,Treatment,"Odds, 1 knot",transformed,gamma2,gamma2,0.000413257116878
+independent,Treatment,"Odds, 2 knots",natural,gamma0,gamma0,0.11161810815
+independent,Treatment,"Odds, 2 knots",natural,gamma0,gamma1,-0.0657002478605
+independent,Treatment,"Odds, 2 knots",natural,gamma0,gamma2,-0.000207198314492
+independent,Treatment,"Odds, 2 knots",natural,gamma0,gamma3,-0.00414892082127
+independent,Treatment,"Odds, 2 knots",natural,gamma1,gamma0,-0.0657002478605
+independent,Treatment,"Odds, 2 knots",natural,gamma1,gamma1,0.0792898028982
+independent,Treatment,"Odds, 2 knots",natural,gamma1,gamma2,0.0288668116564
+independent,Treatment,"Odds, 2 knots",natural,gamma1,gamma3,-0.0323146805405
+independent,Treatment,"Odds, 2 knots",natural,gamma2,gamma0,-0.000207198314492
+independent,Treatment,"Odds, 2 knots",natural,gamma2,gamma1,0.0288668116564
+independent,Treatment,"Odds, 2 knots",natural,gamma2,gamma2,0.0364091272626
+independent,Treatment,"Odds, 2 knots",natural,gamma2,gamma3,-0.0472052943308
+independent,Treatment,"Odds, 2 knots",natural,gamma3,gamma0,-0.00414892082127
+independent,Treatment,"Odds, 2 knots",natural,gamma3,gamma1,-0.0323146805405
+independent,Treatment,"Odds, 2 knots",natural,gamma3,gamma2,-0.0472052943308
+independent,Treatment,"Odds, 2 knots",natural,gamma3,gamma3,0.061760642125
+independent,Treatment,"Odds, 2 knots",transformed,gamma0,gamma0,0.11161810815
+independent,Treatment,"Odds, 2 knots",transformed,gamma0,gamma1,-0.0657002478605
+independent,Treatment,"Odds, 2 knots",transformed,gamma0,gamma2,-0.000207198314492
+independent,Treatment,"Odds, 2 knots",transformed,gamma0,gamma3,-0.00414892082127
+independent,Treatment,"Odds, 2 knots",transformed,gamma1,gamma0,-0.0657002478605
+independent,Treatment,"Odds, 2 knots",transformed,gamma1,gamma1,0.0792898028982
+independent,Treatment,"Odds, 2 knots",transformed,gamma1,gamma2,0.0288668116564
+independent,Treatment,"Odds, 2 knots",transformed,gamma1,gamma3,-0.0323146805405
+independent,Treatment,"Odds, 2 knots",transformed,gamma2,gamma0,-0.000207198314492
+independent,Treatment,"Odds, 2 knots",transformed,gamma2,gamma1,0.0288668116564
+independent,Treatment,"Odds, 2 knots",transformed,gamma2,gamma2,0.0364091272626
+independent,Treatment,"Odds, 2 knots",transformed,gamma2,gamma3,-0.0472052943308
+independent,Treatment,"Odds, 2 knots",transformed,gamma3,gamma0,-0.00414892082127
+independent,Treatment,"Odds, 2 knots",transformed,gamma3,gamma1,-0.0323146805405
+independent,Treatment,"Odds, 2 knots",transformed,gamma3,gamma2,-0.0472052943308
+independent,Treatment,"Odds, 2 knots",transformed,gamma3,gamma3,0.061760642125
+independent,Treatment,"Odds, 3 knots",natural,gamma0,gamma0,0.115383408456
+independent,Treatment,"Odds, 3 knots",natural,gamma0,gamma1,-0.0651490359142
+independent,Treatment,"Odds, 3 knots",natural,gamma0,gamma2,0.0131551467969
+independent,Treatment,"Odds, 3 knots",natural,gamma0,gamma3,-0.0387473718653
+independent,Treatment,"Odds, 3 knots",natural,gamma0,gamma4,0.0261623507694
+independent,Treatment,"Odds, 3 knots",natural,gamma1,gamma0,-0.0651490359142
+independent,Treatment,"Odds, 3 knots",natural,gamma1,gamma1,0.098701345606
+independent,Treatment,"Odds, 3 knots",natural,gamma1,gamma2,0.0566553242577
+independent,Treatment,"Odds, 3 knots",natural,gamma1,gamma3,-0.0979725117723
+independent,Treatment,"Odds, 3 knots",natural,gamma1,gamma4,0.0491953685731
+independent,Treatment,"Odds, 3 knots",natural,gamma2,gamma0,0.0131551467969
+independent,Treatment,"Odds, 3 knots",natural,gamma2,gamma1,0.0566553242576
+independent,Treatment,"Odds, 3 knots",natural,gamma2,gamma2,0.139099860117
+independent,Treatment,"Odds, 3 knots",natural,gamma2,gamma3,-0.333252421276
+independent,Treatment,"Odds, 3 knots",natural,gamma2,gamma4,0.230617169142
+independent,Treatment,"Odds, 3 knots",natural,gamma3,gamma0,-0.0387473718654
+independent,Treatment,"Odds, 3 knots",natural,gamma3,gamma1,-0.0979725117721
+independent,Treatment,"Odds, 3 knots",natural,gamma3,gamma2,-0.333252421276
+independent,Treatment,"Odds, 3 knots",natural,gamma3,gamma3,0.875258874801
+independent,Treatment,"Odds, 3 knots",natural,gamma3,gamma4,-0.655968353254
+independent,Treatment,"Odds, 3 knots",natural,gamma4,gamma0,0.0261623507694
+independent,Treatment,"Odds, 3 knots",natural,gamma4,gamma1,0.049195368573
+independent,Treatment,"Odds, 3 knots",natural,gamma4,gamma2,0.230617169142
+independent,Treatment,"Odds, 3 knots",natural,gamma4,gamma3,-0.655968353254
+independent,Treatment,"Odds, 3 knots",natural,gamma4,gamma4,0.522395728265
+independent,Treatment,"Odds, 3 knots",transformed,gamma0,gamma0,0.115383408456
+independent,Treatment,"Odds, 3 knots",transformed,gamma0,gamma1,-0.0651490359142
+independent,Treatment,"Odds, 3 knots",transformed,gamma0,gamma2,0.0131551467969
+independent,Treatment,"Odds, 3 knots",transformed,gamma0,gamma3,-0.0387473718653
+independent,Treatment,"Odds, 3 knots",transformed,gamma0,gamma4,0.0261623507694
+independent,Treatment,"Odds, 3 knots",transformed,gamma1,gamma0,-0.0651490359142
+independent,Treatment,"Odds, 3 knots",transformed,gamma1,gamma1,0.098701345606
+independent,Treatment,"Odds, 3 knots",transformed,gamma1,gamma2,0.0566553242577
+independent,Treatment,"Odds, 3 knots",transformed,gamma1,gamma3,-0.0979725117723
+independent,Treatment,"Odds, 3 knots",transformed,gamma1,gamma4,0.0491953685731
+independent,Treatment,"Odds, 3 knots",transformed,gamma2,gamma0,0.0131551467969
+independent,Treatment,"Odds, 3 knots",transformed,gamma2,gamma1,0.0566553242576
+independent,Treatment,"Odds, 3 knots",transformed,gamma2,gamma2,0.139099860117
+independent,Treatment,"Odds, 3 knots",transformed,gamma2,gamma3,-0.333252421276
+independent,Treatment,"Odds, 3 knots",transformed,gamma2,gamma4,0.230617169142
+independent,Treatment,"Odds, 3 knots",transformed,gamma3,gamma0,-0.0387473718654
+independent,Treatment,"Odds, 3 knots",transformed,gamma3,gamma1,-0.0979725117721
+independent,Treatment,"Odds, 3 knots",transformed,gamma3,gamma2,-0.333252421276
+independent,Treatment,"Odds, 3 knots",transformed,gamma3,gamma3,0.875258874801
+independent,Treatment,"Odds, 3 knots",transformed,gamma3,gamma4,-0.655968353254
+independent,Treatment,"Odds, 3 knots",transformed,gamma4,gamma0,0.0261623507694
+independent,Treatment,"Odds, 3 knots",transformed,gamma4,gamma1,0.049195368573
+independent,Treatment,"Odds, 3 knots",transformed,gamma4,gamma2,0.230617169142
+independent,Treatment,"Odds, 3 knots",transformed,gamma4,gamma3,-0.655968353254
+independent,Treatment,"Odds, 3 knots",transformed,gamma4,gamma4,0.522395728265
+independent,Treatment,"Normal, 1 knot",natural,gamma0,gamma0,0.0182939097569
+independent,Treatment,"Normal, 1 knot",natural,gamma0,gamma1,-0.00916908616119
+independent,Treatment,"Normal, 1 knot",natural,gamma0,gamma2,-0.000430671502943
+independent,Treatment,"Normal, 1 knot",natural,gamma1,gamma0,-0.00916908616119
+independent,Treatment,"Normal, 1 knot",natural,gamma1,gamma1,0.0100996959402
+independent,Treatment,"Normal, 1 knot",natural,gamma1,gamma2,0.000836284099088
+independent,Treatment,"Normal, 1 knot",natural,gamma2,gamma0,-0.000430671502943
+independent,Treatment,"Normal, 1 knot",natural,gamma2,gamma1,0.000836284099088
+independent,Treatment,"Normal, 1 knot",natural,gamma2,gamma2,8.64519037337e-05
+independent,Treatment,"Normal, 1 knot",transformed,gamma0,gamma0,0.0182939097569
+independent,Treatment,"Normal, 1 knot",transformed,gamma0,gamma1,-0.00916908616119
+independent,Treatment,"Normal, 1 knot",transformed,gamma0,gamma2,-0.000430671502943
+independent,Treatment,"Normal, 1 knot",transformed,gamma1,gamma0,-0.00916908616119
+independent,Treatment,"Normal, 1 knot",transformed,gamma1,gamma1,0.0100996959402
+independent,Treatment,"Normal, 1 knot",transformed,gamma1,gamma2,0.000836284099088
+independent,Treatment,"Normal, 1 knot",transformed,gamma2,gamma0,-0.000430671502943
+independent,Treatment,"Normal, 1 knot",transformed,gamma2,gamma1,0.000836284099088
+independent,Treatment,"Normal, 1 knot",transformed,gamma2,gamma2,8.64519037337e-05
+independent,Treatment,"Normal, 2 knots",natural,gamma0,gamma0,0.0182324239656
+independent,Treatment,"Normal, 2 knots",natural,gamma0,gamma1,-0.00694267059857
+independent,Treatment,"Normal, 2 knots",natural,gamma0,gamma2,0.00238152138901
+independent,Treatment,"Normal, 2 knots",natural,gamma0,gamma3,-0.00354589404872
+independent,Treatment,"Normal, 2 knots",natural,gamma1,gamma0,-0.00694267059857
+independent,Treatment,"Normal, 2 knots",natural,gamma1,gamma1,0.0118866664734
+independent,Treatment,"Normal, 2 knots",natural,gamma1,gamma2,0.00550671640831
+independent,Treatment,"Normal, 2 knots",natural,gamma1,gamma3,-0.00637088534857
+independent,Treatment,"Normal, 2 knots",natural,gamma2,gamma0,0.00238152138901
+independent,Treatment,"Normal, 2 knots",natural,gamma2,gamma1,0.00550671640831
+independent,Treatment,"Normal, 2 knots",natural,gamma2,gamma2,0.00967658960095
+independent,Treatment,"Normal, 2 knots",natural,gamma2,gamma3,-0.0126895705511
+independent,Treatment,"Normal, 2 knots",natural,gamma3,gamma0,-0.00354589404872
+independent,Treatment,"Normal, 2 knots",natural,gamma3,gamma1,-0.00637088534857
+independent,Treatment,"Normal, 2 knots",natural,gamma3,gamma2,-0.0126895705511
+independent,Treatment,"Normal, 2 knots",natural,gamma3,gamma3,0.0167474963414
+independent,Treatment,"Normal, 2 knots",transformed,gamma0,gamma0,0.0182324239656
+independent,Treatment,"Normal, 2 knots",transformed,gamma0,gamma1,-0.00694267059857
+independent,Treatment,"Normal, 2 knots",transformed,gamma0,gamma2,0.00238152138901
+independent,Treatment,"Normal, 2 knots",transformed,gamma0,gamma3,-0.00354589404872
+independent,Treatment,"Normal, 2 knots",transformed,gamma1,gamma0,-0.00694267059857
+independent,Treatment,"Normal, 2 knots",transformed,gamma1,gamma1,0.0118866664734
+independent,Treatment,"Normal, 2 knots",transformed,gamma1,gamma2,0.00550671640831
+independent,Treatment,"Normal, 2 knots",transformed,gamma1,gamma3,-0.00637088534857
+independent,Treatment,"Normal, 2 knots",transformed,gamma2,gamma0,0.00238152138901
+independent,Treatment,"Normal, 2 knots",transformed,gamma2,gamma1,0.00550671640831
+independent,Treatment,"Normal, 2 knots",transformed,gamma2,gamma2,0.00967658960095
+independent,Treatment,"Normal, 2 knots",transformed,gamma2,gamma3,-0.0126895705511
+independent,Treatment,"Normal, 2 knots",transformed,gamma3,gamma0,-0.00354589404872
+independent,Treatment,"Normal, 2 knots",transformed,gamma3,gamma1,-0.00637088534857
+independent,Treatment,"Normal, 2 knots",transformed,gamma3,gamma2,-0.0126895705511
+independent,Treatment,"Normal, 2 knots",transformed,gamma3,gamma3,0.0167474963414
+independent,Treatment,"Normal, 3 knots",natural,gamma0,gamma0,0.0191668207351
+independent,Treatment,"Normal, 3 knots",natural,gamma0,gamma1,-0.00663187522152
+independent,Treatment,"Normal, 3 knots",natural,gamma0,gamma2,0.00606762043666
+independent,Treatment,"Normal, 3 knots",natural,gamma0,gamma3,-0.0134085775774
+independent,Treatment,"Normal, 3 knots",natural,gamma0,gamma4,0.00787740176008
+independent,Treatment,"Normal, 3 knots",natural,gamma1,gamma0,-0.00663187522152
+independent,Treatment,"Normal, 3 knots",natural,gamma1,gamma1,0.0153487243115
+independent,Treatment,"Normal, 3 knots",natural,gamma1,gamma2,0.0116476352008
+independent,Treatment,"Normal, 3 knots",natural,gamma1,gamma3,-0.0210482509376
+independent,Treatment,"Normal, 3 knots",natural,gamma1,gamma4,0.0109327143103
+independent,Treatment,"Normal, 3 knots",natural,gamma2,gamma0,0.00606762043665
+independent,Treatment,"Normal, 3 knots",natural,gamma2,gamma1,0.0116476352008
+independent,Treatment,"Normal, 3 knots",natural,gamma2,gamma2,0.0428781324093
+independent,Treatment,"Normal, 3 knots",natural,gamma2,gamma3,-0.105846405479
+independent,Treatment,"Normal, 3 knots",natural,gamma2,gamma4,0.074673964008
+independent,Treatment,"Normal, 3 knots",natural,gamma3,gamma0,-0.0134085775774
+independent,Treatment,"Normal, 3 knots",natural,gamma3,gamma1,-0.0210482509376
+independent,Treatment,"Normal, 3 knots",natural,gamma3,gamma2,-0.105846405479
+independent,Treatment,"Normal, 3 knots",natural,gamma3,gamma3,0.281467737826
+independent,Treatment,"Normal, 3 knots",natural,gamma3,gamma4,-0.211600652916
+independent,Treatment,"Normal, 3 knots",natural,gamma4,gamma0,0.00787740176006
+independent,Treatment,"Normal, 3 knots",natural,gamma4,gamma1,0.0109327143103
+independent,Treatment,"Normal, 3 knots",natural,gamma4,gamma2,0.0746739640079
+independent,Treatment,"Normal, 3 knots",natural,gamma4,gamma3,-0.211600652916
+independent,Treatment,"Normal, 3 knots",natural,gamma4,gamma4,0.167036137026
+independent,Treatment,"Normal, 3 knots",transformed,gamma0,gamma0,0.0191668207351
+independent,Treatment,"Normal, 3 knots",transformed,gamma0,gamma1,-0.00663187522152
+independent,Treatment,"Normal, 3 knots",transformed,gamma0,gamma2,0.00606762043666
+independent,Treatment,"Normal, 3 knots",transformed,gamma0,gamma3,-0.0134085775774
+independent,Treatment,"Normal, 3 knots",transformed,gamma0,gamma4,0.00787740176008
+independent,Treatment,"Normal, 3 knots",transformed,gamma1,gamma0,-0.00663187522152
+independent,Treatment,"Normal, 3 knots",transformed,gamma1,gamma1,0.0153487243115
+independent,Treatment,"Normal, 3 knots",transformed,gamma1,gamma2,0.0116476352008
+independent,Treatment,"Normal, 3 knots",transformed,gamma1,gamma3,-0.0210482509376
+independent,Treatment,"Normal, 3 knots",transformed,gamma1,gamma4,0.0109327143103
+independent,Treatment,"Normal, 3 knots",transformed,gamma2,gamma0,0.00606762043665
+independent,Treatment,"Normal, 3 knots",transformed,gamma2,gamma1,0.0116476352008
+independent,Treatment,"Normal, 3 knots",transformed,gamma2,gamma2,0.0428781324093
+independent,Treatment,"Normal, 3 knots",transformed,gamma2,gamma3,-0.105846405479
+independent,Treatment,"Normal, 3 knots",transformed,gamma2,gamma4,0.074673964008
+independent,Treatment,"Normal, 3 knots",transformed,gamma3,gamma0,-0.0134085775774
+independent,Treatment,"Normal, 3 knots",transformed,gamma3,gamma1,-0.0210482509376
+independent,Treatment,"Normal, 3 knots",transformed,gamma3,gamma2,-0.105846405479
+independent,Treatment,"Normal, 3 knots",transformed,gamma3,gamma3,0.281467737826
+independent,Treatment,"Normal, 3 knots",transformed,gamma3,gamma4,-0.211600652916
+independent,Treatment,"Normal, 3 knots",transformed,gamma4,gamma0,0.00787740176006
+independent,Treatment,"Normal, 3 knots",transformed,gamma4,gamma1,0.0109327143103
+independent,Treatment,"Normal, 3 knots",transformed,gamma4,gamma2,0.0746739640079
+independent,Treatment,"Normal, 3 knots",transformed,gamma4,gamma3,-0.211600652916
+independent,Treatment,"Normal, 3 knots",transformed,gamma4,gamma4,0.167036137026
+dependent,Both arms,Exponential,natural,rate,rate,2.46713456532e-05
+dependent,Both arms,Exponential,natural,rate,ARMTreatment,-0.000301725331583
+dependent,Both arms,Exponential,natural,ARMTreatment,rate,-0.000301725331583
+dependent,Both arms,Exponential,natural,ARMTreatment,ARMTreatment,0.0078567035589
+dependent,Both arms,Exponential,transformed,rate,rate,0.00369003689939
+dependent,Both arms,Exponential,transformed,rate,ARMTreatment,-0.00369003689739
+dependent,Both arms,Exponential,transformed,ARMTreatment,rate,-0.00369003689739
+dependent,Both arms,Exponential,transformed,ARMTreatment,ARMTreatment,0.0078567035589
+dependent,Both arms,Weibull,natural,shape,shape,0.0019671503515
+dependent,Both arms,Weibull,natural,shape,scale,0.00530115525747
+dependent,Both arms,Weibull,natural,shape,ARMTreatment,-0.000144546583004
+dependent,Both arms,Weibull,natural,scale,shape,0.00530115525747
+dependent,Both arms,Weibull,natural,scale,scale,0.372774240703
+dependent,Both arms,Weibull,natural,scale,ARMTreatment,-0.0278745540218
+dependent,Both arms,Weibull,natural,ARMTreatment,shape,-0.000144546583004
+dependent,Both arms,Weibull,natural,ARMTreatment,scale,-0.0278745540218
+dependent,Both arms,Weibull,natural,ARMTreatment,ARMTreatment,0.00449731792311
+dependent,Both arms,Weibull,transformed,shape,shape,0.00112337276517
+dependent,Both arms,Weibull,transformed,shape,scale,0.000307138751583
+dependent,Both arms,Weibull,transformed,shape,ARMTreatment,-0.000109232279714
+dependent,Both arms,Weibull,transformed,scale,shape,0.000307138751583
+dependent,Both arms,Weibull,transformed,scale,scale,0.00219122886435
+dependent,Both arms,Weibull,transformed,scale,ARMTreatment,-0.00213711971417
+dependent,Both arms,Weibull,transformed,ARMTreatment,shape,-0.000109232279714
+dependent,Both arms,Weibull,transformed,ARMTreatment,scale,-0.00213711971417
+dependent,Both arms,Weibull,transformed,ARMTreatment,ARMTreatment,0.00449731792311
+dependent,Both arms,Weibull (PH),natural,shape,shape,0.00196715035328
+dependent,Both arms,Weibull (PH),natural,shape,scale,-0.000186824580083
+dependent,Both arms,Weibull (PH),natural,shape,ARMTreatment,-0.000730849132743
+dependent,Both arms,Weibull (PH),natural,scale,shape,-0.000186824580083
+dependent,Both arms,Weibull (PH),natural,scale,scale,2.18648600034e-05
+dependent,Both arms,Weibull (PH),natural,scale,ARMTreatment,-5.39156457935e-05
+dependent,Both arms,Weibull (PH),natural,ARMTreatment,shape,-0.000730849132743
+dependent,Both arms,Weibull (PH),natural,ARMTreatment,scale,-5.39156457935e-05
+dependent,Both arms,Weibull (PH),natural,ARMTreatment,ARMTreatment,0.00812823364703
+dependent,Both arms,Weibull (PH),transformed,shape,shape,0.00112337276618
+dependent,Both arms,Weibull (PH),transformed,shape,scale,-0.00422428570955
+dependent,Both arms,Weibull (PH),transformed,shape,ARMTreatment,-0.000552294735979
+dependent,Both arms,Weibull (PH),transformed,scale,shape,-0.00422428570955
+dependent,Both arms,Weibull (PH),transformed,scale,scale,0.0195748707675
+dependent,Both arms,Weibull (PH),transformed,scale,ARMTreatment,-0.00161321002717
+dependent,Both arms,Weibull (PH),transformed,ARMTreatment,shape,-0.000552294735979
+dependent,Both arms,Weibull (PH),transformed,ARMTreatment,scale,-0.00161321002717
+dependent,Both arms,Weibull (PH),transformed,ARMTreatment,ARMTreatment,0.00812823364703
+dependent,Both arms,Rayleigh,natural,scale,scale,0.208352247608
+dependent,Both arms,Rayleigh,natural,scale,ARMTreatment,-0.0138638692452
+dependent,Both arms,Rayleigh,natural,ARMTreatment,scale,-0.0138638692452
+dependent,Both arms,Rayleigh,natural,ARMTreatment,ARMTreatment,0.00196417589148
+dependent,Both arms,Rayleigh,transformed,scale,scale,0.000922509225036
+dependent,Both arms,Rayleigh,transformed,scale,ARMTreatment,-0.000922509224971
+dependent,Both arms,Rayleigh,transformed,ARMTreatment,scale,-0.000922509224971
+dependent,Both arms,Rayleigh,transformed,ARMTreatment,ARMTreatment,0.00196417589148
+dependent,Both arms,Lognormal,natural,meanlog,meanlog,0.00322813354443
+dependent,Both arms,Lognormal,natural,meanlog,sdlog,5.34325728092e-05
+dependent,Both arms,Lognormal,natural,meanlog,ARMTreatment,-0.00322087418703
+dependent,Both arms,Lognormal,natural,sdlog,meanlog,5.34325728092e-05
+dependent,Both arms,Lognormal,natural,sdlog,sdlog,0.000896662591523
+dependent,Both arms,Lognormal,natural,sdlog,ARMTreatment,6.83880849716e-05
+dependent,Both arms,Lognormal,natural,ARMTreatment,meanlog,-0.00322087418703
+dependent,Both arms,Lognormal,natural,ARMTreatment,sdlog,6.83880849716e-05
+dependent,Both arms,Lognormal,natural,ARMTreatment,ARMTreatment,0.00661290141869
+dependent,Both arms,Lognormal,transformed,meanlog,meanlog,0.00322813354443
+dependent,Both arms,Lognormal,transformed,meanlog,sdlog,5.58473168201e-05
+dependent,Both arms,Lognormal,transformed,meanlog,ARMTreatment,-0.00322087418703
+dependent,Both arms,Lognormal,transformed,sdlog,meanlog,5.58473168201e-05
+dependent,Both arms,Lognormal,transformed,sdlog,sdlog,0.000979538485166
+dependent,Both arms,Lognormal,transformed,sdlog,ARMTreatment,7.14787038567e-05
+dependent,Both arms,Lognormal,transformed,ARMTreatment,meanlog,-0.00322087418703
+dependent,Both arms,Lognormal,transformed,ARMTreatment,sdlog,7.14787038567e-05
+dependent,Both arms,Lognormal,transformed,ARMTreatment,ARMTreatment,0.00661290141869
+dependent,Both arms,Log-logistic,natural,shape,shape,0.00521432029593
+dependent,Both arms,Log-logistic,natural,shape,scale,0.000700786297446
+dependent,Both arms,Log-logistic,natural,shape,ARMTreatment,-0.000133991974718
+dependent,Both arms,Log-logistic,natural,scale,shape,0.000700786297446
+dependent,Both arms,Log-logistic,natural,scale,scale,0.233937255079
+dependent,Both arms,Log-logistic,natural,scale,ARMTreatment,-0.0250718993912
+dependent,Both arms,Log-logistic,natural,ARMTreatment,shape,-0.000133991974718
+dependent,Both arms,Log-logistic,natural,ARMTreatment,scale,-0.0250718993912
+dependent,Both arms,Log-logistic,natural,ARMTreatment,ARMTreatment,0.00554585608466
+dependent,Both arms,Log-logistic,transformed,shape,shape,0.0013647652939
+dependent,Both arms,Log-logistic,transformed,shape,scale,3.84119554031e-05
+dependent,Both arms,Log-logistic,transformed,shape,ARMTreatment,-6.85502306147e-05
+dependent,Both arms,Log-logistic,transformed,scale,shape,3.84119554031e-05
+dependent,Both arms,Log-logistic,transformed,scale,scale,0.00268534910623
+dependent,Both arms,Log-logistic,transformed,scale,ARMTreatment,-0.00268619736266
+dependent,Both arms,Log-logistic,transformed,ARMTreatment,shape,-6.85502306147e-05
+dependent,Both arms,Log-logistic,transformed,ARMTreatment,scale,-0.00268619736266
+dependent,Both arms,Log-logistic,transformed,ARMTreatment,ARMTreatment,0.00554585608466
+dependent,Both arms,Gompertz,natural,shape,shape,1.29981550335e-05
+dependent,Both arms,Gompertz,natural,shape,rate,-9.80818659501e-06
+dependent,Both arms,Gompertz,natural,shape,ARMTreatment,-6.49639107849e-05
+dependent,Both arms,Gompertz,natural,rate,shape,-9.80818659501e-06
+dependent,Both arms,Gompertz,natural,rate,rate,2.50149145639e-05
+dependent,Both arms,Gompertz,natural,rate,ARMTreatment,-0.000205921802792
+dependent,Both arms,Gompertz,natural,ARMTreatment,shape,-6.49639107849e-05
+dependent,Both arms,Gompertz,natural,ARMTreatment,rate,-0.000205921802792
+dependent,Both arms,Gompertz,natural,ARMTreatment,ARMTreatment,0.00818138886264
+dependent,Both arms,Gompertz,transformed,shape,shape,1.29981550335e-05
+dependent,Both arms,Gompertz,transformed,shape,rate,-0.000141963680279
+dependent,Both arms,Gompertz,transformed,shape,ARMTreatment,-6.49639107849e-05
+dependent,Both arms,Gompertz,transformed,rate,shape,-0.000141963680279
+dependent,Both arms,Gompertz,transformed,rate,rate,0.0052405405289
+dependent,Both arms,Gompertz,transformed,rate,ARMTreatment,-0.00298051191123
+dependent,Both arms,Gompertz,transformed,ARMTreatment,shape,-6.49639107849e-05
+dependent,Both arms,Gompertz,transformed,ARMTreatment,rate,-0.00298051191123
+dependent,Both arms,Gompertz,transformed,ARMTreatment,ARMTreatment,0.00818138886264
+dependent,Both arms,Gamma,natural,shape,shape,0.00816217568341
+dependent,Both arms,Gamma,natural,shape,rate,0.000699419167271
+dependent,Both arms,Gamma,natural,shape,ARMTreatment,0.000242883041786
+dependent,Both arms,Gamma,natural,rate,shape,0.000699419167271
+dependent,Both arms,Gamma,natural,rate,rate,0.000100899330754
+dependent,Both arms,Gamma,natural,rate,ARMTreatment,-0.000283102271841
+dependent,Both arms,Gamma,natural,ARMTreatment,shape,0.000242883041786
+dependent,Both arms,Gamma,natural,ARMTreatment,rate,-0.000283102271841
+dependent,Both arms,Gamma,natural,ARMTreatment,ARMTreatment,0.00475904515962
+dependent,Both arms,Gamma,transformed,shape,shape,0.00311170288098
+dependent,Both arms,Gamma,transformed,shape,rate,0.00320378391224
+dependent,Both arms,Gamma,transformed,shape,ARMTreatment,0.000149966164784
+dependent,Both arms,Gamma,transformed,rate,shape,0.00320378391224
+dependent,Both arms,Gamma,transformed,rate,rate,0.00555325319264
+dependent,Both arms,Gamma,transformed,rate,ARMTreatment,-0.00210025945819
+dependent,Both arms,Gamma,transformed,ARMTreatment,shape,0.000149966164784
+dependent,Both arms,Gamma,transformed,ARMTreatment,rate,-0.00210025945819
+dependent,Both arms,Gamma,transformed,ARMTreatment,ARMTreatment,0.00475904515962
+dependent,Both arms,Generalized Gamma,natural,mu,mu,0.00376779468236
+dependent,Both arms,Generalized Gamma,natural,mu,sigma,-0.000785603121433
+dependent,Both arms,Generalized Gamma,natural,mu,Q,0.00366948533638
+dependent,Both arms,Generalized Gamma,natural,mu,ARMTreatment,-0.00229995463716
+dependent,Both arms,Generalized Gamma,natural,sigma,mu,-0.000785603121433
+dependent,Both arms,Generalized Gamma,natural,sigma,sigma,0.000955557465261
+dependent,Both arms,Generalized Gamma,natural,sigma,Q,-0.00155916283682
+dependent,Both arms,Generalized Gamma,natural,sigma,ARMTreatment,6.64760338763e-05
+dependent,Both arms,Generalized Gamma,natural,Q,mu,0.00366948533638
+dependent,Both arms,Generalized Gamma,natural,Q,sigma,-0.00155916283682
+dependent,Both arms,Generalized Gamma,natural,Q,Q,0.00941789251659
+dependent,Both arms,Generalized Gamma,natural,Q,ARMTreatment,2.76191094005e-05
+dependent,Both arms,Generalized Gamma,natural,ARMTreatment,mu,-0.00229995463716
+dependent,Both arms,Generalized Gamma,natural,ARMTreatment,sigma,6.64760338763e-05
+dependent,Both arms,Generalized Gamma,natural,ARMTreatment,Q,2.76191094005e-05
+dependent,Both arms,Generalized Gamma,natural,ARMTreatment,ARMTreatment,0.0048321588393
+dependent,Both arms,Generalized Gamma,transformed,mu,mu,0.00376779468236
+dependent,Both arms,Generalized Gamma,transformed,mu,sigma,-0.000990711911665
+dependent,Both arms,Generalized Gamma,transformed,mu,Q,0.00366948533638
+dependent,Both arms,Generalized Gamma,transformed,mu,ARMTreatment,-0.00229995463716
+dependent,Both arms,Generalized Gamma,transformed,sigma,mu,-0.000990711911665
+dependent,Both arms,Generalized Gamma,transformed,sigma,sigma,0.00151965561262
+dependent,Both arms,Generalized Gamma,transformed,sigma,Q,-0.00196623607076
+dependent,Both arms,Generalized Gamma,transformed,sigma,ARMTreatment,8.38318952722e-05
+dependent,Both arms,Generalized Gamma,transformed,Q,mu,0.00366948533638
+dependent,Both arms,Generalized Gamma,transformed,Q,sigma,-0.00196623607076
+dependent,Both arms,Generalized Gamma,transformed,Q,Q,0.00941789251659
+dependent,Both arms,Generalized Gamma,transformed,Q,ARMTreatment,2.76191094005e-05
+dependent,Both arms,Generalized Gamma,transformed,ARMTreatment,mu,-0.00229995463716
+dependent,Both arms,Generalized Gamma,transformed,ARMTreatment,sigma,8.38318952722e-05
+dependent,Both arms,Generalized Gamma,transformed,ARMTreatment,Q,2.76191094005e-05
+dependent,Both arms,Generalized Gamma,transformed,ARMTreatment,ARMTreatment,0.0048321588393
+dependent,Both arms,Generalized Gamma (original),natural,shape,shape,0.0210661800866
+dependent,Both arms,Generalized Gamma (original),natural,shape,scale,0.373781971103
+dependent,Both arms,Generalized Gamma (original),natural,shape,k,-0.064157920034
+dependent,Both arms,Generalized Gamma (original),natural,shape,ARMTreatment,-4.48734399092e-05
+dependent,Both arms,Generalized Gamma (original),natural,scale,shape,0.373781971103
+dependent,Both arms,Generalized Gamma (original),natural,scale,scale,6.88850808425
+dependent,Both arms,Generalized Gamma (original),natural,scale,k,-1.17766326649
+dependent,Both arms,Generalized Gamma (original),natural,scale,ARMTreatment,-0.014737049515
+dependent,Both arms,Generalized Gamma (original),natural,k,shape,-0.064157920034
+dependent,Both arms,Generalized Gamma (original),natural,k,scale,-1.17766326649
+dependent,Both arms,Generalized Gamma (original),natural,k,k,0.205159550129
+dependent,Both arms,Generalized Gamma (original),natural,k,ARMTreatment,-0.000128905705163
+dependent,Both arms,Generalized Gamma (original),natural,ARMTreatment,shape,-4.48734399092e-05
+dependent,Both arms,Generalized Gamma (original),natural,ARMTreatment,scale,-0.014737049515
+dependent,Both arms,Generalized Gamma (original),natural,ARMTreatment,k,-0.000128905705163
+dependent,Both arms,Generalized Gamma (original),natural,ARMTreatment,ARMTreatment,0.00483215884831
+dependent,Both arms,Generalized Gamma (original),transformed,shape,shape,0.0233054041199
+dependent,Both arms,Generalized Gamma (original),transformed,shape,scale,0.0600491318851
+dependent,Both arms,Generalized Gamma (original),transformed,shape,k,-0.0383553971898
+dependent,Both arms,Generalized Gamma (original),transformed,shape,ARMTreatment,-4.71981293076e-05
+dependent,Both arms,Generalized Gamma (original),transformed,scale,shape,0.0600491318851
+dependent,Both arms,Generalized Gamma (original),transformed,scale,scale,0.16070563072
+dependent,Both arms,Generalized Gamma (original),transformed,scale,k,-0.102238595595
+dependent,Both arms,Generalized Gamma (original),transformed,scale,ARMTreatment,-0.00225093784647
+dependent,Both arms,Generalized Gamma (original),transformed,k,shape,-0.0383553971898
+dependent,Both arms,Generalized Gamma (original),transformed,k,scale,-0.102238595595
+dependent,Both arms,Generalized Gamma (original),transformed,k,k,0.066278597452
+dependent,Both arms,Generalized Gamma (original),transformed,k,ARMTreatment,-7.32677617821e-05
+dependent,Both arms,Generalized Gamma (original),transformed,ARMTreatment,shape,-4.71981293076e-05
+dependent,Both arms,Generalized Gamma (original),transformed,ARMTreatment,scale,-0.00225093784647
+dependent,Both arms,Generalized Gamma (original),transformed,ARMTreatment,k,-7.32677617821e-05
+dependent,Both arms,Generalized Gamma (original),transformed,ARMTreatment,ARMTreatment,0.00483215884831
+dependent,Both arms,Generalized F,natural,mu,mu,0.00365765219278
+dependent,Both arms,Generalized F,natural,mu,sigma,-0.000869240060715
+dependent,Both arms,Generalized F,natural,mu,Q,0.00561952816084
+dependent,Both arms,Generalized F,natural,mu,P,0.00416127171114
+dependent,Both arms,Generalized F,natural,mu,ARMTreatment,-0.00204132006208
+dependent,Both arms,Generalized F,natural,sigma,mu,-0.000869240060715
+dependent,Both arms,Generalized F,natural,sigma,sigma,0.00541222910149
+dependent,Both arms,Generalized F,natural,sigma,Q,-0.0034372318725
+dependent,Both arms,Generalized F,natural,sigma,P,-0.0564926390807
+dependent,Both arms,Generalized F,natural,sigma,ARMTreatment,0.000719777206979
+dependent,Both arms,Generalized F,natural,Q,mu,0.00561952816084
+dependent,Both arms,Generalized F,natural,Q,sigma,-0.0034372318725
+dependent,Both arms,Generalized F,natural,Q,Q,0.0210476701966
+dependent,Both arms,Generalized F,natural,Q,P,0.0212390856087
+dependent,Both arms,Generalized F,natural,Q,ARMTreatment,0.000321707059487
+dependent,Both arms,Generalized F,natural,P,mu,0.00416127171114
+dependent,Both arms,Generalized F,natural,P,sigma,-0.0564926390807
+dependent,Both arms,Generalized F,natural,P,Q,0.0212390856087
+dependent,Both arms,Generalized F,natural,P,P,0.66689649841
+dependent,Both arms,Generalized F,natural,P,ARMTreatment,-0.00860892425455
+dependent,Both arms,Generalized F,natural,ARMTreatment,mu,-0.00204132006208
+dependent,Both arms,Generalized F,natural,ARMTreatment,sigma,0.000719777206979
+dependent,Both arms,Generalized F,natural,ARMTreatment,Q,0.000321707059487
+dependent,Both arms,Generalized F,natural,ARMTreatment,P,-0.00860892425455
+dependent,Both arms,Generalized F,natural,ARMTreatment,ARMTreatment,0.00470340786576
+dependent,Both arms,Generalized F,transformed,mu,mu,0.00365765219278
+dependent,Both arms,Generalized F,transformed,mu,sigma,-0.00152673801591
+dependent,Both arms,Generalized F,transformed,mu,Q,0.00561952816084
+dependent,Both arms,Generalized F,transformed,mu,P,0.0023171705158
+dependent,Both arms,Generalized F,transformed,mu,ARMTreatment,-0.00204132006208
+dependent,Both arms,Generalized F,transformed,sigma,mu,-0.00152673801591
+dependent,Both arms,Generalized F,transformed,sigma,sigma,0.0166965116415
+dependent,Both arms,Generalized F,transformed,sigma,Q,-0.00603717293577
+dependent,Both arms,Generalized F,transformed,sigma,P,-0.0552520720471
+dependent,Both arms,Generalized F,transformed,sigma,ARMTreatment,0.00126422063886
+dependent,Both arms,Generalized F,transformed,Q,mu,0.00561952816084
+dependent,Both arms,Generalized F,transformed,Q,sigma,-0.00603717293577
+dependent,Both arms,Generalized F,transformed,Q,Q,0.0210476701966
+dependent,Both arms,Generalized F,transformed,Q,P,0.0118268131406
+dependent,Both arms,Generalized F,transformed,Q,ARMTreatment,0.000321707059487
+dependent,Both arms,Generalized F,transformed,P,mu,0.0023171705158
+dependent,Both arms,Generalized F,transformed,P,sigma,-0.0552520720471
+dependent,Both arms,Generalized F,transformed,P,Q,0.0118268131406
+dependent,Both arms,Generalized F,transformed,P,P,0.206786544775
+dependent,Both arms,Generalized F,transformed,P,ARMTreatment,-0.00479380988316
+dependent,Both arms,Generalized F,transformed,ARMTreatment,mu,-0.00204132006208
+dependent,Both arms,Generalized F,transformed,ARMTreatment,sigma,0.00126422063886
+dependent,Both arms,Generalized F,transformed,ARMTreatment,Q,0.000321707059487
+dependent,Both arms,Generalized F,transformed,ARMTreatment,P,-0.00479380988316
+dependent,Both arms,Generalized F,transformed,ARMTreatment,ARMTreatment,0.00470340786576
+dependent,Both arms,Generalized F (original),natural,mu,mu,0.00365765221946
+dependent,Both arms,Generalized F (original),natural,mu,sigma,-0.000989083718717
+dependent,Both arms,Generalized F (original),natural,mu,s1,-0.00201262601089
+dependent,Both arms,Generalized F (original),natural,mu,s2,-0.000567968833114
+dependent,Both arms,Generalized F (original),natural,mu,ARMTreatment,-0.00204132004012
+dependent,Both arms,Generalized F (original),natural,sigma,mu,-0.000989083718717
+dependent,Both arms,Generalized F (original),natural,sigma,sigma,0.00873490132185
+dependent,Both arms,Generalized F (original),natural,sigma,s1,0.0127128803343
+dependent,Both arms,Generalized F (original),natural,sigma,s2,0.0338559734159
+dependent,Both arms,Generalized F (original),natural,sigma,ARMTreatment,0.000935939778973
+dependent,Both arms,Generalized F (original),natural,s1,mu,-0.00201262601089
+dependent,Both arms,Generalized F (original),natural,s1,sigma,0.0127128803343
+dependent,Both arms,Generalized F (original),natural,s1,s1,0.0190274892396
+dependent,Both arms,Generalized F (original),natural,s1,s2,0.0485895899475
+dependent,Both arms,Generalized F (original),natural,s1,ARMTreatment,0.00126283146418
+dependent,Both arms,Generalized F (original),natural,s2,mu,-0.000567968833114
+dependent,Both arms,Generalized F (original),natural,s2,sigma,0.0338559734159
+dependent,Both arms,Generalized F (original),natural,s2,s1,0.0485895899475
+dependent,Both arms,Generalized F (original),natural,s2,s2,0.140269325169
+dependent,Both arms,Generalized F (original),natural,s2,ARMTreatment,0.0040759666929
+dependent,Both arms,Generalized F (original),natural,ARMTreatment,mu,-0.00204132004012
+dependent,Both arms,Generalized F (original),natural,ARMTreatment,sigma,0.000935939778973
+dependent,Both arms,Generalized F (original),natural,ARMTreatment,s1,0.00126283146418
+dependent,Both arms,Generalized F (original),natural,ARMTreatment,s2,0.0040759666929
+dependent,Both arms,Generalized F (original),natural,ARMTreatment,ARMTreatment,0.00470340840912
+dependent,Both arms,Generalized F (original),transformed,mu,mu,0.00365765221946
+dependent,Both arms,Generalized F (original),transformed,mu,sigma,-0.0035084420753
+dependent,Both arms,Generalized F (original),transformed,mu,s1,-0.00552252276973
+dependent,Both arms,Generalized F (original),transformed,mu,s2,-0.000758055666351
+dependent,Both arms,Generalized F (original),transformed,mu,ARMTreatment,-0.00204132004012
+dependent,Both arms,Generalized F (original),transformed,sigma,mu,-0.0035084420753
+dependent,Both arms,Generalized F (original),transformed,sigma,sigma,0.109905776376
+dependent,Both arms,Generalized F (original),transformed,sigma,s1,0.123737019476
+dependent,Both arms,Generalized F (original),transformed,sigma,s2,0.160285101402
+dependent,Both arms,Generalized F (original),transformed,sigma,ARMTreatment,0.00331993180997
+dependent,Both arms,Generalized F (original),transformed,s1,mu,-0.00552252276973
+dependent,Both arms,Generalized F (original),transformed,s1,sigma,0.123737019476
+dependent,Both arms,Generalized F (original),transformed,s1,s1,0.143261783357
+dependent,Both arms,Generalized F (original),transformed,s1,s2,0.177948471379
+dependent,Both arms,Generalized F (original),transformed,s1,ARMTreatment,0.0034651323582
+dependent,Both arms,Generalized F (original),transformed,s2,mu,-0.000758055666351
+dependent,Both arms,Generalized F (original),transformed,s2,sigma,0.160285101402
+dependent,Both arms,Generalized F (original),transformed,s2,s1,0.177948471379
+dependent,Both arms,Generalized F (original),transformed,s2,s2,0.249871022993
+dependent,Both arms,Generalized F (original),transformed,s2,ARMTreatment,0.00544010422274
+dependent,Both arms,Generalized F (original),transformed,ARMTreatment,mu,-0.00204132004012
+dependent,Both arms,Generalized F (original),transformed,ARMTreatment,sigma,0.00331993180997
+dependent,Both arms,Generalized F (original),transformed,ARMTreatment,s1,0.0034651323582
+dependent,Both arms,Generalized F (original),transformed,ARMTreatment,s2,0.00544010422274
+dependent,Both arms,Generalized F (original),transformed,ARMTreatment,ARMTreatment,0.00470340840912
+dependent,Both arms,"Hazards, 1 knot",natural,gamma0,gamma0,0.0526806071035
+dependent,Both arms,"Hazards, 1 knot",natural,gamma0,gamma1,-0.0365665946794
+dependent,Both arms,"Hazards, 1 knot",natural,gamma0,gamma2,-0.00199800000016
+dependent,Both arms,"Hazards, 1 knot",natural,gamma0,ARMTreatment,-0.00306563290841
+dependent,Both arms,"Hazards, 1 knot",natural,gamma1,gamma0,-0.0365665946794
+dependent,Both arms,"Hazards, 1 knot",natural,gamma1,gamma1,0.0311101908751
+dependent,Both arms,"Hazards, 1 knot",natural,gamma1,gamma2,0.00188712621152
+dependent,Both arms,"Hazards, 1 knot",natural,gamma1,ARMTreatment,0.000647746368795
+dependent,Both arms,"Hazards, 1 knot",natural,gamma2,gamma0,-0.00199800000016
+dependent,Both arms,"Hazards, 1 knot",natural,gamma2,gamma1,0.00188712621152
+dependent,Both arms,"Hazards, 1 knot",natural,gamma2,gamma2,0.000122532405678
+dependent,Both arms,"Hazards, 1 knot",natural,gamma2,ARMTreatment,9.00386790467e-05
+dependent,Both arms,"Hazards, 1 knot",natural,ARMTreatment,gamma0,-0.00306563290841
+dependent,Both arms,"Hazards, 1 knot",natural,ARMTreatment,gamma1,0.000647746368795
+dependent,Both arms,"Hazards, 1 knot",natural,ARMTreatment,gamma2,9.00386790467e-05
+dependent,Both arms,"Hazards, 1 knot",natural,ARMTreatment,ARMTreatment,0.00818968157737
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma0,gamma0,0.0526806071035
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma0,gamma1,-0.0365665946794
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma0,gamma2,-0.00199800000016
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma0,ARMTreatment,-0.00306563290841
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma1,gamma0,-0.0365665946794
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma1,gamma1,0.0311101908751
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma1,gamma2,0.00188712621152
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma1,ARMTreatment,0.000647746368795
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma2,gamma0,-0.00199800000016
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma2,gamma1,0.00188712621152
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma2,gamma2,0.000122532405678
+dependent,Both arms,"Hazards, 1 knot",transformed,gamma2,ARMTreatment,9.00386790467e-05
+dependent,Both arms,"Hazards, 1 knot",transformed,ARMTreatment,gamma0,-0.00306563290841
+dependent,Both arms,"Hazards, 1 knot",transformed,ARMTreatment,gamma1,0.000647746368795
+dependent,Both arms,"Hazards, 1 knot",transformed,ARMTreatment,gamma2,9.00386790467e-05
+dependent,Both arms,"Hazards, 1 knot",transformed,ARMTreatment,ARMTreatment,0.00818968157737
+dependent,Both arms,"Hazards, 2 knots",natural,gamma0,gamma0,0.044544469459
+dependent,Both arms,"Hazards, 2 knots",natural,gamma0,gamma1,-0.0305207712226
+dependent,Both arms,"Hazards, 2 knots",natural,gamma0,gamma2,-0.00159481975841
+dependent,Both arms,"Hazards, 2 knots",natural,gamma0,gamma3,0.000224536137813
+dependent,Both arms,"Hazards, 2 knots",natural,gamma0,ARMTreatment,-0.00277939541855
+dependent,Both arms,"Hazards, 2 knots",natural,gamma1,gamma0,-0.0305207712226
+dependent,Both arms,"Hazards, 2 knots",natural,gamma1,gamma1,0.0416245731361
+dependent,Both arms,"Hazards, 2 knots",natural,gamma1,gamma2,0.0106159151658
+dependent,Both arms,"Hazards, 2 knots",natural,gamma1,gamma3,-0.0110935985912
+dependent,Both arms,"Hazards, 2 knots",natural,gamma1,ARMTreatment,0.000238199567167
+dependent,Both arms,"Hazards, 2 knots",natural,gamma2,gamma0,-0.0015948197584
+dependent,Both arms,"Hazards, 2 knots",natural,gamma2,gamma1,0.0106159151658
+dependent,Both arms,"Hazards, 2 knots",natural,gamma2,gamma2,0.00572925206119
+dependent,Both arms,"Hazards, 2 knots",natural,gamma2,gamma3,-0.00681639755634
+dependent,Both arms,"Hazards, 2 knots",natural,gamma2,ARMTreatment,-4.43007011589e-05
+dependent,Both arms,"Hazards, 2 knots",natural,gamma3,gamma0,0.000224536137809
+dependent,Both arms,"Hazards, 2 knots",natural,gamma3,gamma1,-0.0110935985912
+dependent,Both arms,"Hazards, 2 knots",natural,gamma3,gamma2,-0.00681639755634
+dependent,Both arms,"Hazards, 2 knots",natural,gamma3,gamma3,0.00822875592801
+dependent,Both arms,"Hazards, 2 knots",natural,gamma3,ARMTreatment,0.000132677437162
+dependent,Both arms,"Hazards, 2 knots",natural,ARMTreatment,gamma0,-0.00277939541855
+dependent,Both arms,"Hazards, 2 knots",natural,ARMTreatment,gamma1,0.000238199567168
+dependent,Both arms,"Hazards, 2 knots",natural,ARMTreatment,gamma2,-4.43007011589e-05
+dependent,Both arms,"Hazards, 2 knots",natural,ARMTreatment,gamma3,0.000132677437162
+dependent,Both arms,"Hazards, 2 knots",natural,ARMTreatment,ARMTreatment,0.008153369731
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma0,gamma0,0.044544469459
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma0,gamma1,-0.0305207712226
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma0,gamma2,-0.00159481975841
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma0,gamma3,0.000224536137813
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma0,ARMTreatment,-0.00277939541855
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma1,gamma0,-0.0305207712226
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma1,gamma1,0.0416245731361
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma1,gamma2,0.0106159151658
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma1,gamma3,-0.0110935985912
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma1,ARMTreatment,0.000238199567167
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma2,gamma0,-0.0015948197584
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma2,gamma1,0.0106159151658
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma2,gamma2,0.00572925206119
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma2,gamma3,-0.00681639755634
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma2,ARMTreatment,-4.43007011589e-05
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma3,gamma0,0.000224536137809
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma3,gamma1,-0.0110935985912
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma3,gamma2,-0.00681639755634
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma3,gamma3,0.00822875592801
+dependent,Both arms,"Hazards, 2 knots",transformed,gamma3,ARMTreatment,0.000132677437162
+dependent,Both arms,"Hazards, 2 knots",transformed,ARMTreatment,gamma0,-0.00277939541855
+dependent,Both arms,"Hazards, 2 knots",transformed,ARMTreatment,gamma1,0.000238199567168
+dependent,Both arms,"Hazards, 2 knots",transformed,ARMTreatment,gamma2,-4.43007011589e-05
+dependent,Both arms,"Hazards, 2 knots",transformed,ARMTreatment,gamma3,0.000132677437162
+dependent,Both arms,"Hazards, 2 knots",transformed,ARMTreatment,ARMTreatment,0.008153369731
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,gamma0,0.0463418215689
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,gamma1,-0.0309042560029
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,gamma2,0.00254785148442
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,gamma3,-0.0105677887742
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,gamma4,0.00752278811122
+dependent,Both arms,"Hazards, 3 knots",natural,gamma0,ARMTreatment,-0.00286317055277
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,gamma0,-0.0309042560029
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,gamma1,0.0605439372752
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,gamma2,0.025921806554
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,gamma3,-0.0434473435815
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,gamma4,0.020501103763
+dependent,Both arms,"Hazards, 3 knots",natural,gamma1,ARMTreatment,-4.35765779467e-06
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,gamma0,0.00254785148443
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,gamma1,0.025921806554
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,gamma2,0.0311983938233
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,gamma3,-0.0705887654295
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,gamma4,0.0444526847148
+dependent,Both arms,"Hazards, 3 knots",natural,gamma2,ARMTreatment,-0.000502330228155
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,gamma0,-0.0105677887742
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,gamma1,-0.0434473435814
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,gamma2,-0.0705887654295
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,gamma3,0.173012512318
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,gamma4,-0.116393670212
+dependent,Both arms,"Hazards, 3 knots",natural,gamma3,ARMTreatment,0.0012444832007
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,gamma0,0.00752278811122
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,gamma1,0.0205011037629
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,gamma2,0.0444526847147
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,gamma3,-0.116393670212
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,gamma4,0.0822845529515
+dependent,Both arms,"Hazards, 3 knots",natural,gamma4,ARMTreatment,-0.000760059271315
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,gamma0,-0.00286317055277
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,gamma1,-4.35765779413e-06
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,gamma2,-0.000502330228155
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,gamma3,0.0012444832007
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,gamma4,-0.000760059271315
+dependent,Both arms,"Hazards, 3 knots",natural,ARMTreatment,ARMTreatment,0.0081567533071
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,gamma0,0.0463418215689
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,gamma1,-0.0309042560029
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,gamma2,0.00254785148442
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,gamma3,-0.0105677887742
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,gamma4,0.00752278811122
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma0,ARMTreatment,-0.00286317055277
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,gamma0,-0.0309042560029
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,gamma1,0.0605439372752
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,gamma2,0.025921806554
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,gamma3,-0.0434473435815
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,gamma4,0.020501103763
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma1,ARMTreatment,-4.35765779467e-06
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,gamma0,0.00254785148443
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,gamma1,0.025921806554
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,gamma2,0.0311983938233
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,gamma3,-0.0705887654295
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,gamma4,0.0444526847148
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma2,ARMTreatment,-0.000502330228155
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,gamma0,-0.0105677887742
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,gamma1,-0.0434473435814
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,gamma2,-0.0705887654295
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,gamma3,0.173012512318
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,gamma4,-0.116393670212
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma3,ARMTreatment,0.0012444832007
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,gamma0,0.00752278811122
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,gamma1,0.0205011037629
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,gamma2,0.0444526847147
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,gamma3,-0.116393670212
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,gamma4,0.0822845529515
+dependent,Both arms,"Hazards, 3 knots",transformed,gamma4,ARMTreatment,-0.000760059271315
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,gamma0,-0.00286317055277
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,gamma1,-4.35765779413e-06
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,gamma2,-0.000502330228155
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,gamma3,0.0012444832007
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,gamma4,-0.000760059271315
+dependent,Both arms,"Hazards, 3 knots",transformed,ARMTreatment,ARMTreatment,0.0081567533071
+dependent,Both arms,"Odds, 1 knot",natural,gamma0,gamma0,0.0466516522512
+dependent,Both arms,"Odds, 1 knot",natural,gamma0,gamma1,-0.0284901979889
+dependent,Both arms,"Odds, 1 knot",natural,gamma0,gamma2,-0.00150003016714
+dependent,Both arms,"Odds, 1 knot",natural,gamma0,ARMTreatment,-0.00735932869997
+dependent,Both arms,"Odds, 1 knot",natural,gamma1,gamma0,-0.0284901979889
+dependent,Both arms,"Odds, 1 knot",natural,gamma1,gamma1,0.0301729527807
+dependent,Both arms,"Odds, 1 knot",natural,gamma1,gamma2,0.00215089343822
+dependent,Both arms,"Odds, 1 knot",natural,gamma1,ARMTreatment,0.000220184623555
+dependent,Both arms,"Odds, 1 knot",natural,gamma2,gamma0,-0.00150003016714
+dependent,Both arms,"Odds, 1 knot",natural,gamma2,gamma1,0.00215089343822
+dependent,Both arms,"Odds, 1 knot",natural,gamma2,gamma2,0.000182933901127
+dependent,Both arms,"Odds, 1 knot",natural,gamma2,ARMTreatment,0.000187377538233
+dependent,Both arms,"Odds, 1 knot",natural,ARMTreatment,gamma0,-0.00735932869997
+dependent,Both arms,"Odds, 1 knot",natural,ARMTreatment,gamma1,0.000220184623555
+dependent,Both arms,"Odds, 1 knot",natural,ARMTreatment,gamma2,0.000187377538233
+dependent,Both arms,"Odds, 1 knot",natural,ARMTreatment,ARMTreatment,0.0226541800378
+dependent,Both arms,"Odds, 1 knot",transformed,gamma0,gamma0,0.0466516522512
+dependent,Both arms,"Odds, 1 knot",transformed,gamma0,gamma1,-0.0284901979889
+dependent,Both arms,"Odds, 1 knot",transformed,gamma0,gamma2,-0.00150003016714
+dependent,Both arms,"Odds, 1 knot",transformed,gamma0,ARMTreatment,-0.00735932869997
+dependent,Both arms,"Odds, 1 knot",transformed,gamma1,gamma0,-0.0284901979889
+dependent,Both arms,"Odds, 1 knot",transformed,gamma1,gamma1,0.0301729527807
+dependent,Both arms,"Odds, 1 knot",transformed,gamma1,gamma2,0.00215089343822
+dependent,Both arms,"Odds, 1 knot",transformed,gamma1,ARMTreatment,0.000220184623555
+dependent,Both arms,"Odds, 1 knot",transformed,gamma2,gamma0,-0.00150003016714
+dependent,Both arms,"Odds, 1 knot",transformed,gamma2,gamma1,0.00215089343822
+dependent,Both arms,"Odds, 1 knot",transformed,gamma2,gamma2,0.000182933901127
+dependent,Both arms,"Odds, 1 knot",transformed,gamma2,ARMTreatment,0.000187377538233
+dependent,Both arms,"Odds, 1 knot",transformed,ARMTreatment,gamma0,-0.00735932869997
+dependent,Both arms,"Odds, 1 knot",transformed,ARMTreatment,gamma1,0.000220184623555
+dependent,Both arms,"Odds, 1 knot",transformed,ARMTreatment,gamma2,0.000187377538233
+dependent,Both arms,"Odds, 1 knot",transformed,ARMTreatment,ARMTreatment,0.0226541800378
+dependent,Both arms,"Odds, 2 knots",natural,gamma0,gamma0,0.0476990786446
+dependent,Both arms,"Odds, 2 knots",natural,gamma0,gamma1,-0.0291141648255
+dependent,Both arms,"Odds, 2 knots",natural,gamma0,gamma2,0.000130661461297
+dependent,Both arms,"Odds, 2 knots",natural,gamma0,gamma3,-0.00203639396808
+dependent,Both arms,"Odds, 2 knots",natural,gamma0,ARMTreatment,-0.00733044940767
+dependent,Both arms,"Odds, 2 knots",natural,gamma1,gamma0,-0.0291141648255
+dependent,Both arms,"Odds, 2 knots",natural,gamma1,gamma1,0.0450618206685
+dependent,Both arms,"Odds, 2 knots",natural,gamma1,gamma2,0.014780824303
+dependent,Both arms,"Odds, 2 knots",natural,gamma1,gamma3,-0.0164435802133
+dependent,Both arms,"Odds, 2 knots",natural,gamma1,ARMTreatment,0.000789042786773
+dependent,Both arms,"Odds, 2 knots",natural,gamma2,gamma0,0.000130661461296
+dependent,Both arms,"Odds, 2 knots",natural,gamma2,gamma1,0.014780824303
+dependent,Both arms,"Odds, 2 knots",natural,gamma2,gamma2,0.014700924252
+dependent,Both arms,"Odds, 2 knots",natural,gamma2,gamma3,-0.0189163607519
+dependent,Both arms,"Odds, 2 knots",natural,gamma2,ARMTreatment,0.000633834171693
+dependent,Both arms,"Odds, 2 knots",natural,gamma3,gamma0,-0.00203639396808
+dependent,Both arms,"Odds, 2 knots",natural,gamma3,gamma1,-0.0164435802133
+dependent,Both arms,"Odds, 2 knots",natural,gamma3,gamma2,-0.0189163607519
+dependent,Both arms,"Odds, 2 knots",natural,gamma3,gamma3,0.0246028097888
+dependent,Both arms,"Odds, 2 knots",natural,gamma3,ARMTreatment,-0.000598953722343
+dependent,Both arms,"Odds, 2 knots",natural,ARMTreatment,gamma0,-0.00733044940767
+dependent,Both arms,"Odds, 2 knots",natural,ARMTreatment,gamma1,0.000789042786773
+dependent,Both arms,"Odds, 2 knots",natural,ARMTreatment,gamma2,0.000633834171693
+dependent,Both arms,"Odds, 2 knots",natural,ARMTreatment,gamma3,-0.000598953722343
+dependent,Both arms,"Odds, 2 knots",natural,ARMTreatment,ARMTreatment,0.0226152388092
+dependent,Both arms,"Odds, 2 knots",transformed,gamma0,gamma0,0.0476990786446
+dependent,Both arms,"Odds, 2 knots",transformed,gamma0,gamma1,-0.0291141648255
+dependent,Both arms,"Odds, 2 knots",transformed,gamma0,gamma2,0.000130661461297
+dependent,Both arms,"Odds, 2 knots",transformed,gamma0,gamma3,-0.00203639396808
+dependent,Both arms,"Odds, 2 knots",transformed,gamma0,ARMTreatment,-0.00733044940767
+dependent,Both arms,"Odds, 2 knots",transformed,gamma1,gamma0,-0.0291141648255
+dependent,Both arms,"Odds, 2 knots",transformed,gamma1,gamma1,0.0450618206685
+dependent,Both arms,"Odds, 2 knots",transformed,gamma1,gamma2,0.014780824303
+dependent,Both arms,"Odds, 2 knots",transformed,gamma1,gamma3,-0.0164435802133
+dependent,Both arms,"Odds, 2 knots",transformed,gamma1,ARMTreatment,0.000789042786773
+dependent,Both arms,"Odds, 2 knots",transformed,gamma2,gamma0,0.000130661461296
+dependent,Both arms,"Odds, 2 knots",transformed,gamma2,gamma1,0.014780824303
+dependent,Both arms,"Odds, 2 knots",transformed,gamma2,gamma2,0.014700924252
+dependent,Both arms,"Odds, 2 knots",transformed,gamma2,gamma3,-0.0189163607519
+dependent,Both arms,"Odds, 2 knots",transformed,gamma2,ARMTreatment,0.000633834171693
+dependent,Both arms,"Odds, 2 knots",transformed,gamma3,gamma0,-0.00203639396808
+dependent,Both arms,"Odds, 2 knots",transformed,gamma3,gamma1,-0.0164435802133
+dependent,Both arms,"Odds, 2 knots",transformed,gamma3,gamma2,-0.0189163607519
+dependent,Both arms,"Odds, 2 knots",transformed,gamma3,gamma3,0.0246028097888
+dependent,Both arms,"Odds, 2 knots",transformed,gamma3,ARMTreatment,-0.000598953722343
+dependent,Both arms,"Odds, 2 knots",transformed,ARMTreatment,gamma0,-0.00733044940767
+dependent,Both arms,"Odds, 2 knots",transformed,ARMTreatment,gamma1,0.000789042786773
+dependent,Both arms,"Odds, 2 knots",transformed,ARMTreatment,gamma2,0.000633834171693
+dependent,Both arms,"Odds, 2 knots",transformed,ARMTreatment,gamma3,-0.000598953722343
+dependent,Both arms,"Odds, 2 knots",transformed,ARMTreatment,ARMTreatment,0.0226152388092
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,gamma0,0.049871335137
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,gamma1,-0.029332926592
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,gamma2,0.00610992185396
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,gamma3,-0.0199774534207
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,gamma4,0.0141887497619
+dependent,Both arms,"Odds, 3 knots",natural,gamma0,ARMTreatment,-0.00763831763699
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,gamma0,-0.029332926592
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,gamma1,0.0634029114439
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,gamma2,0.0319189285983
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,gamma3,-0.0591465945215
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,gamma4,0.0316540856875
+dependent,Both arms,"Odds, 3 knots",natural,gamma1,ARMTreatment,0.000293648398607
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,gamma0,0.00610992185395
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,gamma1,0.0319189285983
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,gamma2,0.0542742109752
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,gamma3,-0.140337187049
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,gamma4,0.0988228819733
+dependent,Both arms,"Odds, 3 knots",natural,gamma2,ARMTreatment,-0.00126789661864
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,gamma0,-0.0199774534207
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,gamma1,-0.0591465945216
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,gamma2,-0.140337187049
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,gamma3,0.40457635278
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,gamma4,-0.307989523097
+dependent,Both arms,"Odds, 3 knots",natural,gamma3,ARMTreatment,0.00484367552025
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,gamma0,0.0141887497619
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,gamma1,0.0316540856876
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,gamma2,0.0988228819733
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,gamma3,-0.307989523097
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,gamma4,0.246259235503
+dependent,Both arms,"Odds, 3 knots",natural,gamma4,ARMTreatment,-0.00403700731059
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,gamma0,-0.00763831763699
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,gamma1,0.000293648398607
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,gamma2,-0.00126789661864
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,gamma3,0.00484367552025
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,gamma4,-0.00403700731059
+dependent,Both arms,"Odds, 3 knots",natural,ARMTreatment,ARMTreatment,0.0227770317068
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,gamma0,0.049871335137
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,gamma1,-0.029332926592
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,gamma2,0.00610992185396
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,gamma3,-0.0199774534207
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,gamma4,0.0141887497619
+dependent,Both arms,"Odds, 3 knots",transformed,gamma0,ARMTreatment,-0.00763831763699
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,gamma0,-0.029332926592
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,gamma1,0.0634029114439
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,gamma2,0.0319189285983
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,gamma3,-0.0591465945215
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,gamma4,0.0316540856875
+dependent,Both arms,"Odds, 3 knots",transformed,gamma1,ARMTreatment,0.000293648398607
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,gamma0,0.00610992185395
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,gamma1,0.0319189285983
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,gamma2,0.0542742109752
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,gamma3,-0.140337187049
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,gamma4,0.0988228819733
+dependent,Both arms,"Odds, 3 knots",transformed,gamma2,ARMTreatment,-0.00126789661864
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,gamma0,-0.0199774534207
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,gamma1,-0.0591465945216
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,gamma2,-0.140337187049
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,gamma3,0.40457635278
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,gamma4,-0.307989523097
+dependent,Both arms,"Odds, 3 knots",transformed,gamma3,ARMTreatment,0.00484367552025
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,gamma0,0.0141887497619
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,gamma1,0.0316540856876
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,gamma2,0.0988228819733
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,gamma3,-0.307989523097
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,gamma4,0.246259235503
+dependent,Both arms,"Odds, 3 knots",transformed,gamma4,ARMTreatment,-0.00403700731059
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,gamma0,-0.00763831763699
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,gamma1,0.000293648398607
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,gamma2,-0.00126789661864
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,gamma3,0.00484367552025
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,gamma4,-0.00403700731059
+dependent,Both arms,"Odds, 3 knots",transformed,ARMTreatment,ARMTreatment,0.0227770317068
+dependent,Both arms,"Normal, 1 knot",natural,gamma0,gamma0,0.00902635187373
+dependent,Both arms,"Normal, 1 knot",natural,gamma0,gamma1,-0.00420351575394
+dependent,Both arms,"Normal, 1 knot",natural,gamma0,gamma2,-0.000188866858208
+dependent,Both arms,"Normal, 1 knot",natural,gamma0,ARMTreatment,-0.00293608045533
+dependent,Both arms,"Normal, 1 knot",natural,gamma1,gamma0,-0.00420351575394
+dependent,Both arms,"Normal, 1 knot",natural,gamma1,gamma1,0.00556254281598
+dependent,Both arms,"Normal, 1 knot",natural,gamma1,gamma2,0.000423343515705
+dependent,Both arms,"Normal, 1 knot",natural,gamma1,ARMTreatment,0.000176854121591
+dependent,Both arms,"Normal, 1 knot",natural,gamma2,gamma0,-0.000188866858208
+dependent,Both arms,"Normal, 1 knot",natural,gamma2,gamma1,0.000423343515705
+dependent,Both arms,"Normal, 1 knot",natural,gamma2,gamma2,3.95919538253e-05
+dependent,Both arms,"Normal, 1 knot",natural,gamma2,ARMTreatment,5.38655920977e-05
+dependent,Both arms,"Normal, 1 knot",natural,ARMTreatment,gamma0,-0.00293608045533
+dependent,Both arms,"Normal, 1 knot",natural,ARMTreatment,gamma1,0.000176854121591
+dependent,Both arms,"Normal, 1 knot",natural,ARMTreatment,gamma2,5.38655920977e-05
+dependent,Both arms,"Normal, 1 knot",natural,ARMTreatment,ARMTreatment,0.00745013122101
+dependent,Both arms,"Normal, 1 knot",transformed,gamma0,gamma0,0.00902635187373
+dependent,Both arms,"Normal, 1 knot",transformed,gamma0,gamma1,-0.00420351575394
+dependent,Both arms,"Normal, 1 knot",transformed,gamma0,gamma2,-0.000188866858208
+dependent,Both arms,"Normal, 1 knot",transformed,gamma0,ARMTreatment,-0.00293608045533
+dependent,Both arms,"Normal, 1 knot",transformed,gamma1,gamma0,-0.00420351575394
+dependent,Both arms,"Normal, 1 knot",transformed,gamma1,gamma1,0.00556254281598
+dependent,Both arms,"Normal, 1 knot",transformed,gamma1,gamma2,0.000423343515705
+dependent,Both arms,"Normal, 1 knot",transformed,gamma1,ARMTreatment,0.000176854121591
+dependent,Both arms,"Normal, 1 knot",transformed,gamma2,gamma0,-0.000188866858208
+dependent,Both arms,"Normal, 1 knot",transformed,gamma2,gamma1,0.000423343515705
+dependent,Both arms,"Normal, 1 knot",transformed,gamma2,gamma2,3.95919538253e-05
+dependent,Both arms,"Normal, 1 knot",transformed,gamma2,ARMTreatment,5.38655920977e-05
+dependent,Both arms,"Normal, 1 knot",transformed,ARMTreatment,gamma0,-0.00293608045533
+dependent,Both arms,"Normal, 1 knot",transformed,ARMTreatment,gamma1,0.000176854121591
+dependent,Both arms,"Normal, 1 knot",transformed,ARMTreatment,gamma2,5.38655920977e-05
+dependent,Both arms,"Normal, 1 knot",transformed,ARMTreatment,ARMTreatment,0.00745013122101
+dependent,Both arms,"Normal, 2 knots",natural,gamma0,gamma0,0.00920392841088
+dependent,Both arms,"Normal, 2 knots",natural,gamma0,gamma1,-0.0029764164897
+dependent,Both arms,"Normal, 2 knots",natural,gamma0,gamma2,0.0011630059598
+dependent,Both arms,"Normal, 2 knots",natural,gamma0,gamma3,-0.00170439178081
+dependent,Both arms,"Normal, 2 knots",natural,gamma0,ARMTreatment,-0.00293354051547
+dependent,Both arms,"Normal, 2 knots",natural,gamma1,gamma0,-0.0029764164897
+dependent,Both arms,"Normal, 2 knots",natural,gamma1,gamma1,0.00701132061315
+dependent,Both arms,"Normal, 2 knots",natural,gamma1,gamma2,0.00280600202899
+dependent,Both arms,"Normal, 2 knots",natural,gamma1,gamma3,-0.00320622556043
+dependent,Both arms,"Normal, 2 knots",natural,gamma1,ARMTreatment,0.000116889068495
+dependent,Both arms,"Normal, 2 knots",natural,gamma2,gamma0,0.0011630059598
+dependent,Both arms,"Normal, 2 knots",natural,gamma2,gamma1,0.00280600202899
+dependent,Both arms,"Normal, 2 knots",natural,gamma2,gamma2,0.003667627839
+dependent,Both arms,"Normal, 2 knots",natural,gamma2,gamma3,-0.00476235549379
+dependent,Both arms,"Normal, 2 knots",natural,gamma2,ARMTreatment,-2.56693852621e-05
+dependent,Both arms,"Normal, 2 knots",natural,gamma3,gamma0,-0.00170439178081
+dependent,Both arms,"Normal, 2 knots",natural,gamma3,gamma1,-0.00320622556043
+dependent,Both arms,"Normal, 2 knots",natural,gamma3,gamma2,-0.00476235549379
+dependent,Both arms,"Normal, 2 knots",natural,gamma3,gamma3,0.00623364846202
+dependent,Both arms,"Normal, 2 knots",natural,gamma3,ARMTreatment,9.38246335617e-05
+dependent,Both arms,"Normal, 2 knots",natural,ARMTreatment,gamma0,-0.00293354051547
+dependent,Both arms,"Normal, 2 knots",natural,ARMTreatment,gamma1,0.000116889068496
+dependent,Both arms,"Normal, 2 knots",natural,ARMTreatment,gamma2,-2.5669385262e-05
+dependent,Both arms,"Normal, 2 knots",natural,ARMTreatment,gamma3,9.38246335616e-05
+dependent,Both arms,"Normal, 2 knots",natural,ARMTreatment,ARMTreatment,0.00745123022219
+dependent,Both arms,"Normal, 2 knots",transformed,gamma0,gamma0,0.00920392841088
+dependent,Both arms,"Normal, 2 knots",transformed,gamma0,gamma1,-0.0029764164897
+dependent,Both arms,"Normal, 2 knots",transformed,gamma0,gamma2,0.0011630059598
+dependent,Both arms,"Normal, 2 knots",transformed,gamma0,gamma3,-0.00170439178081
+dependent,Both arms,"Normal, 2 knots",transformed,gamma0,ARMTreatment,-0.00293354051547
+dependent,Both arms,"Normal, 2 knots",transformed,gamma1,gamma0,-0.0029764164897
+dependent,Both arms,"Normal, 2 knots",transformed,gamma1,gamma1,0.00701132061315
+dependent,Both arms,"Normal, 2 knots",transformed,gamma1,gamma2,0.00280600202899
+dependent,Both arms,"Normal, 2 knots",transformed,gamma1,gamma3,-0.00320622556043
+dependent,Both arms,"Normal, 2 knots",transformed,gamma1,ARMTreatment,0.000116889068495
+dependent,Both arms,"Normal, 2 knots",transformed,gamma2,gamma0,0.0011630059598
+dependent,Both arms,"Normal, 2 knots",transformed,gamma2,gamma1,0.00280600202899
+dependent,Both arms,"Normal, 2 knots",transformed,gamma2,gamma2,0.003667627839
+dependent,Both arms,"Normal, 2 knots",transformed,gamma2,gamma3,-0.00476235549379
+dependent,Both arms,"Normal, 2 knots",transformed,gamma2,ARMTreatment,-2.56693852621e-05
+dependent,Both arms,"Normal, 2 knots",transformed,gamma3,gamma0,-0.00170439178081
+dependent,Both arms,"Normal, 2 knots",transformed,gamma3,gamma1,-0.00320622556043
+dependent,Both arms,"Normal, 2 knots",transformed,gamma3,gamma2,-0.00476235549379
+dependent,Both arms,"Normal, 2 knots",transformed,gamma3,gamma3,0.00623364846202
+dependent,Both arms,"Normal, 2 knots",transformed,gamma3,ARMTreatment,9.38246335617e-05
+dependent,Both arms,"Normal, 2 knots",transformed,ARMTreatment,gamma0,-0.00293354051547
+dependent,Both arms,"Normal, 2 knots",transformed,ARMTreatment,gamma1,0.000116889068496
+dependent,Both arms,"Normal, 2 knots",transformed,ARMTreatment,gamma2,-2.5669385262e-05
+dependent,Both arms,"Normal, 2 knots",transformed,ARMTreatment,gamma3,9.38246335616e-05
+dependent,Both arms,"Normal, 2 knots",transformed,ARMTreatment,ARMTreatment,0.00745123022219
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,gamma0,0.00975314260803
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,gamma1,-0.00254926046692
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,gamma2,0.00311305498349
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,gamma3,-0.00738931159695
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,gamma4,0.00453649639649
+dependent,Both arms,"Normal, 3 knots",natural,gamma0,ARMTreatment,-0.00299048294854
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,gamma0,-0.00254926046692
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,gamma1,0.0099330961746
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,gamma2,0.00643970139512
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,gamma3,-0.0124580969751
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,gamma4,0.0068490455063
+dependent,Both arms,"Normal, 3 knots",natural,gamma1,ARMTreatment,7.90464686458e-05
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,gamma0,0.00311305498349
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,gamma1,0.00643970139511
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,gamma2,0.0162876875521
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,gamma3,-0.0434308694079
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,gamma4,0.0310437891207
+dependent,Both arms,"Normal, 3 knots",natural,gamma2,ARMTreatment,-0.000275072726526
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,gamma0,-0.00738931159695
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,gamma1,-0.0124580969751
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,gamma2,-0.0434308694078
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,gamma3,0.126171500604
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,gamma4,-0.0958430269247
+dependent,Both arms,"Normal, 3 knots",natural,gamma3,ARMTreatment,0.000812574464951
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,gamma0,0.00453649639649
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,gamma1,0.00684904550628
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,gamma2,0.0310437891207
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,gamma3,-0.0958430269246
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,gamma4,0.0757028354357
+dependent,Both arms,"Normal, 3 knots",natural,gamma4,ARMTreatment,-0.000556465349894
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,gamma0,-0.00299048294854
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,gamma1,7.90464686458e-05
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,gamma2,-0.000275072726527
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,gamma3,0.000812574464952
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,gamma4,-0.000556465349894
+dependent,Both arms,"Normal, 3 knots",natural,ARMTreatment,ARMTreatment,0.00745535867664
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,gamma0,0.00975314260803
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,gamma1,-0.00254926046692
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,gamma2,0.00311305498349
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,gamma3,-0.00738931159695
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,gamma4,0.00453649639649
+dependent,Both arms,"Normal, 3 knots",transformed,gamma0,ARMTreatment,-0.00299048294854
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,gamma0,-0.00254926046692
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,gamma1,0.0099330961746
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,gamma2,0.00643970139512
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,gamma3,-0.0124580969751
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,gamma4,0.0068490455063
+dependent,Both arms,"Normal, 3 knots",transformed,gamma1,ARMTreatment,7.90464686458e-05
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,gamma0,0.00311305498349
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,gamma1,0.00643970139511
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,gamma2,0.0162876875521
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,gamma3,-0.0434308694079
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,gamma4,0.0310437891207
+dependent,Both arms,"Normal, 3 knots",transformed,gamma2,ARMTreatment,-0.000275072726526
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,gamma0,-0.00738931159695
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,gamma1,-0.0124580969751
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,gamma2,-0.0434308694078
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,gamma3,0.126171500604
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,gamma4,-0.0958430269247
+dependent,Both arms,"Normal, 3 knots",transformed,gamma3,ARMTreatment,0.000812574464951
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,gamma0,0.00453649639649
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,gamma1,0.00684904550628
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,gamma2,0.0310437891207
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,gamma3,-0.0958430269246
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,gamma4,0.0757028354357
+dependent,Both arms,"Normal, 3 knots",transformed,gamma4,ARMTreatment,-0.000556465349894
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,gamma0,-0.00299048294854
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,gamma1,7.90464686458e-05
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,gamma2,-0.000275072726527
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,gamma3,0.000812574464952
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,gamma4,-0.000556465349894
+dependent,Both arms,"Normal, 3 knots",transformed,ARMTreatment,ARMTreatment,0.00745535867664

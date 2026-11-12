@@ -13,3 +13,13 @@ reference:
       - estimate_hazard_ratio
       - test_proportional_hazards
       - estimate_empirical_hazard
+  - title: Parametric and spline models
+    contents:
+      - fit_survival_models
+      - print.survfitsummary
+      - parameter_table
+      - covariance_table
+      - gof_table
+      - predict_survival
+      - survival_summary
+      - spline_knot_table
