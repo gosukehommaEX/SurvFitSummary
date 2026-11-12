@@ -2,10 +2,11 @@
 #'
 #' @description
 #' Internal helper. Arms take the colours of version 1.0.0 in the order of
-#' the arms. Each parametric distribution has a fixed colour, so that a
-#' distribution has the same colour in every plot; spline models take a
-#' colour family by scale (hazard orange, odds purple, normal green), darker
-#' with more knots.
+#' the arms; the plots pass all the arms of the data and keep the colours of
+#' the arms plotted, so that an arm has the same colour in every plot. Each
+#' parametric distribution has a fixed colour, so that a distribution has
+#' the same colour in every plot; spline models take a colour family by
+#' scale (hazard orange, odds purple, normal green), darker with more knots.
 #'
 #' @param arms Character vector of arms, or \code{NULL}.
 #' @param models \code{NULL}, or rows of \code{x$models} (columns

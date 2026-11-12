@@ -128,7 +128,7 @@
     legend_position <- "right"
   } else {
     types <- c(observed_name, sel$models)
-    colours <- .plot_colours(arms = sel$arms)
+    colours <- .plot_colours(arms = x$arms)[sel$arms]
     observed$arm <- factor(observed$arm, levels = sel$arms)
     observed$type <- factor(observed_name, levels = types)
     pred$arm <- factor(pred$arm, levels = sel$arms)
@@ -178,8 +178,14 @@
   if (survival_plot) {
     p <- p + ggplot2::scale_y_continuous(breaks = seq(0, 1, by = 0.2))
     if (isTRUE(risk_table)) {
+      # Black numbers with the black Kaplan-Meier curve of one arm
+      table_colours <- if (length(sel$arms) == 1L) {
+        stats::setNames("black", sel$arms)
+      } else {
+        .plot_colours(arms = x$arms)[sel$arms]
+      }
       p <- .add_risk_table(p, data, sel$arms, axis$breaks, time_horizon,
-                           .plot_colours(arms = sel$arms))
+                           table_colours)
     }
   }
   p

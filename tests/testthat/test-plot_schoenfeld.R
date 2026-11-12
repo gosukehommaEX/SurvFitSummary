@@ -31,6 +31,24 @@ test_that("residuals, log hazard ratio and regression line", {
   expect_equal(smooth$fit - smooth$lcl, half)
 })
 
+test_that("panel title with the test and breaks of the time axis", {
+  d <- make_fit_data()
+  p <- plot_schoenfeld(d)
+  ph <- test_proportional_hazards(d)
+  reference <- layer_input(p, "GeomHline")
+  expect_identical(
+    as.character(reference$panel),
+    sprintf(paste("Treatment vs Control (log HR = %.3f;",
+                  "Grambsch-Therneau test p = %.3f)"),
+            ph$log_hr, ph$p_value)
+  )
+  expect_identical(levels(layer_input(p, "GeomPoint")$panel),
+                   as.character(reference$panel))
+  expect_length(layer_index(p, "GeomText"), 0)
+  breaks <- ggplot2::layer_scales(p)$x$get_breaks()
+  expect_equal(breaks[!is.na(breaks)], seq(0, 60, by = 12))
+})
+
 test_that("one panel per comparison with the control arm", {
   d <- make_fit_data()
   arm <- as.character(d$ARM)

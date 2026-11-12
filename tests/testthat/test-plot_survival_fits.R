@@ -53,6 +53,25 @@ test_that("one model with both arms from the dependent fit", {
                    c("Control", "Treatment"))
 })
 
+test_that("arms keep their colours; numbers at risk black with one arm", {
+  d <- make_fit_data()
+  arm <- as.character(d$ARM)
+  treated <- which(arm == "Treatment")
+  arm[treated[seq(1, length(treated), by = 2)]] <- "Treatment B"
+  d$ARM <- factor(arm, levels = c("Control", "Treatment", "Treatment B"))
+  x <- fit_survival_models(d, distributions = "exp", spline_scales = NULL,
+                           fit_type = "independent")
+  shown <- c("Treatment", "Treatment B")
+  colours <- unname(.plot_colours(arms = x$arms)[shown])
+  p <- plot_survival_fits(x, models = "Exponential", arms = shown)
+  main <- p[[1]]
+  step <- ggplot2::layer_data(main, layer_index(main, "GeomStep"))
+  expect_setequal(unique(step$colour), colours)
+  expect_setequal(unique(ggplot2::layer_data(p[[2]])$colour), colours)
+  p <- plot_survival_fits(x, models = "Exponential", arms = "Treatment B")
+  expect_identical(unique(ggplot2::layer_data(p[[2]])$colour), "black")
+})
+
 test_that("confidence bands: Kaplan-Meier always, a model only alone", {
   x <- get_fits("simple")
   p <- plot_survival_fits(x, models = c("Exponential", "Weibull"),

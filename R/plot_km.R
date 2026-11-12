@@ -62,7 +62,7 @@ plot_km <- function(data,
   data <- data[data$ARM %in% arms, , drop = FALSE]
   max_time <- max(data$SURVTIME)
   axis <- .time_axis(max_time, time_unit, break_by)
-  colours <- .plot_colours(arms = arms)
+  colours <- .plot_colours(arms = all_arms)[arms]
   km <- .km_curve(data, arms, conf_level)
   km$arm <- factor(km$arm, levels = arms)
   p <- ggplot2::ggplot()

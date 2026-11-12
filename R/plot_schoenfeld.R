@@ -11,7 +11,8 @@
 #'     \code{survival::plot.cox.zph()}, with its pointwise confidence
 #'     interval (dotted lines);
 #'   \item the log hazard ratio and the p-value of the Grambsch-Therneau
-#'     test of \code{\link{test_proportional_hazards}}.
+#'     test of \code{\link{test_proportional_hazards}}, in the title of the
+#'     panel.
 #' }
 #' A flat regression line close to the log hazard ratio indicates that the
 #' treatment effect does not depend on time, that is, proportional hazards.
@@ -30,7 +31,8 @@
 #' @param time_unit Time unit of the data: \code{"months"} (the default),
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
 #'
-#' @return A ggplot object (one panel per comparison with the control arm).
+#' @return A ggplot object (one panel per comparison with the control arm,
+#'   titled with the comparison, the log hazard ratio and the p-value).
 #'
 #' @references
 #' Grambsch PM, Therneau TM (1994). Proportional hazards tests and
@@ -87,10 +89,15 @@ plot_schoenfeld <- function(data,
     smooth[[comparison]] <- data.frame(comparison = comparison, time = grid,
                                        fit = fitted, lcl = fitted - half,
                                        ucl = fitted + half)
+    p_text <- if (test$p_value < 0.001) {
+      "p < 0.001"
+    } else {
+      sprintf("p = %.3f", test$p_value)
+    }
     reference[[comparison]] <- data.frame(
       comparison = comparison, log_hr = unname(stats::coef(fit)[1L]),
-      label = sprintf("log HR = %.3f\nGrambsch-Therneau p = %.3f",
-                      test$log_hr, test$p_value)
+      label = sprintf("%s (log HR = %.3f; Grambsch-Therneau test %s)",
+                      comparison, test$log_hr, p_text)
     )
   }
   residuals <- do.call(rbind, residuals)
@@ -100,6 +107,14 @@ plot_schoenfeld <- function(data,
   residuals$comparison <- factor(residuals$comparison, levels = comparisons)
   smooth$comparison <- factor(smooth$comparison, levels = comparisons)
   reference$comparison <- factor(reference$comparison, levels = comparisons)
+  # Panel titles with the log hazard ratio and the p-value of the test
+  panels <- reference$label[match(comparisons, reference$comparison)]
+  residuals$panel <- factor(panels[match(residuals$comparison, comparisons)],
+                            levels = panels)
+  smooth$panel <- factor(panels[match(smooth$comparison, comparisons)],
+                         levels = panels)
+  reference$panel <- factor(reference$label, levels = panels)
+  axis <- .time_axis(max(residuals$time), time_unit)
 
   lines <- c("Estimated log hazard ratio", "Regression on time",
              paste0(round(100 * conf_level), "% confidence interval"))
@@ -136,23 +151,16 @@ plot_schoenfeld <- function(data,
                    linetype = lines[3L]),
       linewidth = 0.6
     ) +
-    ggplot2::geom_text(
-      data = reference,
-      ggplot2::aes(x = Inf, y = Inf, label = .data$label),
-      hjust = 1.05, vjust = 1.3, size = 4
-    ) +
     ggplot2::scale_colour_manual(values = colours, breaks = lines) +
     ggplot2::scale_linetype_manual(values = types, breaks = lines) +
     ggplot2::scale_shape_manual(values = c("Scaled Schoenfeld residual" = 16)) +
-    ggplot2::labs(x = .time_axis(1, time_unit)$label,
+    ggplot2::scale_x_continuous(breaks = axis$breaks) +
+    ggplot2::facet_wrap(ggplot2::vars(.data$panel), scales = "free_x") +
+    ggplot2::labs(x = axis$label,
                   y = "Scaled Schoenfeld residual, beta(t)") +
     .plot_theme(legend_position = "bottom") +
     ggplot2::guides(shape = ggplot2::guide_legend(order = 1),
                     colour = ggplot2::guide_legend(order = 2),
                     linetype = ggplot2::guide_legend(order = 2))
-  if (length(comparisons) > 1L) {
-    p <- p + ggplot2::facet_wrap(ggplot2::vars(.data$comparison),
-                                 scales = "free_x")
-  }
   p
 }

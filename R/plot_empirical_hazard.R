@@ -53,7 +53,7 @@ plot_empirical_hazard <- function(data,
   max_time <- max(data$SURVTIME)
   y_max <- 1.05 * max(if (isTRUE(conf_int)) hazard$ucl else hazard$hazard)
   axis <- .time_axis(max_time, time_unit, break_by)
-  colours <- .plot_colours(arms = arms)
+  colours <- .plot_colours(arms = all_arms)[arms]
   p <- ggplot2::ggplot()
   if (isTRUE(conf_int)) {
     p <- p + ggplot2::geom_ribbon(

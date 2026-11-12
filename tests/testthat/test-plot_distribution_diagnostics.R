@@ -37,6 +37,13 @@ test_that("the points are transformations of the Kaplan-Meier estimate", {
   }
 })
 
+test_that("the Gompertz plot has the breaks of the other time axes", {
+  d <- make_fit_data()
+  p <- plot_distribution_diagnostics(d, which = "gompertz")
+  breaks <- ggplot2::layer_scales(p)$x$get_breaks()
+  expect_equal(breaks[!is.na(breaks)], seq(0, 60, by = 12))
+})
+
 test_that("all four plots in the order of 'which'", {
   d <- make_fit_data()
   p <- plot_distribution_diagnostics(d)

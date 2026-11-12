@@ -21,7 +21,8 @@ line, a single number in (0, 1). The default is 0.95.}
 \code{"days"}, \code{"weeks"} or \code{"years"}.}
 }
 \value{
-A ggplot object (one panel per comparison with the control arm).
+A ggplot object (one panel per comparison with the control arm,
+titled with the comparison, the log hazard ratio and the p-value).
 }
 \description{
 For each arm other than the control arm, fits a Cox model to the data of
@@ -34,7 +35,8 @@ cubic spline with 4 degrees of freedom as in
 \code{survival::plot.cox.zph()}, with its pointwise confidence
 interval (dotted lines);
 \item the log hazard ratio and the p-value of the Grambsch-Therneau
-test of \code{\link{test_proportional_hazards}}.
+test of \code{\link{test_proportional_hazards}}, in the title of the
+panel.
 }
 A flat regression line close to the log hazard ratio indicates that the
 treatment effect does not depend on time, that is, proportional hazards.

@@ -38,6 +38,16 @@ test_that("the numbers at risk are given at the breaks of the time axis", {
   expect_identical(max(table$time[table$arm == "Treatment"]), 66)
 })
 
+test_that("the names of the arms are clear of the numbers at time 0", {
+  d <- make_fit_data()
+  table <- plot_km(d)[[2]]
+  first <- table$data$n[table$data$time == 0]
+  # The numbers are centred at time 0: half the width of the widest one, in
+  # points (a digit is about 0.6 times the font size of 0.8 * 14 points)
+  half_width <- 0.5 * max(nchar(first)) * 0.6 * 0.8 * 14
+  expect_gt(as.numeric(table$theme$axis.text.y$margin)[2], half_width)
+})
+
 test_that("one arm with its confidence band", {
   d <- make_fit_data()
   p <- plot_km(d, arms = "Treatment", conf_int = TRUE, risk_table = FALSE)
@@ -47,6 +57,10 @@ test_that("one arm with its confidence band", {
   expect_true(all(0 <= band$lcl & band$lcl <= band$ucl & band$ucl <= 1))
   expect_equal(panel_ranges(p)$x,
                c(0, max(d$SURVTIME[d$ARM == "Treatment"])))
+  # The arm keeps the colour it has in the plot of both arms
+  step <- ggplot2::layer_data(p, layer_index(p, "GeomStep"))
+  expect_identical(unique(step$colour),
+                   unname(.plot_colours(arms = levels(d$ARM))["Treatment"]))
 })
 
 test_that("invalid inputs are rejected", {

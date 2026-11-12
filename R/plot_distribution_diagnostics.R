@@ -86,7 +86,9 @@ plot_distribution_diagnostics <- function(data,
     hz <- hz[hz$hazard > 0, , drop = FALSE]
     panels$gompertz <- list(title = "Gompertz", x = hz$time,
                             y = log(hz$hazard), arm = hz$ARM,
-                            x_label = time_label, y_label = "log(h(t))")
+                            x_label = time_label, y_label = "log(h(t))",
+                            breaks = .time_axis(max(hz$time),
+                                                time_unit)$breaks)
   }
 
   plots <- lapply(which, function(w) {
@@ -112,6 +114,9 @@ plot_distribution_diagnostics <- function(data,
         ggplot2::aes(x = .data$x, y = .data$y, colour = .data$arm),
         linetype = "dashed", linewidth = 0.6
       )
+    }
+    if (!is.null(panel$breaks)) {
+      p <- p + ggplot2::scale_x_continuous(breaks = panel$breaks)
     }
     p +
       ggplot2::scale_colour_manual(values = colours, breaks = arms) +

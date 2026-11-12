@@ -26,6 +26,14 @@ test_that("one arm with its confidence band", {
                c(0, max(d$SURVTIME[d$ARM == "Control"])))
 })
 
+test_that("an arm keeps its colour when plotted alone", {
+  d <- make_fit_data()
+  p <- plot_empirical_hazard(d, arms = "Treatment")
+  line <- ggplot2::layer_data(p, layer_index(p, "GeomLine"))
+  expect_identical(unique(line$colour),
+                   unname(.plot_colours(arms = levels(d$ARM))["Treatment"]))
+})
+
 test_that("invalid inputs are rejected", {
   d <- make_fit_data()
   expect_error(plot_empirical_hazard(make_test_raw()), "processing_dataset")
