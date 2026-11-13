@@ -1,0 +1,7 @@
+script,item,reference,value,difference,tolerance,max_difference,verdict
+check_report,"Table ""Data summary"": counts and medians",NA,NA,NA,NA,NA,FAIL
+check_report,"Tables ""Kaplan-Meier estimates"": n at risk, S (SE), CI (12 rows)",NA,NA,NA,NA,NA,FAIL
+check_report,"Table ""Hazard ratios"": HR (CI), p-value 0.56 (0.47, 0.66)",NA,NA,NA,NA,NA,FAIL
+check_report,"Tables ""Goodness of fit"": AIC, BIC and their order (21 rows)",NA,NA,NA,NA,NA,FAIL
+check_report,"Tables ""Placement of knots"" (18 rows)",NA,NA,NA,NA,NA,FAIL
+check_report,"Tables ""Tests of fit and predicted survival"": AIC, median, mean, survival (36 rows)",NA,NA,NA,NA,NA,FAIL

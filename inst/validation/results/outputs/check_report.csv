@@ -1,0 +1,11 @@
+script,item,reference,value,difference,tolerance,max_difference,verdict
+check_report,"tables numbered 1..n, one caption per table (15 tables)",NA,NA,NA,NA,NA,PASS
+check_report,"figures numbered 1..n, one caption per image (115 images)",NA,NA,NA,NA,NA,PASS
+check_report,number of figures (115 vs 115),NA,NA,NA,NA,NA,PASS
+check_report,no figure failed,NA,NA,NA,NA,NA,PASS
+check_report,"Table ""Data summary"": counts and medians",NA,NA,NA,NA,NA,PASS
+check_report,"Tables ""Kaplan-Meier estimates"": n at risk, S (SE), CI (12 rows)",NA,NA,NA,NA,NA,PASS
+check_report,"Table ""Hazard ratios"": HR (CI), p-value 0.55 (0.46, 0.65)",NA,NA,NA,NA,NA,PASS
+check_report,"Tables ""Goodness of fit"": AIC, BIC and their order (21 rows)",NA,NA,NA,NA,NA,PASS
+check_report,"Tables ""Placement of knots"" (18 rows)",NA,NA,NA,NA,NA,PASS
+check_report,"Tables ""Tests of fit and predicted survival"": AIC, median, mean, survival (36 rows)",NA,NA,NA,NA,NA,PASS

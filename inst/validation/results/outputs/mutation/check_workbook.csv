@@ -1,0 +1,20 @@
+script,item,reference,value,difference,tolerance,max_difference,verdict
+check_workbook,Data summary: counts and KM median (abs diff),NA,NA,3,1e-09,NA,FAIL
+check_workbook,"KM table (12 rows): n at risk, S, Greenwood SE, log CI",NA,NA,3,1e-09,NA,FAIL
+check_workbook,Hazard ratio and Wald CI (relative diff),NA,NA,0.0182563,1e-06,NA,FAIL
+check_workbook,"Fit statistics (48 models in the reference): loglik, AIC, BIC (abs diff)",NA,NA,38.3507,0.001,NA,FAIL
+check_workbook,Parameters (166 parameters): |est - ref| / se,NA,NA,3.11757,0.02,NA,FAIL
+check_workbook,Parameters: relative diff of se,NA,NA,3.11757,0.05,NA,FAIL
+check_workbook,"Parameters: covariance columns vs reference (656 entries, / sd_i sd_j)",NA,NA,971.927,0.06,NA,FAIL
+check_workbook,Parameters: variance on the diagonal = se^2 (relative),NA,NA,56.3849,1e-10,NA,FAIL
+check_workbook,Parameters (transformed) (166 parameters): |est - ref| / se,NA,NA,2.77371,0.02,NA,FAIL
+check_workbook,Parameters (transformed): relative diff of se,NA,NA,2.7737,0.05,NA,FAIL
+check_workbook,"Parameters (transformed): covariance columns vs reference (656 entries, / sd_i sd_j)",NA,NA,769.34,0.06,NA,FAIL
+check_workbook,Parameters (transformed): variance on the diagonal = se^2 (relative),NA,NA,53.0939,1e-10,NA,FAIL
+check_workbook,Cholesky (96 matrices): upper triangle,NA,NA,0.01,0,NA,FAIL
+check_workbook,Cholesky: L L' - covariance (relative to the largest variance),NA,NA,0.982574,1e-10,NA,FAIL
+check_workbook,Landmark survival (448 predictions): S(t) vs reference (abs),NA,NA,0.0100012,0.001,NA,FAIL
+check_workbook,Landmark survival: KM column vs reference (abs),NA,NA,0.01,1e-09,NA,FAIL
+check_workbook,Survival summary (64 models): median and mean (relative),NA,NA,0.0100027,0.002,NA,FAIL
+check_workbook,"RMST to 120 months, exponential and Weibull (relative)",NA,NA,0.211069,1e-06,NA,FAIL
+check_workbook,"Spline knots (18 knots): log time, n at risk, KM, SE (abs)",NA,NA,4.28,1e-06,NA,FAIL

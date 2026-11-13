@@ -21,6 +21,7 @@ scripts <- c(
   file.path("inst", "validation", "validate_survreg.R"),
   file.path("inst", "validation", "validate_closed_forms.R"),
   file.path("inst", "validation", "validate_splines_rstpm2.R"),
+  file.path("inst", "validation", "validate_python_reference.R"),
   file.path("inst", "reproduce", "reproduce_Jackson2016.R"),
   file.path("inst", "reproduce", "reproduce_RoystonParmar2002.R")
 )

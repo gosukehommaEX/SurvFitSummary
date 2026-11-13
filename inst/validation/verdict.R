@@ -9,7 +9,8 @@
 # registered with its reason in inst/validation/explained.csv and the
 # difference is at most the max_difference registered with it (the largest
 # difference the reason accounts for), FAIL otherwise, and INFO for values
-# reported without a reference. (Without this bound, a registered item was
+# reported without a reference (a missing value or tolerance with a
+# reference FAILs). (Without this bound, a registered item was
 # EXPLAINED whatever its difference, also in the mutation run of
 # 2026-11-13.)
 #
@@ -17,11 +18,14 @@
 # "1", the values of the package are shifted by 0.01 * max(1, |value|)
 # before the comparison, and the results are written to results/mutation/.
 # Every comparison must then FAIL, which shows that the comparisons are not
-# vacuous (inst/validation/run_validation.R checks this); for an EXPLAINED
-# item this holds if max_difference is below 0.005, half the smallest
-# shift, which verdict_table() checks. (A shift of 1% + 0.01 left values
-# near -1 almost unchanged, so that 3 comparisons passed in the mutation
-# run of 2026-11-13.)
+# vacuous (inst/validation/run_validation.R checks this). This holds if
+# every tolerance is at most 0.005 * max(1, |reference|), half the shift,
+# and every max_difference below 0.005, half the smallest shift, which
+# verdict_table() checks, so that a comparison that cannot detect an error
+# of that size stops the normal run. (A shift of 1% + 0.01 left values near
+# -1 almost unchanged, so that 3 comparisons passed in the mutation run of
+# 2026-11-13; tolerances in standard errors larger than the shift let 71
+# comparisons of validate_python_reference.R pass in that of the same day.)
 
 mutation_run <- function() {
   identical(Sys.getenv("SURVFITSUMMARY_MUTATION"), "1")
@@ -32,6 +36,14 @@ verdict_table <- function(script, item, reference, value, tolerance) {
   reference <- rep_len(as.numeric(reference), n)
   value <- rep_len(as.numeric(value), n)
   tolerance <- rep_len(as.numeric(tolerance), n)
+  too_wide <- !is.na(reference) & !is.na(tolerance) &
+    tolerance > 0.005 * pmax(1, abs(reference))
+  if (any(too_wide)) {
+    stop(script, ": the tolerance of ", sum(too_wide), " comparison(s) ",
+         "exceeds half the shift of the mutation run, 0.005 * max(1, ",
+         "|reference|), for example '", item[too_wide][1L], "'.",
+         call. = FALSE)
+  }
   if (mutation_run()) {
     value <- value + 0.01 * pmax(1, abs(value))
   }
@@ -49,7 +61,8 @@ verdict_table <- function(script, item, reference, value, tolerance) {
   bound <- explained$max_difference[match(item, explained$item)]
   difference <- abs(value - reference)
   verdict <- ifelse(is.na(reference), "INFO",
-                    ifelse(!is.na(difference) & difference <= tolerance,
+                    ifelse(!is.na(difference) & !is.na(tolerance) &
+                             difference <= tolerance,
                            "PASS",
                            ifelse(!is.na(bound) & !is.na(difference) &
                                     difference <= bound,

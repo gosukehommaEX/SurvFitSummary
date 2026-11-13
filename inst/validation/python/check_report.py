@@ -5,14 +5,41 @@ Cox) and the reference values of inst/validation/python/expected,
 numbering of the tables and figures.
 
 Usage: python3 -I check_report.py <report.docx> <expected folder> <fit_example.csv>
-Prints PASS or FAIL for each check and ALL PASS at the end."""
-import csv, math, re, sys
+         [--csv <verdicts.csv>] [--mutate]
+Prints PASS or FAIL for each check and ALL PASS at the end; --csv also writes
+the verdicts (with the columns of verdict_table() in verdict.R). With
+--mutate, every number in the cells of the tables, except in the columns that
+identify a row, is shifted by 0.01 * max(1, |value|) and printed with its
+number of decimals (at least one unit of its last digit), as in the mutation
+run of run_validation.R, and the checks of the numbering of the tables and
+figures, which involve no number of the tables, are left out: every check
+must then FAIL, which shows that the checks are not vacuous. A check that
+compares no row FAILs."""
+import argparse, csv, math, re
 import numpy as np
 import docx
 from docx.oxml.ns import qn
 from scipy import stats
 
-path, EXPECTED, DATA = sys.argv[1:4]
+parser = argparse.ArgumentParser()
+parser.add_argument('report'); parser.add_argument('expected'); parser.add_argument('data')
+parser.add_argument('--csv'); parser.add_argument('--mutate', action='store_true')
+args = parser.parse_args()
+path, EXPECTED, DATA = args.report, args.expected, args.data
+# Columns that identify a row: not shifted by --mutate
+KEYS = {'Treatment', 'Time (months)', 'Distribution', 'Model', 'n_knots', 'knot'}
+def shift_number(m):
+    text = m.group(0)
+    decimals = len(text.split('.')[1]) if '.' in text else 0
+    v = float(text)
+    new = f'{v + 0.01 * max(1.0, abs(v)):.{decimals}f}'
+    if new == text:
+        new = f'{v + 10 ** -decimals:.{decimals}f}'
+    return new
+def shifted(column, text):
+    if not args.mutate or column in KEYS:
+        return text
+    return re.sub(r'-?\d+(?:\.\d+)?', shift_number, text)
 d = docx.Document(path)
 paras, tables, images, caption = [], [], 0, None
 ti = 0
@@ -25,10 +52,15 @@ for child in d.element.body.iterchildren():
         if text.startswith('Table '): caption = text
     elif tag == 'tbl':
         t = d.tables[ti]; ti += 1
-        tables.append((caption, [[c.text for c in r.cells] for r in t.rows]))
+        cells = [[c.text for c in r.cells] for r in t.rows]
+        cells = cells[:1] + [[shifted(h, c) for h, c in zip(cells[0], r)] for r in cells[1:]]
+        tables.append((caption, cells))
 results = []
-def report(label, ok, detail=''):
-    results.append(ok); print(f"{'PASS' if ok else 'FAIL'}  {label} {detail}")
+def report(label, ok, detail='', numbering=False):
+    # numbering: a check of the numbering, left out with --mutate
+    if numbering and args.mutate:
+        return
+    results.append((label, detail, ok)); print(f"{'PASS' if ok else 'FAIL'}  {label} {detail}")
 def table(name):
     for cap, rows in tables:
         if cap is not None and re.sub(r'^Table \d+: ', '', cap) == name:
@@ -41,12 +73,12 @@ def expected(name):
 # numbering
 tab_no = [int(m.group(1)) for p in paras for m in [re.match(r'Table (\d+): ', p)] if m]
 fig_no = [int(m.group(1)) for p in paras for m in [re.match(r'Figure (\d+): ', p)] if m]
-report('tables numbered 1..n, one caption per table', tab_no == list(range(1, len(tables) + 1)), f'({len(tables)} tables)')
-report('figures numbered 1..n, one caption per image', fig_no == list(range(1, images + 1)), f'({images} images)')
+report('tables numbered 1..n, one caption per table', tab_no == list(range(1, len(tables) + 1)), f'({len(tables)} tables)', numbering=True)
+report('figures numbered 1..n, one caption per image', fig_no == list(range(1, images + 1)), f'({images} images)', numbering=True)
 # 2 arms, 7 standard models and 9 spline models
 expected_figures = 2 * 3 * 2 + 3 + 2 * (2 + 4 * 7) + (2 * 2 + 4 * 7) + 2 * 2 + 2 * 2
-report('number of figures', images == expected_figures, f'({images} vs {expected_figures})')
-report('no figure failed', not any('could not be drawn' in p for p in paras))
+report('number of figures', images == expected_figures, f'({images} vs {expected_figures})', numbering=True)
+report('no figure failed', not any('could not be drawn' in p for p in paras), numbering=True)
 
 # data and Kaplan-Meier
 data = {}
@@ -74,7 +106,7 @@ for r in table('Data summary'):
     ok &= r['N patients'] == str(len(data[a])) and r['N events'] == str(ev) \
         and r['N censored'] == str(len(data[a]) - ev)
     ok &= r['Median time to event, months (95% CI)'].split(' ')[0] == f1(km_median(a))
-report('Table "Data summary": counts and medians', ok)
+report('Table "Data summary": counts and medians', ok and len(table('Data summary')) == 2)
 ok = True; n = 0
 for a in ['Control', 'Treatment']:
     for r in table(f'Kaplan-Meier estimates of {a}'):
@@ -83,7 +115,7 @@ for a in ['Control', 'Treatment']:
         ok &= r['Number at risk'] == str(nr)
         ok &= r['Survival probability (SE)'] == f'{f3(s)} ({f3(se)})'
         ok &= r['Survival probability 95% CI'] == f'{f3(lo)}, {f3(hi)}'
-report('Tables "Kaplan-Meier estimates": n at risk, S (SE), CI', ok, f'({n} rows)')
+report('Tables "Kaplan-Meier estimates": n at risk, S (SE), CI', ok and n > 0, f'({n} rows)')
 
 # Cox model (no ties)
 t = np.array([u for a in data for u, _ in data[a]]); e = np.array([v for a in data for _, v in data[a]])
@@ -113,7 +145,7 @@ for arm, fit in [('Control', 'independent'), ('Treatment', 'independent'), ('Bot
         g = gof[(fit, arm, r['Distribution'])]; n += 1
         ok &= abs(float(r['AIC']) - float(g['AIC'])) <= 0.05 + 1e-3
         ok &= abs(float(r['BIC']) - float(g['BIC'])) <= 0.05 + 1e-3
-report('Tables "Goodness of fit": AIC, BIC and their order', ok, f'({n} rows)')
+report('Tables "Goodness of fit": AIC, BIC and their order', ok and n > 0, f'({n} rows)')
 kn = {(k['fit_type'], k['arm'], k['n_knots'], k['knot']): k for k in expected('knots')}
 ok = True; n = 0
 for arm, fit in [('Control', 'independent'), ('Treatment', 'independent'), ('Both arms', 'dependent')]:
@@ -122,7 +154,7 @@ for arm, fit in [('Control', 'independent'), ('Treatment', 'independent'), ('Bot
         ok &= r['n_risk'] == k['n_risk'] and abs(float(r['time']) - float(k['time'])) <= 0.005 + 1e-6
         ok &= abs(float(r['surv_est']) - float(k['surv_est'])) <= 5e-4 + 1e-9
         ok &= abs(float(r['quantile']) - float(k['quantile'])) <= 5e-4 + 1e-9
-report('Tables "Placement of knots"', ok, f'({n} rows)')
+report('Tables "Placement of knots"', ok and n > 0, f'({n} rows)')
 pred = {}
 for p_ in expected('predictions'):
     pred[(p_['fit_type'], p_['arm'], p_['model'], float(p_['time']))] = float(p_['surv'])
@@ -141,7 +173,20 @@ for arm, fit, title in [('Control', 'independent', 'Control'), ('Treatment', 'in
         s_ = summ[(fit, a, r['Model'])]
         ok &= abs(float(r['Median (months)']) - float(s_['median'])) <= 0.05 + 2e-3 * float(s_['median'])
         ok &= abs(float(r['Mean (months)']) - float(s_['mean'])) <= 0.05 + 2e-3 * float(s_['mean'])
-report('Tables "Tests of fit and predicted survival": AIC, median, mean, survival', ok, f'({n} rows)')
+report('Tables "Tests of fit and predicted survival": AIC, median, mean, survival', ok and n > 0, f'({n} rows)')
 gt = [p_ for p_ in paras if p_.startswith('The Grambsch-Therneau test')]
 print('   G-T text:', gt[0][:90])
-print('ALL PASS' if all(results) else 'SOME FAIL')
+oks = [ok for *_, ok in results]
+if args.mutate:
+    print('MUTATION DETECTED: every check FAILS' if not any(oks) else
+          f'MUTATION NOT DETECTED: {sum(oks)} check(s) PASS')
+else:
+    print('ALL PASS' if all(oks) else 'SOME FAIL')
+if args.csv:
+    with open(args.csv, 'w', newline='') as f:
+        w = csv.writer(f, lineterminator='\r\n')
+        w.writerow(['script', 'item', 'reference', 'value', 'difference', 'tolerance',
+                    'max_difference', 'verdict'])
+        for label, detail, ok in results:
+            w.writerow(['check_report', f'{label} {detail}'.strip(), 'NA', 'NA', 'NA', 'NA',
+                        'NA', 'PASS' if ok else 'FAIL'])
