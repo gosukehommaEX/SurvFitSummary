@@ -25,6 +25,25 @@
 #'   the time unit) or the spacing of the breaks of the time axis.
 #' @param legend_position Position of the legend: \code{"bottom"} (the
 #'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
+#' @param colours \code{NULL} (the default colours of the arms, the same in
+#'   all plots) or colours of the arms: a vector named by arm, for some or
+#'   all of the plotted arms, or an unnamed vector with one colour per
+#'   plotted arm, in the order of the arms. The confidence bands and the
+#'   numbers at risk take the colours of their arms.
+#' @param linetypes \code{NULL} (the default, solid lines) or line types of
+#'   the arms, given as for \code{colours}: \code{"solid"},
+#'   \code{"dashed"}, \code{"dotted"}, \code{"dotdash"},
+#'   \code{"longdash"}, \code{"twodash"}, \code{"blank"} or a string of 2,
+#'   4, 6 or 8 hexadecimal digits (for example \code{"44"}).
+#' @param text_sizes \code{NULL} (the default) or a named vector of font
+#'   sizes in points, with some or all of the names \code{"title"} (titles
+#'   of the plot and of its panels), \code{"axis_title"},
+#'   \code{"axis_text"}, \code{"legend"} and \code{"risk_table"} (numbers
+#'   at risk and names of the arms below the plot; the title of the table
+#'   is 1.125 times as large). The texts not named keep their default
+#'   sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+#'   11.2 for the titles of panels, the axis text, the legend and the
+#'   numbers at risk.
 #'
 #' @return A ggplot object, or with \code{risk_table = TRUE} a patchwork
 #'   object whose first element is the plot and second the table.
@@ -48,10 +67,14 @@ plot_km <- function(data,
                     y_label = "Survival probability",
                     break_by = NULL,
                     legend_position = c("bottom", "right", "top",
-                                        "left", "none")) {
+                                        "left", "none"),
+                    colours = NULL,
+                    linetypes = NULL,
+                    text_sizes = NULL) {
   .check_survival_data(data)
   time_unit <- match.arg(time_unit)
   legend_position <- match.arg(legend_position)
+  text_sizes <- .check_text_sizes(text_sizes)
   all_arms <- levels(droplevels(data$ARM))
   if (is.null(arms)) arms <- all_arms
   if (!is.character(arms) || length(arms) == 0L ||
@@ -67,7 +90,10 @@ plot_km <- function(data,
   data <- data[data$ARM %in% arms, , drop = FALSE]
   max_time <- max(data$SURVTIME)
   axis <- .time_axis(max_time, time_unit, break_by)
-  colours <- .plot_colours(arms = all_arms)[arms]
+  colours <- .plot_values(colours, arms, .plot_colours(arms = all_arms)[arms],
+                          "colour", "colours")
+  linetypes <- .plot_values(linetypes, arms, rep("solid", length(arms)),
+                            "linetype", "linetypes")
   km <- .km_curve(data, arms, conf_level)
   km$arm <- factor(km$arm, levels = arms)
   p <- ggplot2::ggplot()
@@ -84,19 +110,22 @@ plot_km <- function(data,
   p <- p +
     ggplot2::geom_step(
       data = km,
-      ggplot2::aes(x = .data$time, y = .data$surv, colour = .data$arm),
+      ggplot2::aes(x = .data$time, y = .data$surv, colour = .data$arm,
+                   linetype = .data$arm),
       linewidth = 0.8
     ) +
     ggplot2::scale_colour_manual(values = colours, breaks = arms) +
+    ggplot2::scale_linetype_manual(values = linetypes, breaks = arms) +
     ggplot2::scale_fill_manual(values = colours, guide = "none") +
     ggplot2::scale_x_continuous(breaks = axis$breaks) +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, by = 0.2)) +
     ggplot2::coord_cartesian(xlim = c(0, max_time), ylim = c(0, 1),
                              expand = FALSE) +
     ggplot2::labs(x = axis$label, y = y_label) +
-    .plot_theme(legend_position = legend_position)
+    .plot_theme(legend_position = legend_position, text_sizes = text_sizes)
   if (isTRUE(risk_table)) {
-    p <- .add_risk_table(p, data, arms, axis$breaks, max_time, colours)
+    p <- .add_risk_table(p, data, arms, axis$breaks, max_time, colours,
+                         text_sizes[["risk_table"]])
   }
   p
 }

@@ -78,3 +78,35 @@ test_that("the legend is placed with legend_position", {
   expect_identical(p$theme$legend.position, "right")
   expect_error(plot_schoenfeld(d, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  d <- make_fit_data()
+  p <- plot_schoenfeld(d, colours = c(residuals = "grey50", log_hr = "red"),
+                       linetypes = c(regression = "dashed",
+                                     confidence_interval = "dotdash"),
+                       text_sizes = c(title = 10, axis_text = 9))
+  expect_identical(group_values(p, "GeomPoint", "colour"), "grey50")
+  expect_identical(group_values(p, "GeomHline", "colour"), "red")
+  expect_identical(group_values(p, "GeomHline", "linetype"), "solid")
+  expect_identical(group_values(p, "GeomLine", "colour", 1), "black")
+  expect_identical(group_values(p, "GeomLine", "linetype", 1), "dashed")
+  expect_identical(group_values(p, "GeomLine", "linetype", 2), "dotdash")
+  expect_identical(theme_size(p, "strip.text.x"), 10)
+  expect_identical(theme_size(p, "axis.text.x"), 9)
+  # An unnamed vector gives the colours in the order of the elements
+  p <- plot_schoenfeld(d, colours = c("black", "blue", "grey40", "grey60"))
+  expect_identical(group_values(p, "GeomPoint", "colour"), "black")
+  expect_identical(group_values(p, "GeomHline", "colour"), "blue")
+  expect_identical(group_values(p, "GeomLine", "colour", 1), "grey40")
+  expect_identical(group_values(p, "GeomLine", "colour", 3), "grey60")
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  d <- make_fit_data()
+  expect_error(plot_schoenfeld(d, colours = c(points = "red")),
+               "names of 'colours'")
+  expect_error(plot_schoenfeld(d, linetypes = c(residuals = "dashed")),
+               "names of 'linetypes'")
+  expect_error(plot_schoenfeld(d, colours = c("red", "blue")),
+               "'colours' must have 4 values")
+})

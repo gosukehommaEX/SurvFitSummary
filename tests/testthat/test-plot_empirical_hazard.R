@@ -48,3 +48,36 @@ test_that("the legend is placed with legend_position", {
   expect_identical(p$theme$legend.position, "none")
   expect_error(plot_empirical_hazard(d, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  d <- make_fit_data()
+  control <- unname(.plot_colours(arms = levels(d$ARM))["Control"])
+  p <- plot_empirical_hazard(d, conf_int = TRUE,
+                             colours = c(Treatment = "black"),
+                             linetypes = c("dotted", "solid"),
+                             text_sizes = c(axis_text = 8, title = 15))
+  expect_identical(group_values(p, "GeomLine", "colour"),
+                   c(control, "black"))
+  expect_identical(group_values(p, "GeomLine", "linetype"),
+                   c("dotted", "solid"))
+  expect_identical(group_values(p, "GeomRibbon", "fill"),
+                   c(control, "black"))
+  expect_identical(theme_size(p, "axis.text.x"), 8)
+  expect_identical(theme_size(p, "plot.title"), 15)
+  default <- plot_empirical_hazard(d)
+  expect_identical(group_values(default, "GeomLine", "linetype"),
+                   c("solid", "solid"))
+  expect_identical(theme_size(p, "legend.text"),
+                   theme_size(default, "legend.text"))
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  d <- make_fit_data()
+  expect_error(plot_empirical_hazard(d, arms = "Control",
+                                     colours = c(Treatment = "red")),
+               "names of 'colours'")
+  expect_error(plot_empirical_hazard(d, linetypes = "dashed"),
+               "'linetypes' must have 2 values")
+  expect_error(plot_empirical_hazard(d, text_sizes = c(title = 0)),
+               "'text_sizes'")
+})

@@ -15,12 +15,17 @@
 #' @param breaks Times at which the numbers are reported.
 #' @param max_time Largest time of the x axis.
 #' @param colours Named colours of the numbers of each arm.
+#' @param text_size \code{NULL} or \code{NA} (the default, 0.8 times the
+#'   base size of 14 points) or the font size in points of the numbers and
+#'   of the names of the arms; the title of the table is 1.125 times as
+#'   large (0.9 times the base size by default).
 #'
 #' @return A patchwork object: the plot above the table.
 #'
 #' @keywords internal
 #' @noRd
-.add_risk_table <- function(p, data, arms, breaks, max_time, colours) {
+.add_risk_table <- function(p, data, arms, breaks, max_time, colours,
+                            text_size = NA) {
   rows <- lapply(arms, function(a) {
     t <- data$SURVTIME[data$ARM == a]
     shown <- breaks[breaks <= max(t)]
@@ -31,7 +36,7 @@
   table_data <- do.call(rbind, rows)
   table_data$arm <- factor(table_data$arm, levels = rev(arms))
   base_size <- 14
-  text_size <- 0.8 * base_size
+  if (is.null(text_size) || is.na(text_size)) text_size <- 0.8 * base_size
   first <- table_data$n[table_data$time == min(table_data$time)]
   label_gap <- 0.5 * max(nchar(first)) * 0.6 * text_size + 4
   table_plot <- ggplot2::ggplot(
@@ -53,9 +58,10 @@
       axis.ticks = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_text(
-        colour = "black", margin = ggplot2::margin(r = label_gap)
+        colour = "black", size = text_size,
+        margin = ggplot2::margin(r = label_gap)
       ),
-      plot.title = ggplot2::element_text(size = 0.9 * base_size),
+      plot.title = ggplot2::element_text(size = 1.125 * text_size),
       plot.margin = ggplot2::margin(0, 16, 4, 8)
     )
   patchwork::wrap_plots(p, table_plot, ncol = 1,

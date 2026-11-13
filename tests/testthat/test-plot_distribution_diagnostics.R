@@ -74,3 +74,42 @@ test_that("the collected legend is placed with legend_position", {
   expect_identical(p$theme$legend.position, "none")
   expect_error(plot_distribution_diagnostics(d, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  d <- make_fit_data()
+  treatment <- unname(.plot_colours(arms = levels(d$ARM))["Treatment"])
+  p <- plot_distribution_diagnostics(d, which = "weibull",
+                                     colours = c(Control = "black"),
+                                     linetypes = c("dotted", "solid"),
+                                     text_sizes = c(title = 12))
+  expect_identical(group_values(p, "GeomStep", "colour"),
+                   c("black", treatment))
+  expect_identical(group_values(p, "GeomStep", "linetype"),
+                   c("dotted", "solid"))
+  # The least-squares lines stay dashed, in the colours of the arms
+  expect_identical(group_values(p, "GeomLine", "linetype"),
+                   c("dashed", "dashed"))
+  expect_identical(group_values(p, "GeomLine", "colour"),
+                   c("black", treatment))
+  expect_identical(theme_size(p, "plot.title"), 12)
+  # The same colours and sizes in every panel
+  p <- plot_distribution_diagnostics(d, which = c("lognormal", "gompertz"),
+                                     colours = c("black", "grey50"),
+                                     text_sizes = c(axis_title = 10))
+  expect_identical(group_values(p[[1]], "GeomStep", "colour"),
+                   c("black", "grey50"))
+  expect_identical(group_values(p[[2]], "GeomLine", "colour"),
+                   c("black", "grey50"))
+  expect_identical(theme_size(p[[2]], "axis.title.x"), 10)
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  d <- make_fit_data()
+  expect_error(plot_distribution_diagnostics(d, colours = c(A = "red")),
+               "names of 'colours'")
+  expect_error(plot_distribution_diagnostics(d, linetypes = c(1, 2)),
+               "'linetypes' must be NULL")
+  expect_error(plot_distribution_diagnostics(d,
+                                             text_sizes = c(legend = NA)),
+               "'text_sizes'")
+})

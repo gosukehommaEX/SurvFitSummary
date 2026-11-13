@@ -20,6 +20,16 @@
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
 #' @param legend_position Position of the legend: \code{"bottom"} (the
 #'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
+#' @param colours \code{NULL} (the default) or colours of the elements of
+#'   the plot: \code{"identity"} (identity line, dark grey),
+#'   \code{"least_squares"} (least-squares line, dark grey) and
+#'   \code{"quantiles"} (points, red). A named vector sets the colours of
+#'   the elements it names; an unnamed vector gives the three colours in
+#'   this order.
+#' @param linetypes \code{NULL} (the default) or line types of
+#'   \code{"identity"} (dashed) and \code{"least_squares"} (solid), given
+#'   as for \code{colours} (see \code{\link{plot_km}} for the line types).
+#' @inheritParams plot_km
 #'
 #' @return A ggplot object (one panel per comparison with the control arm).
 #'
@@ -37,7 +47,10 @@ plot_qq_survival <- function(data,
                              time_unit = c("months", "days", "weeks",
                                            "years"),
                              legend_position = c("bottom", "right", "top",
-                                                 "left", "none")) {
+                                                 "left", "none"),
+                             colours = NULL,
+                             linetypes = NULL,
+                             text_sizes = NULL) {
   .check_survival_data(data, min_arms = 2L)
   time_unit <- match.arg(time_unit)
   legend_position <- match.arg(legend_position)
@@ -45,6 +58,13 @@ plot_qq_survival <- function(data,
       any(probs <= 0 | probs >= 1)) {
     stop("'probs' must contain numbers in (0, 1).", call. = FALSE)
   }
+  text_sizes <- .check_text_sizes(text_sizes)
+  colours <- .plot_values(
+    colours, c("identity", "least_squares", "quantiles"),
+    c("grey30", "grey30", "#D91E49"), "colour", "colours"
+  )
+  linetypes <- .plot_values(linetypes, c("identity", "least_squares"),
+                            c("dashed", "solid"), "linetype", "linetypes")
   data$ARM <- droplevels(data$ARM)
   arms <- levels(data$ARM)
   quantiles_of <- function(a) {
@@ -66,6 +86,7 @@ plot_qq_survival <- function(data,
     stop("No quantile is reached by the Kaplan-Meier curves of both arms.",
          call. = FALSE)
   }
+  line_names <- c("Identity line (y = x)", "Least-squares line")
   lines <- do.call(rbind, lapply(comparisons, function(cmp) {
     d <- points[points$comparison == cmp, , drop = FALSE]
     coefs <- if (nrow(d) >= 2L) {
@@ -74,7 +95,7 @@ plot_qq_survival <- function(data,
       c(NA_real_, NA_real_)
     }
     data.frame(comparison = cmp,
-               type = c("Identity line (y = x)", "Least-squares line"),
+               type = line_names,
                intercept = c(0, coefs[1L]), slope = c(1, coefs[2L]),
                stringsAsFactors = FALSE)
   }))
@@ -89,17 +110,19 @@ plot_qq_survival <- function(data,
     ggplot2::geom_abline(
       data = lines,
       ggplot2::aes(intercept = .data$intercept, slope = .data$slope,
-                   linetype = .data$type),
-      colour = "grey30", linewidth = 0.7
+                   colour = .data$type, linetype = .data$type),
+      linewidth = 0.7
     ) +
     ggplot2::geom_point(
       data = points,
       ggplot2::aes(x = .data$control, y = .data$arm, shape = point_label),
-      colour = "#D91E49", size = 2.5
+      colour = colours[["quantiles"]], size = 2.5
+    ) +
+    ggplot2::scale_colour_manual(
+      values = stats::setNames(unname(colours[1:2]), line_names)
     ) +
     ggplot2::scale_linetype_manual(
-      values = c("Identity line (y = x)" = "dashed",
-                 "Least-squares line" = "solid")
+      values = stats::setNames(unname(linetypes), line_names)
     ) +
     ggplot2::scale_shape_manual(values = stats::setNames(16, point_label)) +
     ggplot2::coord_fixed(xlim = c(0, limit), ylim = c(0, limit),
@@ -112,11 +135,12 @@ plot_qq_survival <- function(data,
         paste("Quantiles of the arm", unit_label)
       }
     ) +
-    .plot_theme(legend_position = legend_position) +
+    .plot_theme(legend_position = legend_position, text_sizes = text_sizes) +
     # The legend of the lines above that of the points, so that the legend
     # is not wider than the plot
     ggplot2::theme(legend.box = "vertical") +
-    ggplot2::guides(linetype = ggplot2::guide_legend(order = 1),
+    ggplot2::guides(colour = ggplot2::guide_legend(order = 1),
+                    linetype = ggplot2::guide_legend(order = 1),
                     shape = ggplot2::guide_legend(order = 2))
   if (length(comparisons) > 1L) {
     p <- p + ggplot2::facet_wrap(ggplot2::vars(.data$comparison))

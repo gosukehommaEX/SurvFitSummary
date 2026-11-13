@@ -12,7 +12,10 @@ plot_empirical_hazard(
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Hazard rate",
   break_by = NULL,
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 }
 \arguments{
@@ -37,6 +40,25 @@ of the time axis.}
 
 \item{legend_position}{Position of the legend: \code{"bottom"} (the
 default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
+
+\item{colours}{\code{NULL} (the default colours of the arms, the same in
+all plots) or colours of the arms: a vector named by arm, for some or
+all of the plotted arms, or an unnamed vector with one colour per
+plotted arm, in the order of the arms. The confidence bands take the
+colours of their arms.}
+
+\item{linetypes}{\code{NULL} (the default, solid lines) or line types of
+the arms, given as for \code{colours} (see \code{\link{plot_km}}).}
+
+\item{text_sizes}{\code{NULL} (the default) or a named vector of font
+sizes in points, with some or all of the names \code{"title"} (titles
+of the plot and of its panels), \code{"axis_title"},
+\code{"axis_text"}, \code{"legend"} and \code{"risk_table"} (numbers
+at risk and names of the arms below the plot; the title of the table
+is 1.125 times as large). The texts not named keep their default
+sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+11.2 for the titles of panels, the axis text, the legend and the
+numbers at risk.}
 }
 \value{
 A ggplot object.

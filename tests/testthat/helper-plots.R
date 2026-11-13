@@ -27,3 +27,18 @@ drawn_slope <- function(p) {
   line <- layer_input(p, "GeomLine", length(layer_index(p, "GeomLine")))
   diff(line$y) / diff(line$x)
 }
+
+# Values of an aesthetic in each group of a layer of the built plot, the
+# groups in the order of the levels of the variable mapped to them (several
+# values in a group are pasted, so that they show in a failure)
+group_values <- function(p, geom, aesthetic, k = 1L) {
+  d <- ggplot2::layer_data(p, layer_index(p, geom)[k])
+  unname(vapply(split(as.character(d[[aesthetic]]), d$group),
+                function(v) paste(unique(v), collapse = " | "),
+                character(1)))
+}
+
+# Size of a text element of the theme of a plot, after inheritance
+theme_size <- function(p, element) {
+  ggplot2::calc_element(element, p$theme)$size
+}

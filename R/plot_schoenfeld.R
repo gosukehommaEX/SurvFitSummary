@@ -32,6 +32,17 @@
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
 #' @param legend_position Position of the legend: \code{"bottom"} (the
 #'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
+#' @param colours \code{NULL} (the default) or colours of the elements of
+#'   the plot: \code{"residuals"} (points, dark blue), \code{"log_hr"}
+#'   (estimated log hazard ratio, pink), \code{"regression"} (regression on
+#'   time, black) and \code{"confidence_interval"} (black). A named vector
+#'   sets the colours of the elements it names; an unnamed vector gives the
+#'   four colours in this order.
+#' @param linetypes \code{NULL} (the default) or line types of
+#'   \code{"log_hr"} (solid), \code{"regression"} (solid) and
+#'   \code{"confidence_interval"} (dotted), given as for \code{colours} (see
+#'   \code{\link{plot_km}} for the line types).
+#' @inheritParams plot_km
 #'
 #' @return A ggplot object (one panel per comparison with the control arm,
 #'   titled with the comparison, the log hazard ratio and the p-value).
@@ -55,7 +66,10 @@ plot_schoenfeld <- function(data,
                             time_unit = c("months", "days", "weeks",
                                           "years"),
                             legend_position = c("bottom", "right", "top",
-                                                "left", "none")) {
+                                                "left", "none"),
+                            colours = NULL,
+                            linetypes = NULL,
+                            text_sizes = NULL) {
   .check_survival_data(data, min_arms = 2L)
   time_unit <- match.arg(time_unit)
   legend_position <- match.arg(legend_position)
@@ -63,6 +77,15 @@ plot_schoenfeld <- function(data,
       conf_level <= 0 || conf_level >= 1) {
     stop("'conf_level' must be a single number in (0, 1).", call. = FALSE)
   }
+  text_sizes <- .check_text_sizes(text_sizes)
+  colours <- .plot_values(
+    colours, c("residuals", "log_hr", "regression", "confidence_interval"),
+    c("#004C97", "#E7298A", "black", "black"), "colour", "colours"
+  )
+  linetypes <- .plot_values(
+    linetypes, c("log_hr", "regression", "confidence_interval"),
+    c("solid", "solid", "dotted"), "linetype", "linetypes"
+  )
   data$ARM <- droplevels(data$ARM)
   arms <- levels(data$ARM)
   tests <- test_proportional_hazards(data)
@@ -123,14 +146,14 @@ plot_schoenfeld <- function(data,
 
   lines <- c("Estimated log hazard ratio", "Regression on time",
              paste0(round(100 * conf_level), "% confidence interval"))
-  colours <- stats::setNames(c("#E7298A", "black", "black"), lines)
-  types <- stats::setNames(c("solid", "solid", "dotted"), lines)
+  line_colours <- stats::setNames(unname(colours[-1L]), lines)
+  types <- stats::setNames(unname(linetypes), lines)
   p <- ggplot2::ggplot() +
     ggplot2::geom_point(
       data = residuals,
       ggplot2::aes(x = .data$time, y = .data$y,
                    shape = "Scaled Schoenfeld residual"),
-      colour = "#004C97", alpha = 0.5, size = 1.8
+      colour = colours[["residuals"]], alpha = 0.5, size = 1.8
     ) +
     ggplot2::geom_hline(
       data = reference,
@@ -156,14 +179,14 @@ plot_schoenfeld <- function(data,
                    linetype = lines[3L]),
       linewidth = 0.6
     ) +
-    ggplot2::scale_colour_manual(values = colours, breaks = lines) +
+    ggplot2::scale_colour_manual(values = line_colours, breaks = lines) +
     ggplot2::scale_linetype_manual(values = types, breaks = lines) +
     ggplot2::scale_shape_manual(values = c("Scaled Schoenfeld residual" = 16)) +
     ggplot2::scale_x_continuous(breaks = axis$breaks) +
     ggplot2::facet_wrap(ggplot2::vars(.data$panel), scales = "free_x") +
     ggplot2::labs(x = axis$label,
                   y = "Scaled Schoenfeld residual, beta(t)") +
-    .plot_theme(legend_position = legend_position) +
+    .plot_theme(legend_position = legend_position, text_sizes = text_sizes) +
     # The legend of the points above that of the lines, so that the legend
     # is not wider than the plot
     ggplot2::theme(legend.box = "vertical") +

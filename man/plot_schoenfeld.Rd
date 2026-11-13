@@ -8,7 +8,10 @@ plot_schoenfeld(
   data,
   conf_level = 0.95,
   time_unit = c("months", "days", "weeks", "years"),
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 }
 \arguments{
@@ -23,6 +26,28 @@ line, a single number in (0, 1). The default is 0.95.}
 
 \item{legend_position}{Position of the legend: \code{"bottom"} (the
 default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
+
+\item{colours}{\code{NULL} (the default) or colours of the elements of
+the plot: \code{"residuals"} (points, dark blue), \code{"log_hr"}
+(estimated log hazard ratio, pink), \code{"regression"} (regression on
+time, black) and \code{"confidence_interval"} (black). A named vector
+sets the colours of the elements it names; an unnamed vector gives the
+four colours in this order.}
+
+\item{linetypes}{\code{NULL} (the default) or line types of
+\code{"log_hr"} (solid), \code{"regression"} (solid) and
+\code{"confidence_interval"} (dotted), given as for \code{colours} (see
+\code{\link{plot_km}} for the line types).}
+
+\item{text_sizes}{\code{NULL} (the default) or a named vector of font
+sizes in points, with some or all of the names \code{"title"} (titles
+of the plot and of its panels), \code{"axis_title"},
+\code{"axis_text"}, \code{"legend"} and \code{"risk_table"} (numbers
+at risk and names of the arms below the plot; the title of the table
+is 1.125 times as large). The texts not named keep their default
+sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+11.2 for the titles of panels, the axis text, the legend and the
+numbers at risk.}
 }
 \value{
 A ggplot object (one panel per comparison with the control arm,

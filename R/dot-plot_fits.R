@@ -24,6 +24,12 @@
 #' @param risk_table Logical; numbers at risk below the plot (survival
 #'   only).
 #' @param legend_position Position of the legend (validated by the caller).
+#' @param colours,linetypes \code{NULL} or the colours and line types given
+#'   by the user, checked here. With one arm both are given by observed
+#'   curve (\code{"Kaplan-Meier"} or \code{"Smoothed empirical hazard"})
+#'   and model; with several arms the colours are given by arm and the line
+#'   types by observed curve and model.
+#' @param text_sizes Sizes returned by \code{.check_text_sizes()}.
 #'
 #' @return A ggplot or patchwork object.
 #'
@@ -31,7 +37,8 @@
 #' @noRd
 .plot_fits <- function(x, sel, quantity, conf_int, time_horizon, y_label,
                        y_max, break_by, n_points, n_sim, seed, risk_table,
-                       legend_position) {
+                       legend_position, colours = NULL, linetypes = NULL,
+                       text_sizes = NULL) {
   if (!is.logical(conf_int) || length(conf_int) != 1L || is.na(conf_int)) {
     stop("'conf_int' must be TRUE or FALSE.", call. = FALSE)
   }
@@ -95,9 +102,22 @@
                      formatC(aic, format = "f", digits = 1), ")")
     observed_label <- paste0(observed_name, " (", sel$arms, ")")
     curves <- c(observed_label, labels)
-    colours <- c(stats::setNames("black", observed_label),
-                 stats::setNames(unname(.plot_colours(models = sel$rows)),
-                                 labels))
+    # Colours and line types given by observed curve and model, set by the
+    # labels of the curves in the legend
+    keys <- c(observed_name, sel$models)
+    colours <- stats::setNames(unname(.plot_values(
+      colours, keys, c("black", unname(.plot_colours(models = sel$rows))),
+      "colour", "colours"
+    )), curves)
+    linetypes <- stats::setNames(unname(.plot_values(
+      linetypes, keys, rep("solid", length(keys)), "linetype", "linetypes"
+    )), curves)
+    curve_legend <- function() {
+      ggplot2::guide_legend(
+        ncol = if (legend_position %in% c("bottom", "top")) 2L else 1L,
+        byrow = TRUE
+      )
+    }
     observed$curve <- factor(observed_label, levels = curves)
     pred$curve <- factor(labels[match(pred$model, sel$models)],
                          levels = curves)
@@ -118,24 +138,29 @@
     p <- p +
       observed_geom(
         data = observed,
-        ggplot2::aes(x = .data$time, y = .data$value, colour = .data$curve),
+        ggplot2::aes(x = .data$time, y = .data$value, colour = .data$curve,
+                     linetype = .data$curve),
         linewidth = 0.8
       ) +
       ggplot2::geom_line(
         data = pred,
-        ggplot2::aes(x = .data$time, y = .data$est, colour = .data$curve),
+        ggplot2::aes(x = .data$time, y = .data$est, colour = .data$curve,
+                     linetype = .data$curve),
         linewidth = 0.8
       ) +
       ggplot2::scale_colour_manual(values = colours, breaks = curves) +
+      ggplot2::scale_linetype_manual(values = linetypes, breaks = curves) +
       # Below or above the plot, the long labels of the models in two
-      # columns, so that the legend is not wider than the plot
-      ggplot2::guides(colour = ggplot2::guide_legend(
-        ncol = if (legend_position %in% c("bottom", "top")) 2L else 1L,
-        byrow = TRUE
-      ))
+      # columns, so that the legend is not wider than the plot; the same
+      # guide for the colours and the line types, merged in one legend
+      ggplot2::guides(colour = curve_legend(), linetype = curve_legend())
   } else {
     types <- c(observed_name, sel$models)
-    colours <- .plot_colours(arms = x$arms)[sel$arms]
+    colours <- .plot_values(colours, sel$arms,
+                            .plot_colours(arms = x$arms)[sel$arms], "colour",
+                            "colours")
+    linetypes <- .plot_values(linetypes, types, c("solid", "dashed"),
+                              "linetype", "linetypes")
     observed$arm <- factor(observed$arm, levels = sel$arms)
     observed$type <- factor(observed_name, levels = types)
     pred$arm <- factor(pred$arm, levels = sel$arms)
@@ -171,27 +196,26 @@
       ) +
       ggplot2::scale_colour_manual(values = colours, breaks = sel$arms) +
       ggplot2::scale_fill_manual(values = colours, guide = "none") +
-      ggplot2::scale_linetype_manual(
-        values = stats::setNames(c("solid", "dashed"), types), breaks = types
-      )
+      ggplot2::scale_linetype_manual(values = linetypes, breaks = types)
   }
   p <- p +
     ggplot2::scale_x_continuous(breaks = axis$breaks) +
     ggplot2::coord_cartesian(xlim = c(0, time_horizon), ylim = c(0, y_max),
                              expand = FALSE) +
     ggplot2::labs(x = axis$label, y = y_label) +
-    .plot_theme(legend_position = legend_position)
+    .plot_theme(legend_position = legend_position, text_sizes = text_sizes)
   if (survival_plot) {
     p <- p + ggplot2::scale_y_continuous(breaks = seq(0, 1, by = 0.2))
     if (isTRUE(risk_table)) {
-      # Black numbers with the black Kaplan-Meier curve of one arm
+      # With one arm, the numbers in the colour of its Kaplan-Meier curve
+      # (black by default)
       table_colours <- if (length(sel$arms) == 1L) {
-        stats::setNames("black", sel$arms)
+        stats::setNames(unname(colours[1L]), sel$arms)
       } else {
-        .plot_colours(arms = x$arms)[sel$arms]
+        colours
       }
       p <- .add_risk_table(p, data, sel$arms, axis$breaks, time_horizon,
-                           table_colours)
+                           table_colours, text_sizes[["risk_table"]])
     }
   }
   p

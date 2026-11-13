@@ -31,6 +31,14 @@
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
 #' @param legend_position Position of the legend: \code{"bottom"} (the
 #'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
+#' @param colours \code{NULL} (the default colours of the arms, the same in
+#'   all plots) or colours of the arms: a vector named by arm, for some or
+#'   all of the arms, or an unnamed vector with one colour per arm, in the
+#'   order of the arms.
+#' @param linetypes \code{NULL} (the default, solid lines) or line types of
+#'   the curves of the arms, given as for \code{colours} (see
+#'   \code{\link{plot_km}}); the least-squares lines are dashed.
+#' @inheritParams plot_km
 #'
 #' @return A ggplot object for a single plot, otherwise a patchwork object
 #'   with the plots in the order of \code{which}, two per row, and one
@@ -57,14 +65,21 @@ plot_distribution_diagnostics <- function(data,
                                           legend_position = c("bottom",
                                                               "right",
                                                               "top", "left",
-                                                              "none")) {
+                                                              "none"),
+                                          colours = NULL,
+                                          linetypes = NULL,
+                                          text_sizes = NULL) {
   .check_survival_data(data)
   which <- match.arg(which, several.ok = TRUE)
   time_unit <- match.arg(time_unit)
   legend_position <- match.arg(legend_position)
+  text_sizes <- .check_text_sizes(text_sizes)
   data$ARM <- droplevels(data$ARM)
   arms <- levels(data$ARM)
-  colours <- .plot_colours(arms = arms)
+  colours <- .plot_values(colours, arms, .plot_colours(arms = arms),
+                          "colour", "colours")
+  linetypes <- .plot_values(linetypes, arms, rep("solid", length(arms)),
+                            "linetype", "linetypes")
   time_label <- .time_axis(1, time_unit)$label
   log_time_label <- paste0("log(", time_label, ")")
 
@@ -106,7 +121,7 @@ plot_distribution_diagnostics <- function(data,
     p <- ggplot2::ggplot(
       points, ggplot2::aes(x = .data$x, y = .data$y, colour = .data$arm)
     ) +
-      geom(linewidth = 0.8)
+      geom(ggplot2::aes(linetype = .data$arm), linewidth = 0.8)
     if (isTRUE(regression)) {
       lines <- do.call(rbind, lapply(arms, function(a) {
         d <- points[points$arm == a, , drop = FALSE]
@@ -127,9 +142,10 @@ plot_distribution_diagnostics <- function(data,
     }
     p +
       ggplot2::scale_colour_manual(values = colours, breaks = arms) +
+      ggplot2::scale_linetype_manual(values = linetypes, breaks = arms) +
       ggplot2::labs(title = panel$title, x = panel$x_label,
                     y = panel$y_label) +
-      .plot_theme(legend_position = legend_position)
+      .plot_theme(legend_position = legend_position, text_sizes = text_sizes)
   })
   if (length(plots) == 1L) return(plots[[1L]])
   # The collected legend is placed by the theme of the patchwork

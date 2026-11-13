@@ -8,7 +8,10 @@ plot_qq_survival(
   data,
   probs = seq(0.05, 0.95, by = 0.05),
   time_unit = c("months", "days", "weeks", "years"),
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 }
 \arguments{
@@ -24,6 +27,27 @@ reached by a Kaplan-Meier curve are left out.}
 
 \item{legend_position}{Position of the legend: \code{"bottom"} (the
 default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
+
+\item{colours}{\code{NULL} (the default) or colours of the elements of
+the plot: \code{"identity"} (identity line, dark grey),
+\code{"least_squares"} (least-squares line, dark grey) and
+\code{"quantiles"} (points, red). A named vector sets the colours of
+the elements it names; an unnamed vector gives the three colours in
+this order.}
+
+\item{linetypes}{\code{NULL} (the default) or line types of
+\code{"identity"} (dashed) and \code{"least_squares"} (solid), given
+as for \code{colours} (see \code{\link{plot_km}} for the line types).}
+
+\item{text_sizes}{\code{NULL} (the default) or a named vector of font
+sizes in points, with some or all of the names \code{"title"} (titles
+of the plot and of its panels), \code{"axis_title"},
+\code{"axis_text"}, \code{"legend"} and \code{"risk_table"} (numbers
+at risk and names of the arms below the plot; the title of the table
+is 1.125 times as large). The texts not named keep their default
+sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+11.2 for the titles of panels, the axis text, the legend and the
+numbers at risk.}
 }
 \value{
 A ggplot object (one panel per comparison with the control arm).

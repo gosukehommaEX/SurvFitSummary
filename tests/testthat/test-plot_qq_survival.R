@@ -50,3 +50,36 @@ test_that("the legends are stacked and placed with legend_position", {
   expect_identical(p$theme$legend.position, "left")
   expect_error(plot_qq_survival(d, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  d <- make_fit_data()
+  default <- plot_qq_survival(d)
+  expect_identical(group_values(default, "GeomAbline", "colour"),
+                   c("grey30", "grey30"))
+  expect_identical(group_values(default, "GeomAbline", "linetype"),
+                   c("dashed", "solid"))
+  p <- plot_qq_survival(d, colours = c(quantiles = "black",
+                                       least_squares = "red"),
+                        linetypes = c(identity = "dotted"),
+                        text_sizes = c(axis_title = 11, legend = 10))
+  expect_identical(group_values(p, "GeomAbline", "colour"),
+                   c("grey30", "red"))
+  expect_identical(group_values(p, "GeomAbline", "linetype"),
+                   c("dotted", "solid"))
+  expect_identical(group_values(p, "GeomPoint", "colour"), "black")
+  expect_identical(theme_size(p, "axis.title.y"), 11)
+  expect_identical(theme_size(p, "legend.text"), 10)
+  # An unnamed vector gives the colours in the order of the elements
+  p <- plot_qq_survival(d, colours = c("blue", "green4", "orange"))
+  expect_identical(group_values(p, "GeomAbline", "colour"),
+                   c("blue", "green4"))
+  expect_identical(group_values(p, "GeomPoint", "colour"), "orange")
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  d <- make_fit_data()
+  expect_error(plot_qq_survival(d, linetypes = c(quantiles = "dashed")),
+               "names of 'linetypes'")
+  expect_error(plot_qq_survival(d, colours = c(identity = "#12")),
+               "invalid colours")
+})

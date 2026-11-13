@@ -69,6 +69,10 @@ devtools::install_github("gosukehommaEX/SurvFitSummary",
 | `write_survival_workbook()` | Excel workbook with the tables of the analysis, including the parameters with their covariance matrices |
 | `write_survival_report()` | Word report with methods, diagnostics, model fits and extrapolations, with figures with and without confidence intervals |
 
+The plotting functions place the legend with `legend_position` and set the
+colours, line types and font sizes with `colours`, `linetypes` and
+`text_sizes`.
+
 ## Examples
 
 ```r
@@ -99,6 +103,8 @@ survival_summary(fits, time_horizon = 60)
 spline_knot_table(fits)
 
 plot_km(fit_data, conf_int = TRUE)
+plot_km(fit_data, colours = c("black", "grey50"),
+        linetypes = c("solid", "dashed"), text_sizes = c(axis_title = 16))
 plot_survival_fits(fits, arms = "Control", time_horizon = 120)
 plot_hazard_fits(fits, models = "Log-logistic")
 plot_distribution_diagnostics(fit_data)

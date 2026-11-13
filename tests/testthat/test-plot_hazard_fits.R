@@ -63,3 +63,37 @@ test_that("the legend is placed with legend_position", {
   expect_identical(p$theme$legend.position, "top")
   expect_error(plot_hazard_fits(x, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  x <- get_fits("simple")
+  p <- plot_hazard_fits(x, models = "Weibull", arms = "Control",
+                        conf_int = TRUE, n_sim = 200,
+                        colours = c("Smoothed empirical hazard" = "grey40",
+                                    Weibull = "red"),
+                        linetypes = c("solid", "dashed"),
+                        text_sizes = c(axis_title = 18))
+  expect_identical(group_values(p, "GeomLine", "colour", 1), "grey40")
+  expect_identical(group_values(p, "GeomLine", "colour", 2), "red")
+  expect_identical(group_values(p, "GeomLine", "linetype", 2), "dashed")
+  # The confidence band of the model in its colour
+  expect_identical(group_values(p, "GeomRibbon", "fill", 2), "red")
+  expect_identical(theme_size(p, "axis.title.y"), 18)
+  # Several arms: colours by arm
+  control <- unname(.plot_colours(arms = x$arms)["Control"])
+  p <- plot_hazard_fits(x, models = "Weibull",
+                        colours = c(Treatment = "black"))
+  expect_identical(group_values(p, "GeomLine", "colour", 1),
+                   c(control, "black"))
+  expect_identical(group_values(p, "GeomLine", "linetype", 2),
+                   c("dashed", "dashed"))
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  x <- get_fits("simple")
+  expect_error(plot_hazard_fits(x, models = "Weibull", arms = "Control",
+                                colours = c("Kaplan-Meier" = "grey40")),
+               "names of 'colours'")
+  expect_error(plot_hazard_fits(x, models = "Weibull", arms = "Control",
+                                linetypes = c(Weibull = "zigzag")),
+               "invalid line types")
+})

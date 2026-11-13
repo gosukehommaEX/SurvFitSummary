@@ -116,3 +116,66 @@ test_that("the legend is placed with legend_position", {
   expect_identical(p[[1]]$theme$legend.position, "right")
   expect_error(plot_survival_fits(x, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  x <- get_fits("simple")
+  models <- c("Exponential", "Weibull")
+  exponential <- unname(.plot_colours(
+    models = x$models[match("Exponential", x$models$model), ]
+  ))
+  # One arm: by the Kaplan-Meier curve and the models
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          colours = c("Kaplan-Meier" = "grey40",
+                                      Weibull = "red"),
+                          linetypes = c(Exponential = "dashed"),
+                          text_sizes = c(legend = 9, risk_table = 10))
+  main <- p[[1]]
+  expect_identical(group_values(main, "GeomStep", "colour"), "grey40")
+  expect_identical(group_values(main, "GeomStep", "linetype"), "solid")
+  expect_identical(group_values(main, "GeomLine", "colour"),
+                   c(exponential, "red"))
+  expect_identical(group_values(main, "GeomLine", "linetype"),
+                   c("dashed", "solid"))
+  expect_identical(theme_size(main, "legend.text"), 9)
+  # The numbers at risk in the colour of the Kaplan-Meier curve
+  numbers <- ggplot2::layer_data(p[[2]])
+  expect_identical(unique(numbers$colour), "grey40")
+  expect_equal(unique(numbers$size), 10 / ggplot2::.pt)
+  # An unnamed vector gives the values in the order of the legend
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          risk_table = FALSE,
+                          colours = c("black", "blue", "orange"))
+  expect_identical(group_values(p, "GeomLine", "colour"),
+                   c("blue", "orange"))
+  # Several arms: colours by arm, line types by curve
+  p <- plot_survival_fits(x, models = "Weibull", fit_type = "dependent",
+                          risk_table = FALSE,
+                          colours = c("black", "grey50"),
+                          linetypes = c(Weibull = "dotted"))
+  expect_identical(group_values(p, "GeomStep", "colour"),
+                   c("black", "grey50"))
+  expect_identical(group_values(p, "GeomStep", "linetype"),
+                   c("solid", "solid"))
+  expect_identical(group_values(p, "GeomLine", "colour"),
+                   c("black", "grey50"))
+  expect_identical(group_values(p, "GeomLine", "linetype"),
+                   c("dotted", "dotted"))
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  x <- get_fits("simple")
+  models <- c("Exponential", "Weibull")
+  expect_error(plot_survival_fits(x, models = models, arms = "Control",
+                                  colours = c(Gamma = "red")),
+               "names of 'colours'")
+  expect_error(plot_survival_fits(x, models = models, arms = "Control",
+                                  colours = c("red", "blue")),
+               "'colours' must have 3 values")
+  expect_error(plot_survival_fits(x, models = "Weibull",
+                                  fit_type = "dependent",
+                                  linetypes = c(Control = "dashed")),
+               "names of 'linetypes'")
+  expect_error(plot_survival_fits(x, models = "Weibull", arms = "Control",
+                                  text_sizes = c(size = 3)),
+               "'text_sizes'")
+})

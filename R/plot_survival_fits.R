@@ -49,6 +49,22 @@
 #'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'   Below or above the plot, the curves of one arm with several models
 #'   are listed in two columns.
+#' @param colours \code{NULL} (the default colours) or colours of the
+#'   curves. With one arm, the curves are the Kaplan-Meier curve (named
+#'   \code{"Kaplan-Meier"}, black by default) and the models (named by
+#'   their labels, as in \code{models}); with several arms, the curves are
+#'   named by arm. A named vector sets the colours of the curves it names;
+#'   an unnamed vector gives one colour per curve, in the order of the
+#'   legend. With one arm, the confidence band of the model and the numbers
+#'   at risk take the colours of the model and of the Kaplan-Meier curve;
+#'   with several arms, the bands and the numbers at risk take the colours
+#'   of the arms.
+#' @param linetypes \code{NULL} (the default) or line types of the
+#'   Kaplan-Meier curve (\code{"Kaplan-Meier"}) and of the models (named by
+#'   their labels), in both layouts, given as for \code{colours} (see
+#'   \code{\link{plot_km}} for the line types). By default the lines are
+#'   solid, except that of the model with several arms (dashed).
+#' @inheritParams plot_km
 #'
 #' @return A ggplot object, or with \code{risk_table = TRUE} a patchwork
 #'   object whose first element is the plot and second the table.
@@ -80,14 +96,19 @@ plot_survival_fits <- function(x,
                                n_sim = 1000,
                                seed = 1,
                                legend_position = c("bottom", "right", "top",
-                                                   "left", "none")) {
+                                                   "left", "none"),
+                               colours = NULL,
+                               linetypes = NULL,
+                               text_sizes = NULL) {
   .check_survfitsummary(x)
   fit_type <- match.arg(fit_type)
   legend_position <- match.arg(legend_position)
+  text_sizes <- .check_text_sizes(text_sizes)
   sel <- .select_models(x, models, arms, fit_type)
   .plot_fits(x, sel, quantity = "survival", conf_int = conf_int,
              time_horizon = time_horizon, y_label = y_label, y_max = NULL,
              break_by = break_by, n_points = n_points, n_sim = n_sim,
              seed = seed, risk_table = risk_table,
-             legend_position = legend_position)
+             legend_position = legend_position, colours = colours,
+             linetypes = linetypes, text_sizes = text_sizes)
 }

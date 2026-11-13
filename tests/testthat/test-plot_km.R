@@ -80,3 +80,60 @@ test_that("the legend is placed with legend_position", {
   expect_identical(p[[1]]$theme$legend.position, "right")
   expect_error(plot_km(d, legend_position = "middle"))
 })
+
+test_that("colours, line types and text sizes are set by the arguments", {
+  d <- make_fit_data()
+  control <- unname(.plot_colours(arms = levels(d$ARM))["Control"])
+  default <- plot_km(d)
+  expect_identical(group_values(default[[1]], "GeomStep", "linetype"),
+                   c("solid", "solid"))
+  p <- plot_km(d, conf_int = TRUE, colours = c(Treatment = "red"),
+               linetypes = c(Control = "dashed"),
+               text_sizes = c(axis_title = 20, axis_text = 9, legend = 8,
+                              risk_table = 10))
+  main <- p[[1]]
+  expect_identical(group_values(main, "GeomStep", "colour"),
+                   c(control, "red"))
+  expect_identical(group_values(main, "GeomStep", "linetype"),
+                   c("dashed", "solid"))
+  expect_identical(group_values(main, "GeomRibbon", "fill"),
+                   c(control, "red"))
+  expect_identical(theme_size(main, "axis.title.x"), 20)
+  expect_identical(theme_size(main, "axis.text.y"), 9)
+  expect_identical(theme_size(main, "legend.text"), 8)
+  expect_identical(theme_size(main, "plot.title"),
+                   theme_size(default[[1]], "plot.title"))
+  # The numbers at risk in the colours of the arms and in the given size
+  table <- p[[2]]
+  numbers <- ggplot2::layer_data(table)
+  expect_identical(unique(numbers$colour[table$data$arm == "Treatment"]),
+                   "red")
+  expect_equal(unique(numbers$size), 10 / ggplot2::.pt)
+  expect_identical(table$theme$axis.text.y$size, 10)
+  expect_equal(table$theme$plot.title$size, 11.25)
+  expect_equal(default[[2]]$theme$plot.title$size, 0.9 * 14)
+  # An unnamed vector gives the values in the order of the arms
+  p <- plot_km(d, risk_table = FALSE, colours = c("black", "grey50"),
+               linetypes = c("solid", "44"))
+  expect_identical(group_values(p, "GeomStep", "colour"),
+                   c("black", "grey50"))
+  expect_identical(group_values(p, "GeomStep", "linetype"),
+                   c("solid", "44"))
+})
+
+test_that("invalid colours, line types and text sizes are rejected", {
+  d <- make_fit_data()
+  expect_error(plot_km(d, colours = c(Placebo = "red")),
+               "names of 'colours'")
+  expect_error(plot_km(d, colours = "red"), "'colours' must have 2 values")
+  expect_error(plot_km(d, colours = c("red", "no colour")),
+               "invalid colours: no colour")
+  expect_error(plot_km(d, colours = c(Control = NA_character_)),
+               "'colours' must be NULL")
+  expect_error(plot_km(d, linetypes = c(Control = "wavy")),
+               "invalid line types: wavy")
+  expect_error(plot_km(d, linetypes = 1:2), "'linetypes' must be NULL")
+  expect_error(plot_km(d, text_sizes = c(axis = 12)), "'text_sizes'")
+  expect_error(plot_km(d, text_sizes = c(legend = -1)), "'text_sizes'")
+  expect_error(plot_km(d, text_sizes = 12), "'text_sizes'")
+})
