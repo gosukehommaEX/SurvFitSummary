@@ -50,6 +50,7 @@ devtools::install_github("gosukehommaEX/SurvFitSummary",
 | [`test_proportional_hazards()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/test_proportional_hazards.md) | Grambsch-Therneau test of proportional hazards |
 | [`estimate_empirical_hazard()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/estimate_empirical_hazard.md) | Smoothed empirical hazard by arm (`bshazard`) |
 | [`fit_survival_models()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/fit_survival_models.md) | Fits parametric models (12 distributions, the 7 standard models of NICE DSU TSD 14 by default) and spline models on the hazard, odds and normal scales with 1 to 3 knots (`flexsurv`) |
+| [`summary()`](https://rdrr.io/r/base/summary.html), [`plot()`](https://rdrr.io/r/graphics/plot.default.html) | Methods for the fitted models: fit statistics and status of all the models, and the fitted survival curves or hazards |
 | [`parameter_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/parameter_table.md) | Parameter estimates on the natural and transformed scales |
 | [`covariance_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/covariance_table.md) | Covariance matrices and Cholesky factors on the transformed and natural scales |
 | [`gof_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/gof_table.md) | Log-likelihood, AIC and BIC sorted by AIC |
@@ -93,6 +94,8 @@ fit_data <- processing_dataset(
   control_arm = "Control"
 )
 fits <- fit_survival_models(fit_data)
+summary(fits)
+plot(fits, time_horizon = 120)
 gof_table(fits)
 parameter_table(fits)
 covariance_table(fits, type = "cholesky", scale = "transformed")
@@ -180,6 +183,10 @@ GPL (\>= 2)
   : Fit Standard Parametric and Spline Survival Models
 - [`print(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/print.survfitsummary.md)
   : Print the Survival Models Fitted by fit_survival_models()
+- [`summary(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/summary.survfitsummary.md)
+  : Summary of the Survival Models Fitted by fit_survival_models()
+- [`plot(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot.survfitsummary.md)
+  : Plot the Survival Models Fitted by fit_survival_models()
 - [`parameter_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/parameter_table.md)
   : Parameter Estimates of the Fitted Models
 - [`covariance_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/covariance_table.md)

@@ -362,7 +362,7 @@ names are the labels of the models and `"Kaplan-Meier"` (or
 
 plot_survival_fits(fits, arms = "Control", time_horizon = 120,
                    colours = c("Kaplan-Meier" = "grey40",
-                               "Weibull" = "#0072B2"),
+                               "Weibull" = "#009E73"),
                    linetypes = c("Hazards, 1 knot" = "dashed",
                                  "Hazards, 2 knots" = "dotted"),
                    text_sizes = c(axis_title = 16, legend = 12))

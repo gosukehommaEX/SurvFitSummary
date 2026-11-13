@@ -56,6 +56,16 @@ replaced by those below.
   smaller step of the numerical gradient (`ndeps = 1e-5`). Print-ready
   model names (for example “Log-logistic”, “Generalized Gamma”,
   “Hazards, 2 knots”).
+- [`summary()`](https://rdrr.io/r/base/summary.html) and
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods for
+  the fitted models: [`summary()`](https://rdrr.io/r/base/summary.html)
+  gives the fit statistics and the status of all the models, including
+  those that failed, and
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) calls
+  [`plot_survival_fits()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_survival_fits.md)
+  (`type = "survival"`) or
+  [`plot_hazard_fits()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_hazard_fits.md)
+  (`type = "hazard"`), by default for the models of the control arm.
 - New
   [`parameter_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/parameter_table.md):
   estimates, standard errors and confidence intervals on the natural and

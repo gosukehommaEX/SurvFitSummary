@@ -148,6 +148,12 @@
 <td>Fits parametric models (12 distributions, the 7 standard models of NICE DSU TSD 14 by default) and spline models on the hazard, odds and normal scales with 1 to 3 knots (<code>flexsurv</code>)</td>
 </tr>
 <tr>
+<td>
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>
+</td>
+<td>Methods for the fitted models: fit statistics and status of all the models, and the fitted survival curves or hazards</td>
+</tr>
+<tr>
 <td><code><a href="reference/parameter_table.html">parameter_table()</a></code></td>
 <td>Parameter estimates on the natural and transformed scales</td>
 </tr>
@@ -234,6 +240,8 @@
 <span>  control_arm <span class="op">=</span> <span class="st">"Control"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_survival_models.html">fit_survival_models</a></span><span class="op">(</span><span class="va">fit_data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits</span>, time_horizon <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/gof_table.html">gof_table</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/parameter_table.html">parameter_table</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/covariance_table.html">covariance_table</a></span><span class="op">(</span><span class="va">fits</span>, type <span class="op">=</span> <span class="st">"cholesky"</span>, scale <span class="op">=</span> <span class="st">"transformed"</span><span class="op">)</span></span>

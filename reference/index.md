@@ -26,6 +26,10 @@
   : Fit Standard Parametric and Spline Survival Models
 - [`print(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/print.survfitsummary.md)
   : Print the Survival Models Fitted by fit_survival_models()
+- [`summary(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/summary.survfitsummary.md)
+  : Summary of the Survival Models Fitted by fit_survival_models()
+- [`plot(`*`<survfitsummary>`*`)`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot.survfitsummary.md)
+  : Plot the Survival Models Fitted by fit_survival_models()
 - [`parameter_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/parameter_table.md)
   : Parameter Estimates of the Fitted Models
 - [`covariance_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/covariance_table.md)
