@@ -41,6 +41,11 @@ replaced by those below.
   a smaller step of the numerical gradient (`ndeps = 1e-5`). Print-ready model
   names (for example "Log-logistic", "Generalized Gamma", "Hazards, 2
   knots").
+* `summary()` and `plot()` methods for the fitted models: `summary()` gives
+  the fit statistics and the status of all the models, including those that
+  failed, and `plot()` calls `plot_survival_fits()` (`type = "survival"`) or
+  `plot_hazard_fits()` (`type = "hazard"`), by default for the models of the
+  control arm.
 * New `parameter_table()`: estimates, standard errors and confidence
   intervals on the natural and transformed scales.
 * New `covariance_table()`: covariance matrices and their lower triangular

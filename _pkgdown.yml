@@ -17,6 +17,8 @@ reference:
     contents:
       - fit_survival_models
       - print.survfitsummary
+      - summary.survfitsummary
+      - plot.survfitsummary
       - parameter_table
       - covariance_table
       - gof_table

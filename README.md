@@ -53,6 +53,7 @@ devtools::install_github("gosukehommaEX/SurvFitSummary",
 | `test_proportional_hazards()` | Grambsch-Therneau test of proportional hazards |
 | `estimate_empirical_hazard()` | Smoothed empirical hazard by arm (`bshazard`) |
 | `fit_survival_models()` | Fits parametric models (12 distributions, the 7 standard models of NICE DSU TSD 14 by default) and spline models on the hazard, odds and normal scales with 1 to 3 knots (`flexsurv`) |
+| `summary()`, `plot()` | Methods for the fitted models: fit statistics and status of all the models, and the fitted survival curves or hazards |
 | `parameter_table()` | Parameter estimates on the natural and transformed scales |
 | `covariance_table()` | Covariance matrices and Cholesky factors on the transformed and natural scales |
 | `gof_table()` | Log-likelihood, AIC and BIC sorted by AIC |
@@ -95,6 +96,8 @@ fit_data <- processing_dataset(
   control_arm = "Control"
 )
 fits <- fit_survival_models(fit_data)
+summary(fits)
+plot(fits, time_horizon = 120)
 gof_table(fits)
 parameter_table(fits)
 covariance_table(fits, type = "cholesky", scale = "transformed")
