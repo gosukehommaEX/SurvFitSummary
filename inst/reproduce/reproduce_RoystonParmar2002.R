@@ -4,7 +4,7 @@
 # treatment effects. Statistics in Medicine 21, 2175-2197.
 #
 # Breast cancer data of Section 2.1 (686 patients, 299 events; available as
-# flexsurv::bc, time in years) with the three prognostic groups (reference
+# flexsurv::bc) with the three prognostic groups (reference
 # Good). Spline models with d.f. = number of internal knots + 1 on the
 # hazard scale (PH) and the odds scale (PO), with the group acting on
 # gamma0 (models of all arms fitted together, fit_type = "dependent"). The
@@ -16,6 +16,12 @@
 #     PH and PO models with 1 to 4 d.f.
 #   Section 5.1: knots of the PO(2) model (median, minimum and maximum
 #     uncensored times) and its coefficients with standard errors.
+#
+# Time in years of 365.25 days (rectime / 365.25): the knots of Section 5.1
+# (1.769, 0.197 and 6.724 years) are those of rectime / 365.25, whereas
+# flexsurv::bc$recyrs is rectime / 365 (upper knot 6.729). The scale of time
+# changes gamma0 but not the effects of the groups, nor the AIC of the
+# article (log time).
 #
 # Two conversions, both exact:
 #   1. The article gives the log-likelihood of log time: its AIC is the AIC
@@ -34,7 +40,8 @@ script <- "reproduce_RoystonParmar2002"
 
 bc <- flexsurv::bc
 dat <- processing_dataset(
-  data.frame(GROUP = bc$group, YEARS = bc$recyrs, EVENT = bc$censrec),
+  data.frame(GROUP = bc$group, YEARS = bc$rectime / 365.25,
+             EVENT = bc$censrec),
   column_arm = "GROUP", column_survtime = "YEARS", column_event = "EVENT",
   control_arm = "Good"
 )

@@ -17,7 +17,11 @@
 #     (Weibull), fs2 (generalized gamma), fs4 (log-logistic), sp1 (spline,
 #     odds scale, 1 knot) and sp3 (spline, hazard scale, 1 knot).
 #   Section 5.1: group effects (log hazard ratios) and standard errors of
-#     sp3, and the 5-year survival of the Good group under sp1.
+#     sp3, and the 5-year survival of the Good group under sp1. The article
+#     computes the latter as 1 - psurvspline(5, gamma, knots), whose default
+#     is scale = "hazard", for the model sp1 on the odds scale: the printed
+#     0.6896969 is exp(-exp(eta)) with the linear predictor eta of sp1 at 5
+#     years, not the survival 1 / (1 + exp(eta)) of sp1. Both are compared.
 #
 # Run from the root of the package after devtools::load_all():
 #   source(file.path("inst", "reproduce", "reproduce_Jackson2016.R"))
@@ -109,10 +113,12 @@ result <- rbind(result, verdict_table(
   printed_tolerance(7)
 ))
 pred <- predict_survival(fits, times = 5)
+s5 <- pred$est[pred$model == "Odds, 1 knot" & pred$arm == "Good"]
+eta <- log((1 - s5) / s5)
 result <- rbind(result, verdict_table(
-  script, "sp1: 5-year survival of the Good group", 0.6896969,
-  pred$est[pred$model == "Odds, 1 knot" & pred$arm == "Good"],
-  printed_tolerance(7)
+  script, c("sp1: 5-year survival of the Good group",
+            "sp1: 5-year survival as computed in the article (hazard scale)"),
+  0.6896969, c(s5, exp(-exp(eta))), printed_tolerance(7)
 ))
 
 write_verdicts(result, file.path("inst", "reproduce", "results"))

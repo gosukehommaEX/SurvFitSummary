@@ -10,10 +10,12 @@
 # otherwise, and INFO for values reported without a reference.
 #
 # Mutation run: with the environment variable SURVFITSUMMARY_MUTATION set to
-# "1", the values of the package are shifted (by 1% and 0.01) before the
-# comparison, and the results are written to results/mutation/. Every
-# comparison must then FAIL, which shows that the comparisons are not
-# vacuous (inst/validation/run_validation.R checks this).
+# "1", the values of the package are shifted by 0.01 * max(1, |value|)
+# before the comparison, and the results are written to results/mutation/.
+# Every comparison must then FAIL, which shows that the comparisons are not
+# vacuous (inst/validation/run_validation.R checks this). (A shift of
+# 1% + 0.01 left values near -1 almost unchanged, so that 3 comparisons
+# passed in the mutation run of 2026-11-13.)
 
 mutation_run <- function() {
   identical(Sys.getenv("SURVFITSUMMARY_MUTATION"), "1")
@@ -25,7 +27,7 @@ verdict_table <- function(script, item, reference, value, tolerance) {
   value <- rep_len(as.numeric(value), n)
   tolerance <- rep_len(as.numeric(tolerance), n)
   if (mutation_run()) {
-    value <- value * 1.01 + 0.01
+    value <- value + 0.01 * pmax(1, abs(value))
   }
   explained <- utils::read.csv(file.path("inst", "validation",
                                          "explained.csv"),

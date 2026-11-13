@@ -9,7 +9,11 @@
 # "PO" (odds) and "probit" (normal). For the arms fitted together, the arm
 # shifts the spline (gamma0 in flexsurv, the coefficient of the arm in
 # rstpm2), so the effect of the arm is compared too.
-# Data: inst/extdata/fit_example.csv. Tolerance: 1e-3 for the
+# Data: inst/extdata/fit_example.csv (all models), and flexsurv::bc (time
+# in years, groups Good, Medium, Poor) for the models of all groups with 1
+# knot on the hazard and odds scales (sp3 and sp1 of Jackson 2016, PH(2)
+# and PO(2) of Royston and Parmar 2002), to check the estimates against
+# which the published values are compared. Tolerance: 1e-3 for the
 # log-likelihood and the effect of the arm, 1e-4 for the survival
 # probabilities (both programs maximize numerically).
 # rstpm2 is used only here, not by the package. Its fits are S4 objects
@@ -102,6 +106,57 @@ for (g in groups) {
         ))
       }
     }
+  }
+}
+
+# flexsurv::bc: models of all groups with 1 knot
+bc <- processing_dataset(
+  data.frame(GROUP = flexsurv::bc$group, YEARS = flexsurv::bc$recyrs,
+             EVENT = flexsurv::bc$censrec),
+  column_arm = "GROUP", column_survtime = "YEARS", column_event = "EVENT",
+  control_arm = "Good"
+)
+bc_fits <- fit_survival_models(bc, distributions = NULL,
+                               spline_scales = c("hazard", "odds"),
+                               spline_knots = 1L, fit_type = "dependent",
+                               time_unit = "years")
+bc_gof <- gof_table(bc_fits)
+bc_par <- parameter_table(bc_fits, scale = "natural")
+bc_knots <- spline_knot_table(bc_fits)
+bc_pred <- predict_survival(bc_fits, c(1, 2, 5))
+boundary <- range(log(bc$SURVTIME[bc$EVENT == 1]))
+smooth <- stats::as.formula(paste0(
+  "~ rstpm2::nsx(log(SURVTIME), knots = ",
+  sprintf("%.15g", bc_knots$log_time[bc_knots$n_knots == 1]),
+  ", Boundary.knots = c(",
+  paste(sprintf("%.15g", boundary), collapse = ", "), "))"
+))
+for (scale in c("hazard", "odds")) {
+  model <- paste0(labels[[scale]], ", 1 knot")
+  ref <- rstpm2::stpm2(survival::Surv(SURVTIME, EVENT) ~ ARM, data = bc,
+                       smooth.formula = smooth, link.type = links[[scale]])
+  prefix <- paste0("bc, Both arms, ", model, ": ")
+  effects <- paste0("ARM", levels(bc$ARM)[-1L])
+  rows <- bc_par$model == model
+  result <- rbind(
+    result,
+    verdict_table(script, paste0(prefix, "log-likelihood"),
+                  as.numeric(stats4::logLik(ref)),
+                  bc_gof$loglik[bc_gof$model == model], 1e-3),
+    verdict_table(script, paste0(prefix, "effect of ", effects),
+                  unname(stats4::coef(ref)[effects]),
+                  bc_par$est[rows][match(effects, bc_par$parameter[rows])],
+                  1e-4)
+  )
+  for (a in levels(bc$ARM)) {
+    newdata <- data.frame(SURVTIME = c(1, 2, 5),
+                          ARM = factor(a, levels = levels(bc$ARM)))
+    p_rows <- bc_pred$model == model & bc_pred$arm == a
+    result <- rbind(result, verdict_table(
+      script, paste0(prefix, a, " S(", c(1, 2, 5), ")"),
+      as.numeric(predict_stpm2(ref, newdata = newdata, type = "surv")),
+      bc_pred$est[p_rows][match(c(1, 2, 5), bc_pred$time[p_rows])], 1e-4
+    ))
   }
 }
 
