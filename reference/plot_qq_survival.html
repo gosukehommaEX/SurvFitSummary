@@ -72,7 +72,8 @@ with the same scale on both axes.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_qq_survival</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
-<span>  time_unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"months"</span>, <span class="st">"days"</span>, <span class="st">"weeks"</span>, <span class="st">"years"</span><span class="op">)</span></span>
+<span>  time_unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"months"</span>, <span class="st">"days"</span>, <span class="st">"weeks"</span>, <span class="st">"years"</span><span class="op">)</span>,</span>
+<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -94,6 +95,11 @@ reached by a Kaplan-Meier curve are left out.</p></dd>
 <dt id="arg-time-unit">time_unit<a class="anchor" aria-label="anchor" href="#arg-time-unit"></a></dt>
 <dd><p>Time unit of the data: <code>"months"</code> (the default),
 <code>"days"</code>, <code>"weeks"</code> or <code>"years"</code>.</p></dd>
+
+
+<dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
+<dd><p>Position of the legend: <code>"bottom"</code> (the
+default), <code>"right"</code>, <code>"top"</code>, <code>"left"</code> or <code>"none"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

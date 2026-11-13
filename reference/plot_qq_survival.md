@@ -18,7 +18,8 @@ with the same scale on both axes.
 plot_qq_survival(
   data,
   probs = seq(0.05, 0.95, by = 0.05),
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -40,6 +41,11 @@ plot_qq_survival(
 
   Time unit of the data: `"months"` (the default), `"days"`, `"weeks"`
   or `"years"`.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`.
 
 ## Value
 

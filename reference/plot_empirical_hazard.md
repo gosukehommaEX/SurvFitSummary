@@ -15,7 +15,8 @@ plot_empirical_hazard(
   conf_level = 0.95,
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Hazard rate",
-  break_by = NULL
+  break_by = NULL,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -52,6 +53,11 @@ plot_empirical_hazard(
 - break_by:
 
   `NULL` (the default) or the spacing of the breaks of the time axis.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`.
 
 ## Value
 

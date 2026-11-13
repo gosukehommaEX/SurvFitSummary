@@ -62,7 +62,8 @@ curve ends at the largest observed time of its arm, and the axes start at
 <span>  risk_table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  time_unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"months"</span>, <span class="st">"days"</span>, <span class="st">"weeks"</span>, <span class="st">"years"</span><span class="op">)</span>,</span>
 <span>  y_label <span class="op">=</span> <span class="st">"Survival probability"</span>,</span>
-<span>  break_by <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  break_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -109,6 +110,11 @@ survival"</code>. The default is <code>"Survival probability"</code>.</p></dd>
 <dt id="arg-break-by">break_by<a class="anchor" aria-label="anchor" href="#arg-break-by"></a></dt>
 <dd><p><code>NULL</code> (the default, chosen from usual intervals of
 the time unit) or the spacing of the breaks of the time axis.</p></dd>
+
+
+<dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
+<dd><p>Position of the legend: <code>"bottom"</code> (the
+default), <code>"right"</code>, <code>"top"</code>, <code>"left"</code> or <code>"none"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

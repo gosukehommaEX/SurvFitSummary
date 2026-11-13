@@ -16,7 +16,8 @@ plot_km(
   risk_table = TRUE,
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Survival probability",
-  break_by = NULL
+  break_by = NULL,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -63,6 +64,11 @@ plot_km(
 
   `NULL` (the default, chosen from usual intervals of the time unit) or
   the spacing of the breaks of the time axis.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`.
 
 ## Value
 

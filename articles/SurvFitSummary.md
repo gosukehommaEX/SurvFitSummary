@@ -140,7 +140,7 @@ plot_schoenfeld(dat)
 plot_qq_survival(dat)
 ```
 
-![](SurvFitSummary_files/figure-html/schoenfeld-2.png)
+![](SurvFitSummary_files/figure-html/qq-1.png)
 
 ## Fitting the models
 
@@ -221,7 +221,7 @@ plot_survival_fits(fits, arms = "Control",
                    time_horizon = 120)
 ```
 
-![](SurvFitSummary_files/figure-html/fit-plots-1.png)
+![](SurvFitSummary_files/figure-html/survival-fits-1.png)
 
 ``` r
 
@@ -231,7 +231,11 @@ plot_hazard_fits(fits, arms = "Control",
                  time_horizon = 120)
 ```
 
-![](SurvFitSummary_files/figure-html/fit-plots-2.png)
+![](SurvFitSummary_files/figure-html/hazard-fits-1.png)
+
+The legend is below the plot by default; `legend_position = "right"` (or
+`"top"`, `"left"`, `"none"`) places it elsewhere, in all the plots of
+the package.
 
 ## Excel workbook and Word report
 

@@ -26,7 +26,8 @@ treatment effect does not depend on time, that is, proportional hazards.
 plot_schoenfeld(
   data,
   conf_level = 0.95,
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -47,6 +48,11 @@ plot_schoenfeld(
 
   Time unit of the data: `"months"` (the default), `"days"`, `"weeks"`
   or `"years"`.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`.
 
 ## Value
 

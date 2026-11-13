@@ -29,7 +29,8 @@ plot_survival_fits(
   break_by = NULL,
   n_points = 200,
   n_sim = 1000,
-  seed = 1
+  seed = 1,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -93,6 +94,12 @@ plot_survival_fits(
 - seed:
 
   Seed of the simulation. The default is 1.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`. Below or above the plot, the curves of one arm
+  with several models are listed in two columns.
 
 ## Value
 

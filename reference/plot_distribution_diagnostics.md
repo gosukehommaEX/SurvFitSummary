@@ -29,7 +29,8 @@ plot_distribution_diagnostics(
   data,
   which = c("weibull", "loglogistic", "lognormal", "gompertz"),
   regression = TRUE,
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 ```
 
@@ -54,6 +55,11 @@ plot_distribution_diagnostics(
 
   Time unit of the data: `"months"` (the default), `"days"`, `"weeks"`
   or `"years"`.
+
+- legend_position:
+
+  Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
+  `"left"` or `"none"`.
 
 ## Value
 
