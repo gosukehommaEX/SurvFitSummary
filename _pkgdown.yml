@@ -36,3 +36,10 @@ reference:
     contents:
       - write_survival_workbook
       - write_survival_report
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - SurvFitSummary
+      - models
+      - validation

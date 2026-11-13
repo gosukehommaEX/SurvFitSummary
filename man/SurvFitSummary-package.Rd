@@ -24,10 +24,19 @@ The plots are \code{\link{plot_km}}, \code{\link{plot_empirical_hazard}},
 \code{\link{plot_survival_fits}}, \code{\link{plot_hazard_fits}},
 \code{\link{plot_distribution_diagnostics}},
 \code{\link{plot_schoenfeld}} and \code{\link{plot_qq_survival}}.
+
+The results are written to an Excel workbook by
+\code{\link{write_survival_workbook}} and to a Word report by
+\code{\link{write_survival_report}}. The vignettes describe the analysis
+(\code{vignette("SurvFitSummary")}), the models
+(\code{vignette("models", package = "SurvFitSummary")}) and the
+validation of the package
+(\code{vignette("validation", package = "SurvFitSummary")}).
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://gosukehommaEX.github.io/SurvFitSummary/}
   \item \url{https://github.com/gosukehommaEX/SurvFitSummary}
   \item Report bugs at \url{https://github.com/gosukehommaEX/SurvFitSummary/issues}
 }

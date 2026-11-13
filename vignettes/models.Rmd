@@ -1,0 +1,214 @@
+---
+title: "Parametric and spline models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Parametric and spline models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
+                      fig.height = 5, out.width = "100%")
+```
+
+```{r setup}
+library(SurvFitSummary)
+dat <- processing_dataset(
+  system.file("extdata", "fit_example.csv", package = "SurvFitSummary"),
+  column_arm = "TRT01P", column_survtime = "AVAL", column_cnsr = "CNSR",
+  control_arm = "Control"
+)
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+This vignette describes the models of `fit_survival_models()` and the tables
+derived from them. The data are those of
+`vignette("SurvFitSummary", package = "SurvFitSummary")`.
+
+## Distributions
+
+The parametric models are fitted with `flexsurv::flexsurvreg()`, with the
+parameters of flexsurv. The default is the seven standard models of NICE DSU
+Technical Support Document 14 (marked with *).
+
+| Code | Model | Parameters (natural scale) | Location parameter |
+|---|---|---|---|
+| `"exp"` * | Exponential | rate | rate |
+| `"weibull"` * | Weibull (accelerated failure time form) | shape, scale | scale |
+| `"weibullPH"` | Weibull (proportional hazards form) | shape, scale | scale |
+| `"rayleigh"` | Rayleigh (Weibull with shape 2) | scale | scale |
+| `"lnorm"` * | Lognormal | meanlog, sdlog | meanlog |
+| `"llogis"` * | Log-logistic | shape, scale | scale |
+| `"gompertz"` * | Gompertz | shape, rate | rate |
+| `"gamma"` * | Gamma | shape, rate | rate |
+| `"gengamma"` * | Generalized gamma (Prentice 1974) | mu, sigma, Q | mu |
+| `"gengamma.orig"` | Generalized gamma (Stacy 1962) | shape, scale, k | scale |
+| `"genf"` | Generalized F (Prentice 1975) | mu, sigma, Q, P | mu |
+| `"genf.orig"` | Generalized F (original form) | mu, sigma, s1, s2 | mu |
+
+The spline models of Royston and Parmar (2002) are fitted with
+`flexsurv::flexsurvspline()`. They model the log cumulative hazard (scale
+`"hazard"`), the log cumulative odds (`"odds"`) or the probit of the survival
+(`"normal"`) as a natural cubic spline of log time with parameters `gamma0`,
+`gamma1`, ...; without internal knots they reduce to the Weibull,
+log-logistic and lognormal models. The boundary knots are the smallest and
+largest log event times, and the internal knots are by default at equally
+spaced quantiles of the log event times.
+
+## Independent and dependent fits
+
+Each arm is fitted separately (`fit_type = "independent"`), and the arms are
+fitted together with the arm as a covariate of the location parameter on its
+transformed scale (`fit_type = "dependent"`, labelled `"Both arms"`); for the
+spline models the arm shifts `gamma0`.
+
+```{r fit}
+fits <- fit_survival_models(dat, distributions = c("weibull", "llogis"),
+                            spline_scales = "hazard", spline_knots = 1:2)
+par <- parameter_table(fits)
+par[par$fit_type == "dependent" & par$model == "Weibull", ]
+```
+
+```{r effect, include = FALSE}
+b <- par[par$fit_type == "dependent" & par$model == "Weibull" &
+           par$parameter == "ARMTreatment" & par$scale == "transformed", ]
+```
+
+In the dependent Weibull model the treatment multiplies the scale, that is
+the time to any given survival, by exp(`r f3(b$est)`) = `r f2(exp(b$est))`
+(95% CI `r f2(exp(b$lcl))` to `r f2(exp(b$ucl))`). The natural scale is that
+of flexsurv; on the transformed scale the positive parameters are on the log
+scale, which is the scale of the covariance matrices and of the simulations
+below.
+
+## Knots of the spline models
+
+`spline_knot_table()` gives the internal knots of each fit with the number
+at risk and the Kaplan-Meier estimate at each knot, which shows how much
+data supports each part of the spline.
+
+```{r knots}
+spline_knot_table(fits)
+```
+
+Knots can also be given on the time scale, one vector per spline model; the
+vectors must have different numbers of knots, and the knots must lie between
+the smallest and largest event times of every fit.
+
+```{r user-knots}
+fits_knots <- fit_survival_models(dat, distributions = NULL,
+                                  spline_scales = "odds",
+                                  knots = list(12, c(6, 18)))
+gof_table(fits_knots)
+```
+
+## Covariance matrices and Cholesky factors
+
+The covariance matrix of the estimates and its lower triangular Cholesky
+factor L, with L L' equal to the covariance matrix, are given on the
+transformed and natural scales. A probabilistic sensitivity analysis draws
+parameter vectors as the estimate plus L z, with z standard normal, on the
+transformed scale.
+
+```{r cholesky}
+covariance_table(fits, scale = "transformed")[1:4, ]
+chol <- covariance_table(fits, type = "cholesky", scale = "transformed")
+rows <- chol$fit_type == "independent" & chol$arm == "Control" &
+  chol$model == "Weibull"
+L <- matrix(chol$value[rows], nrow = 2, byrow = TRUE,
+            dimnames = list(unique(chol$row[rows]), unique(chol$col[rows])))
+L
+est <- par[par$fit_type == "independent" & par$arm == "Control" &
+             par$model == "Weibull" & par$scale == "transformed", ]
+mu <- est$est[match(rownames(L), est$parameter)]
+set.seed(1)
+draws <- mu + L %*% matrix(stats::rnorm(2 * 10000), nrow = 2)
+# Natural scale: shape and scale
+summary(t(exp(draws)))
+```
+
+```{r cholesky-values, include = FALSE}
+v <- covariance_table(fits, scale = "transformed")
+v <- v[v$fit_type == "independent" & v$arm == "Control" &
+         v$model == "Weibull", ]
+```
+
+The variances of the 10000 draws, `r f3(1e3 * stats::var(draws[1, ]))` and
+`r f3(1e3 * stats::var(draws[2, ]))` (times 1000), reproduce those of the
+covariance matrix, `r f3(1e3 * v$value[v$row == v$col][1])` and
+`r f3(1e3 * v$value[v$row == v$col][2])`.
+
+## Predictions with confidence intervals
+
+`predict_survival()` gives the survival, the hazard or the cumulative hazard
+of each model. With `conf_int = TRUE` the confidence limits are the
+quantiles of the predictions for `n_sim` parameter vectors drawn from the
+asymptotic normal distribution of the estimates; the seed is set for each
+model and arm, so that the limits do not depend on the other models, and the
+random number generator of the session is left unchanged.
+
+```{r predict}
+pred <- predict_survival(fits, times = c(12, 60), conf_int = TRUE)
+pred[pred$fit_type == "independent" & pred$arm == "Control", ]
+```
+
+```{r predict-values, include = FALSE}
+w5 <- pred[pred$fit_type == "independent" & pred$arm == "Control" &
+             pred$model == "Weibull" & pred$time == 60, ]
+```
+
+The Weibull model of the control arm predicts a survival of `r f3(w5$est)`
+at 5 years (95% CI `r f3(w5$lcl)` to `r f3(w5$ucl)`).
+`survival_summary()` gives the median, the mean and the restricted mean
+survival up to a time horizon.
+
+```{r summary}
+survival_summary(fits, time_horizon = 60)
+```
+
+```{r ci-plot, fig.height = 6}
+plot_survival_fits(fits, models = "Weibull", fit_type = "dependent",
+                   conf_int = TRUE, time_horizon = 120)
+```
+
+## Comparing the models
+
+`gof_table()` gives the log-likelihood, AIC and BIC of each model, sorted by
+AIC within each fit; the number of patients is used for the BIC. The fit
+statistics compare the models within the follow-up only, so that the
+plausibility of the extrapolation is judged separately, for example from the
+hazard functions and from external data.
+
+```{r gof}
+gof_table(fits)
+```
+
+## Models that fail
+
+A model that fails or warns does not stop the others: its status (`"ok"`,
+`"warning"` or `"error"`) and message are kept in `fits$models`, printed by
+`print()`, written to the sheet "Model status" of the workbook and listed in
+the report.
+
+```{r status}
+fits$models[, c("fit_type", "arm", "model", "status", "message")]
+```
+
+The likelihood is maximised by `stats::optim()` (BFGS) with the settings in
+`control`; the default tolerance (`reltol = 1e-10`) is smaller than that of
+`optim()`. flexsurv has no analytic gradient for the spline models on the
+normal scale, for which the step of the numerical gradient is `ndeps = 1e-5`
+unless `control` sets it.
+
+## References
+
+Latimer NR (2011, updated 2013). NICE DSU Technical Support Document 14:
+Survival analysis for economic evaluations alongside clinical trials -
+extrapolation with patient-level data.
+
+Royston P, Parmar MKB (2002). Flexible parametric proportional-hazards and
+proportional-odds models for censored survival data, with application to
+prognostic modelling and estimation of treatment effects. Statistics in
+Medicine 21(15):2175-2197.

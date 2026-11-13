@@ -1,0 +1,201 @@
+---
+title: "Getting started with SurvFitSummary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with SurvFitSummary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
+                      fig.height = 5, out.width = "100%")
+```
+
+```{r setup}
+library(SurvFitSummary)
+```
+
+SurvFitSummary carries out the survival analyses that inform the inputs of
+cost-effectiveness models for health technology assessment: it summarises
+time-to-event data, fits the standard parametric models of NICE DSU
+Technical Support Document 14 and Royston-Parmar spline models to each
+treatment arm and to the arms together, extrapolates the survival beyond the
+follow-up, and writes the results to an Excel workbook and a Word report.
+This vignette goes through these steps with the example data of the package.
+The models are described in more detail in
+`vignette("models", package = "SurvFitSummary")`, and the validation of the
+package in `vignette("validation", package = "SurvFitSummary")`.
+
+## Data
+
+The example data `fit_example.csv` were simulated for two arms of 300
+patients, with the time to event in months (`AVAL`) and a censoring
+indicator (`CNSR`, 1 = censored). `processing_dataset()` reads a data frame
+or a file (CSV, Excel, SAS or SAS transport), renames the columns to `ARM`,
+`SURVTIME` and `EVENT`, checks the values, and sets the control arm as the
+first level of `ARM`.
+
+```{r data}
+path <- system.file("extdata", "fit_example.csv", package = "SurvFitSummary")
+dat <- processing_dataset(path, column_arm = "TRT01P",
+                          column_survtime = "AVAL", column_cnsr = "CNSR",
+                          control_arm = "Control")
+head(dat)
+smry <- summarise_data(dat)
+smry
+```
+
+```{r summary-values, include = FALSE}
+ctrl <- smry[smry$ARM == "Control", ]
+trt <- smry[smry$ARM == "Treatment", ]
+f1 <- function(x) sprintf("%.1f", x)
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+The control arm has `r ctrl$n` patients with `r ctrl$events` events and a
+median time to event of `r f1(ctrl$median)` months (95% CI
+`r f1(ctrl$median_lcl)` to `r f1(ctrl$median_ucl)`); the treatment arm has
+`r trt$events` events and a median of `r f1(trt$median)` months (95% CI
+`r f1(trt$median_lcl)` to `r f1(trt$median_ucl)`).
+
+## Kaplan-Meier estimates, hazard ratio and proportional hazards
+
+`km_table()` gives the Kaplan-Meier estimates with their standard errors and
+confidence intervals and the numbers at risk at regular times, and
+`plot_km()` draws the curves with the numbers at risk; each curve ends at the
+last observed time of its arm.
+
+```{r km}
+km <- km_table(dat, interval = 12)
+head(km)
+```
+
+```{r km-plot, fig.height = 6}
+plot_km(dat, conf_int = TRUE)
+```
+
+```{r hr}
+hr <- estimate_hazard_ratio(dat)
+hr
+ph <- test_proportional_hazards(dat)
+ph
+```
+
+The Cox model without adjustment gives a hazard ratio of `r f2(hr$hr[1])`
+(95% CI `r f2(hr$lcl[1])` to `r f2(hr$ucl[1])`) for
+`r hr$comparison[1]`. The Grambsch-Therneau test of the proportional hazards
+assumption gives p = `r f3(ph$p_value[1])`. Covariates and strata of the
+data can be added with the arguments `covariates` and `strata` of
+`estimate_hazard_ratio()`.
+
+## Diagnostics
+
+The transformations of the Kaplan-Meier estimate that are linear in log time
+for the Weibull, log-logistic and lognormal distributions, and the log of the
+smoothed hazard that is linear in time for the Gompertz distribution,
+indicate which distributions may describe each arm. The scaled Schoenfeld
+residuals and the quantile-quantile plot of the two arms show whether the
+hazards are proportional and whether the arms differ by a factor on the time
+scale (accelerated failure time).
+
+```{r diagnostics, fig.height = 6}
+plot_distribution_diagnostics(dat)
+```
+
+```{r schoenfeld}
+plot_schoenfeld(dat)
+plot_qq_survival(dat)
+```
+
+## Fitting the models
+
+`fit_survival_models()` fits, by default, the seven standard distributions
+of NICE DSU TSD 14 and the spline models on the hazard, odds and normal
+scales with 1 to 3 internal knots, to each arm (independent fits) and to
+both arms with the arm as a covariate (dependent fits). A model that fails
+or warns is recorded with its message, and the other models are still
+fitted.
+
+```{r fit}
+fits <- fit_survival_models(dat)
+fits
+```
+
+```{r fit-values, include = FALSE}
+gof <- gof_table(fits)
+best <- gof[!duplicated(paste(gof$fit_type, gof$arm)), ]
+```
+
+`r length(unique(fits$models$model))` models were fitted to each of the
+`r length(unique(paste(fits$models$fit_type, fits$models$arm)))` data sets,
+`r nrow(fits$models)` fits in all. `gof_table()` sorts the models of each fit
+by AIC: the lowest AIC is that of the `r best$model[best$arm == "Control"]`
+model for the control arm, the `r best$model[best$arm == "Treatment"]` model
+for the treatment arm, and the `r best$model[best$arm == "Both arms"]` model
+for both arms.
+
+```{r gof}
+head(gof[gof$arm == "Control", ], 6)
+```
+
+## Extrapolation
+
+The models agree within the follow-up but can differ widely beyond it, which
+is why the choice of the model for a cost-effectiveness model rests on the
+plausibility of the extrapolation as well as on the fit.
+`predict_survival()` gives the survival (or the hazard) of each model at
+given times, with the Kaplan-Meier estimate where the data reach.
+
+```{r predict}
+pred <- predict_survival(fits, times = c(12, 60, 120))
+ctrl_pred <- pred[pred$fit_type == "independent" & pred$arm == "Control", ]
+head(ctrl_pred[ctrl_pred$time == 120, c("model", "time", "est", "km")], 8)
+```
+
+```{r predict-values, include = FALSE}
+s120 <- ctrl_pred$est[ctrl_pred$time == 120]
+```
+
+For the control arm, the survival at 10 years ranges from `r f3(min(s120))`
+to `r f3(max(s120))` across the `r length(s120)` models.
+
+```{r fit-plots, fig.height = 6}
+plot_survival_fits(fits, arms = "Control",
+                   models = c("Exponential", "Weibull", "Log-logistic",
+                              "Lognormal", "Hazards, 1 knot"),
+                   time_horizon = 120)
+plot_hazard_fits(fits, arms = "Control",
+                 models = c("Exponential", "Weibull", "Log-logistic",
+                            "Lognormal", "Hazards, 1 knot"),
+                 time_horizon = 120)
+```
+
+## Excel workbook and Word report
+
+`write_survival_workbook()` writes the tables of the analysis to an Excel
+workbook, one table per sheet: the data summary, the Kaplan-Meier table, the
+hazard ratios, the proportional hazards test, the status of the models, the
+fit statistics, the parameters on the natural and transformed scales with
+the rows of their covariance matrices, the covariance matrices and their
+Cholesky factors, the survival summary, the predicted survival at the
+landmark times and the knots of the spline models.
+
+```{r workbook}
+workbook <- tempfile(fileext = ".xlsx")
+write_survival_workbook(fits, workbook, conf_int = FALSE)
+file.exists(workbook)
+unlink(workbook)
+```
+
+`write_survival_report()` writes a Word report with the methods, the
+diagnostics, the fits of the standard parametric and spline models with
+their tables and figures (with and without confidence intervals), and the
+extrapolations. With all the models it takes a few minutes, because each
+figure is drawn as an image.
+
+```{r report, eval = FALSE}
+write_survival_report(fits, "survival_report.docx",
+                      outcome = "Overall survival")
+```

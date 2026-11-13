@@ -1,5 +1,10 @@
 # SurvFitSummary
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/gosukehommaEX/SurvFitSummary/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gosukehommaEX/SurvFitSummary/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/gosukehommaEX/SurvFitSummary/graph/badge.svg)](https://app.codecov.io/gh/gosukehommaEX/SurvFitSummary)
+<!-- badges: end -->
+
 **Survival Extrapolation with Standard Parametric and Spline Models**
 
 ## Overview
@@ -16,15 +21,25 @@ factors, goodness of fit and predicted survival. The results are written
 to an Excel workbook and to a Word report for health technology
 assessment (NICE DSU TSD 14 models and spline-based extrapolation).
 
-Version 2.0.0 is under development; the functions of version 1.0.0 were
-replaced (see `NEWS.md`).
+Version 2.0.0 replaces the functions of version 1.0.0 (see `NEWS.md`). The
+documentation and the articles below are on the website
+<https://gosukehommaEX.github.io/SurvFitSummary/>.
 
 ## Installation
 
 ```r
 # install.packages("devtools")
-devtools::install_github("gosukehommaEX/SurvFitSummary")
+devtools::install_github("gosukehommaEX/SurvFitSummary",
+                         build_vignettes = TRUE)
 ```
+
+## Articles
+
+| Vignette | Content |
+|---|---|
+| `vignette("SurvFitSummary")` | Getting started: data, Kaplan-Meier estimates, hazard ratio, diagnostics, model fitting, extrapolation, Excel workbook and Word report |
+| `vignette("models", package = "SurvFitSummary")` | The parametric and spline models: parameterisations, independent and dependent fits, knots, covariance matrices and Cholesky factors for probabilistic sensitivity analysis, predictions with confidence intervals, model comparison |
+| `vignette("validation", package = "SurvFitSummary")` | The validation of the package and the reproduction of published results |
 
 ## Main Functions
 
@@ -94,6 +109,21 @@ write_survival_workbook(fits, "survival_results.xlsx")
 write_survival_report(fits, "survival_report.docx",
                       outcome = "Overall survival")
 ```
+
+## Validation
+
+The unit tests compare every fitted model, table and output file with
+reference values computed independently in Python (numpy and scipy, without
+survival analysis libraries; `inst/validation/python`). The scripts of
+`inst/validation` compare the package with closed forms,
+`survival::survreg()`, `rstpm2::stpm2()` and the Python reference, check the
+Excel workbook and the Word report, and estimate the coverage of the
+confidence intervals by simulation; the scripts of `inst/reproduce`
+reproduce published results of Jackson (2016) and Royston and Parmar
+(2002). Every comparison is also run with the values of the package shifted,
+to show that it would detect an error of that size. The verdicts are in
+`inst/validation/results` and `inst/reproduce/results`, and are summarised
+in `vignette("validation", package = "SurvFitSummary")`.
 
 ## References
 

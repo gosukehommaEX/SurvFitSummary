@@ -1,7 +1,7 @@
 # SurvFitSummary 2.0.0
 
-Version 2.0.0 redesigns the package (development in progress). The functions
-of version 1.0.0 are replaced step by step.
+Version 2.0.0 redesigns the package: the functions of version 1.0.0 are
+replaced by those below.
 
 * `processing_dataset()` keeps covariate and stratification columns
   (`column_covariates`, `column_strata`), returns `ARM` as a factor with the
@@ -89,22 +89,30 @@ of version 1.0.0 are replaced step by step.
   knots), with print-ready model names.
 * New `write_survival_report()`: Word report on the extrapolation of
   survival data for health technology assessment (overview, methods, data
-  overview,
-  diagnostics, standard parametric models and spline-based extrapolation
-  for each arm and for both arms), with figures without and with confidence
-  intervals, smoothed hazard plots without fitted models, and print-ready
-  model names. The styles come from a template in the package
-  (`inst/templates/report_template.docx`: A4, Arial, numbered headings),
-  or from a document given in `template`. Replaces the Word export of the Shiny application of version
-  1.0.0.
+  overview, diagnostics, standard parametric models and spline-based
+  extrapolation for each arm and for both arms), with figures without and
+  with confidence intervals, smoothed hazard plots without fitted models,
+  and print-ready model names. The styles come from a template in the
+  package (`inst/templates/report_template.docx`: A4, Arial, numbered
+  headings), or from a document given in `template`. Replaces the Word
+  export of the Shiny application of version 1.0.0.
 * New example dataset `inst/extdata/fit_example.csv` (two arms of 300
   patients) and independent reference values for the tests
   (`inst/validation/python/expected_fits.py`, numpy and scipy).
+* Validation and reproduction scripts: `inst/validation/` compares the
+  package with closed forms, `survival::survreg()`, `rstpm2::stpm2()` and
+  the Python reference, checks the Excel workbook and the Word report, and
+  estimates the coverage of the confidence intervals by simulation;
+  `inst/reproduce/` reproduces published results of Jackson (2016) and
+  Royston and Parmar (2002). Every comparison is also run with the values of
+  the package shifted (`inst/validation/run_validation.R`).
+* Three vignettes (getting started, the parametric and spline models, and
+  the validation) and a pkgdown website.
 * The license is GPL (>= 2) instead of MIT.
 * broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
   longer used; flexsurv (>= 2.3), ggplot2 (>= 3.4.0), officer, patchwork,
-  splines and writexl are imported; haven, readxl and xml2 are suggested
-  packages.
+  splines and writexl are imported; haven, readxl, xml2, knitr and
+  rmarkdown (for the vignettes) are suggested packages.
 
 # SurvFitSummary 1.0.0
 

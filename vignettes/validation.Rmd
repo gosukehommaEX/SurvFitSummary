@@ -1,0 +1,197 @@
+---
+title: "Validation of SurvFitSummary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Validation of SurvFitSummary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r setup}
+library(SurvFitSummary)
+read_result <- function(...) {
+  utils::read.csv(system.file(..., package = "SurvFitSummary",
+                              mustWork = TRUE),
+                  stringsAsFactors = FALSE)
+}
+f1 <- function(x) sprintf("%.1f", x)
+f3 <- function(x) sprintf("%.3f", x)
+runs <- read_result("validation", "results", "validation_summary.csv")
+normal <- runs[runs$run == "normal", ]
+mutation <- runs[runs$run == "mutation", ]
+```
+
+The results of SurvFitSummary are checked in three ways:
+
+1. The unit tests (`tests/testthat`) compare every fitted model, table and
+   output file with reference values computed independently, without any
+   survival analysis library, by the Python scripts in
+   `system.file("validation", "python", package = "SurvFitSummary")`.
+2. The validation scripts (`inst/validation`) compare the package with
+   closed forms, with other R packages that implement the same models
+   independently, and with the Python reference, and estimate the coverage
+   of the confidence intervals by simulation.
+3. The reproduction scripts (`inst/reproduce`) reproduce published
+   results: those of Jackson (2016) and of Royston and Parmar (2002) for the
+   breast cancer data `flexsurv::bc`.
+
+The validation and reproduction scripts write the verdict of every
+comparison to the CSV files that are installed with the package and read by
+this vignette. The latest run gave `r sum(normal$PASS)` PASS,
+`r sum(normal$EXPLAINED)` EXPLAINED, `r sum(normal$FAIL)` FAIL and
+`r sum(normal$INFO)` INFO verdicts.
+
+## Verdicts
+
+Each comparison is PASS if the difference from the reference is within its
+tolerance, EXPLAINED if it is not but the difference is registered with its
+reason and an upper bound in `explained.csv`, FAIL otherwise, and INFO for a
+value reported without a reference. The tolerances of the published values
+are half a unit of their last printed digit.
+
+```{r verdicts}
+knitr::kable(normal[, c("script", "PASS", "EXPLAINED", "FAIL", "INFO")],
+             row.names = FALSE)
+```
+
+## Independent routes
+
+| Script | Comparison |
+|---|---|
+| `validate_survreg.R` | Exponential, Weibull, lognormal and log-logistic models against `survival::survreg()` |
+| `validate_closed_forms.R` | Exponential maximum likelihood estimates in closed form; survival, hazard, median, mean and restricted mean of six distributions against their formulas |
+| `validate_splines_rstpm2.R` | Spline models on the three scales against `rstpm2::stpm2()` with the same knots |
+| `validate_python_reference.R` | The 12 distributions and the spline models against the independent Python implementation |
+
+The largest difference of the comparisons that pass, as a fraction of their
+tolerance, shows how much margin each comparison has.
+
+```{r margins}
+scripts <- c("validate_survreg", "validate_closed_forms",
+             "validate_splines_rstpm2", "validate_python_reference")
+margins <- do.call(rbind, lapply(scripts, function(s) {
+  v <- read_result("validation", "results", paste0(s, ".csv"))
+  p <- v[which(v$verdict == "PASS" & v$tolerance > 0), ]
+  data.frame(script = s, comparisons = nrow(v),
+             largest_fraction_of_tolerance = max(p$difference / p$tolerance))
+}))
+knitr::kable(margins, digits = 3)
+```
+
+## Published results
+
+```{r published}
+repro <- rbind(
+  read_result("reproduce", "results", "reproduce_Jackson2016.csv"),
+  read_result("reproduce", "results", "reproduce_RoystonParmar2002.csv")
+)
+compared <- repro[repro$verdict != "INFO", ]
+explained <- read_result("validation", "explained.csv")
+```
+
+Of the `r nrow(compared)` published values,
+`r sum(compared$verdict == "PASS")` are reproduced to their printed digits
+and `r sum(compared$verdict == "EXPLAINED")` differ for the reasons
+registered in `explained.csv`: the published fits of the spline models of
+Jackson (2016) differ from the maximum likelihood estimates, on which the
+package and `rstpm2` agree, in the third decimal of the effects and the sixth
+decimal of the survival probabilities (the article computes the 5-year
+survival of the odds-scale model on the hazard scale, which the reference
+value takes into account), and one estimate of Royston and Parmar (2002)
+lies just beyond the rounding boundary of its printed value.
+
+```{r explained}
+ex <- compared[compared$verdict == "EXPLAINED",
+               c("script", "item", "reference", "value", "difference",
+                 "max_difference")]
+knitr::kable(ex, digits = 6, row.names = FALSE)
+knitr::kable(explained[, c("item", "reason")], row.names = FALSE)
+```
+
+## Mutation run
+
+Every script is run a second time with the values of the package shifted by
+0.01 * max(1, |value|) before the comparison. Every comparison must then
+FAIL; a comparison that still passed would not detect an error of that size.
+For this, every tolerance is at most half the shift, which the scripts check
+before they compare. In the latest mutation run there were
+`r sum(mutation$PASS)` PASS and `r sum(mutation$EXPLAINED)` EXPLAINED
+verdicts among the `r sum(mutation$PASS + mutation$EXPLAINED + mutation$FAIL)`
+comparisons.
+
+```{r mutation}
+knitr::kable(mutation[, c("script", "PASS", "EXPLAINED", "FAIL", "INFO")],
+             row.names = FALSE)
+```
+
+## Coverage of the confidence intervals
+
+`validate_coverage.R` simulates 500 samples of 300 patients from Weibull,
+lognormal and log-logistic distributions, fits each with its own
+distribution (and the Weibull samples also with the spline model on the
+hazard scale with 1 knot), and records whether the 95% confidence intervals
+of the parameters and of the survival at 6, 12 and 24 months contain the
+true values.
+
+```{r coverage}
+cov <- read_result("validation", "results", "validate_coverage.csv")
+coverage <- cov[grepl("coverage of the 95% CI", cov$item), ]
+mc_se <- cov$value[grepl("Monte Carlo", cov$item)]
+knitr::kable(data.frame(interval = coverage$item,
+                        coverage = coverage$value),
+             digits = 3)
+```
+
+The coverage ranges from `r f3(min(coverage$value))` to
+`r f3(max(coverage$value))`, within
+`r f1(max(abs(coverage$value - 0.95)) / mc_se)` Monte Carlo standard errors
+(`r f3(mc_se)`) of 0.95.
+
+## Excel workbook and Word report
+
+`validate_outputs.R` writes the workbook and the report of the example data
+with all the default models, and the Python scripts `check_workbook.py` and
+`check_report.py` check their numbers against the data and the reference
+values, and the numbering of the tables and figures of the report.
+
+```{r outputs, include = FALSE}
+wb <- read_result("validation", "results", "outputs", "check_workbook.csv")
+rp <- read_result("validation", "results", "outputs", "check_report.csv")
+wb_m <- read_result("validation", "results", "outputs", "mutation",
+                    "check_workbook.csv")
+rp_m <- read_result("validation", "results", "outputs", "mutation",
+                    "check_report.csv")
+```
+
+`r sum(wb$verdict == "PASS")` of the `r nrow(wb)` checks of the workbook and
+`r sum(rp$verdict == "PASS")` of the `r nrow(rp)` checks of the report pass.
+With every number of the files shifted as in the mutation run,
+`r sum(wb_m$verdict == "FAIL")` of the `r nrow(wb_m)` checks of the workbook
+and `r sum(rp_m$verdict == "FAIL")` of the `r nrow(rp_m)` checks of the
+numbers of the report fail.
+
+## Running the validation
+
+The scripts are run from the root of the source package after
+`devtools::load_all()`; `validate_splines_rstpm2.R` needs the package
+rstpm2, which SurvFitSummary itself does not use.
+
+```{r run, eval = FALSE}
+source(file.path("inst", "validation", "run_validation.R"))
+source(file.path("inst", "validation", "validate_coverage.R"))
+source(file.path("inst", "validation", "validate_outputs.R"))
+```
+
+## References
+
+Jackson C (2016). flexsurv: A platform for parametric survival modeling in
+R. Journal of Statistical Software 70(8):1-33.
+
+Royston P, Parmar MKB (2002). Flexible parametric proportional-hazards and
+proportional-odds models for censored survival data, with application to
+prognostic modelling and estimation of treatment effects. Statistics in
+Medicine 21(15):2175-2197.

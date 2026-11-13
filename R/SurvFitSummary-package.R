@@ -20,6 +20,14 @@
 #' \code{\link{plot_distribution_diagnostics}},
 #' \code{\link{plot_schoenfeld}} and \code{\link{plot_qq_survival}}.
 #'
+#' The results are written to an Excel workbook by
+#' \code{\link{write_survival_workbook}} and to a Word report by
+#' \code{\link{write_survival_report}}. The vignettes describe the analysis
+#' (\code{vignette("SurvFitSummary")}), the models
+#' (\code{vignette("models", package = "SurvFitSummary")}) and the
+#' validation of the package
+#' (\code{vignette("validation", package = "SurvFitSummary")}).
+#'
 #' @importFrom ggplot2 .data
 #' @keywords internal
 "_PACKAGE"
