@@ -25,6 +25,7 @@ reference:
       - predict_survival
       - survival_summary
       - spline_knot_table
+      - reporting_times
   - title: Plots
     contents:
       - plot_km

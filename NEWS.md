@@ -1,3 +1,13 @@
+# SurvFitSummary 2.1.0
+
+* New `reporting_times()`: the reporting interval, the landmark times and
+  the time horizon of `write_survival_workbook()` and
+  `write_survival_report()`, with their defaults filled in, so that tables,
+  predictions and plots made with the other functions can use the same
+  times (for example in the Shiny app of the package). The workbook and the
+  report now take these times from `reporting_times()`; their contents are
+  unchanged.
+
 # SurvFitSummary 2.0.0
 
 Version 2.0.0 redesigns the package: the functions of version 1.0.0 are

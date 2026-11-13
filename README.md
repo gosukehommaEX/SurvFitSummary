@@ -60,6 +60,7 @@ devtools::install_github("gosukehommaEX/SurvFitSummary",
 | `predict_survival()` | Survival, hazard or cumulative hazard at given times, with the Kaplan-Meier estimate |
 | `survival_summary()` | Median, mean and restricted mean survival |
 | `spline_knot_table()` | Placement of the knots of the spline models |
+| `reporting_times()` | Reporting interval, landmark times and time horizon of the workbook and the report, with their defaults |
 | `plot_km()` | Kaplan-Meier curves with numbers at risk, each ending at the last observed time of its arm |
 | `plot_empirical_hazard()` | Smoothed empirical hazard without fitted models |
 | `plot_survival_fits()` | Kaplan-Meier curve with fitted survival curves extrapolated to a time horizon |
@@ -104,6 +105,9 @@ covariance_table(fits, type = "cholesky", scale = "transformed")
 predict_survival(fits, times = seq(0, 60, by = 6))
 survival_summary(fits, time_horizon = 60)
 spline_knot_table(fits)
+times <- reporting_times(fits)
+km_table(fit_data, interval = times$interval)
+predict_survival(fits, times = times$landmarks$time)
 
 plot_km(fit_data, conf_int = TRUE)
 plot_km(fit_data, colours = c("black", "grey50"),

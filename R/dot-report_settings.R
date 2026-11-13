@@ -4,11 +4,10 @@
 #' Internal helper that checks the arguments shared by
 #' \code{\link{write_survival_workbook}} and
 #' \code{\link{write_survival_report}} and fills in their defaults: the
-#' reporting interval of the Kaplan-Meier tables (the spacing of the time
-#' axis of the plots of the data), the landmark times of the predicted
-#' survival (6 months and 1, 2, 5 and 10 years),
-#' the time horizon (the last landmark time) and the hazard ratios (Cox
-#' models without adjustment when none are given).
+#' reporting times with \code{\link{reporting_times}} (the reporting
+#' interval of the Kaplan-Meier tables, the landmark times of the predicted
+#' survival and the time horizon) and the hazard ratios (Cox models without
+#' adjustment when none are given).
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param interval \code{NULL} or the spacing of the reporting times.
@@ -26,36 +25,8 @@
 #' @noRd
 .report_settings <- function(x, interval, landmarks, time_horizon,
                              hazard_ratios) {
-  positive_number <- function(v) {
-    is.numeric(v) && length(v) == 1L && is.finite(v) && v > 0
-  }
-  unit <- x$time_unit
-  if (is.null(interval)) {
-    interval <- .time_axis(max(x$data$SURVTIME), unit)$by
-  } else if (!positive_number(interval)) {
-    stop("'interval' must be NULL or a single positive number.",
-         call. = FALSE)
-  }
-  if (is.null(landmarks)) {
-    landmarks <- .landmark_times(unit)
-  } else {
-    if (!is.numeric(landmarks) || length(landmarks) == 0L ||
-        any(!is.finite(landmarks)) || any(landmarks <= 0)) {
-      stop("'landmarks' must be NULL or a vector of positive numbers.",
-           call. = FALSE)
-    }
-    landmarks <- sort(unique(landmarks))
-    landmarks <- data.frame(time = landmarks,
-                            label = paste(format(landmarks, trim = TRUE),
-                                          unit),
-                            stringsAsFactors = FALSE)
-  }
-  if (is.null(time_horizon)) {
-    time_horizon <- max(landmarks$time)
-  } else if (!positive_number(time_horizon)) {
-    stop("'time_horizon' must be NULL or a single positive number.",
-         call. = FALSE)
-  }
+  times <- reporting_times(x, interval = interval, landmarks = landmarks,
+                           time_horizon = time_horizon)
   columns <- c("model", "covariates", "strata", "comparison", "hr", "lcl",
                "ucl", "p_value")
   if (length(x$arms) < 2L) {
@@ -68,7 +39,7 @@
     stop("'hazard_ratios' must be NULL or a data frame returned by ",
          "estimate_hazard_ratio().", call. = FALSE)
   }
-  list(interval = interval, landmarks = landmarks,
-       time_horizon = time_horizon, unit = unit,
+  list(interval = times$interval, landmarks = times$landmarks,
+       time_horizon = times$time_horizon, unit = times$time_unit,
        hazard_ratios = hazard_ratios)
 }
