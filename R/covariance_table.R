@@ -61,9 +61,16 @@ covariance_table <- function(x,
       }
       m <- v
       if (type == "cholesky") {
-        m <- tryCatch(t(chol(v)), error = function(e) {
+        # chol() is not called with missing values: it stops with the
+        # reference LAPACK, but returned NaN and zeros with the BLAS of the
+        # Linux runners of GitHub Actions (2026-11-13)
+        m <- if (all(is.finite(v))) {
+          tryCatch(t(chol(v)), error = function(e) {
+            matrix(NA_real_, p, p)
+          })
+        } else {
           matrix(NA_real_, p, p)
-        })
+        }
       }
       rows[[length(rows) + 1L]] <- data.frame(
         fit_type = x$models$fit_type[i], arm = x$models$arm[i],
