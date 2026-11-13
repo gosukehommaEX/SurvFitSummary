@@ -58,7 +58,11 @@
 #' The likelihood is maximised by \code{stats::optim()} (BFGS) with the
 #' settings in \code{control}; the default tolerance is smaller than that of
 #' \code{optim()} so that the estimates are accurate to well below their
-#' standard errors.
+#' standard errors. flexsurv has no analytic gradient for the spline models
+#' on the normal scale, for which \code{optim()} uses central differences:
+#' their step is \code{ndeps = 1e-5} (instead of the default \code{1e-3}
+#' of \code{optim()}, which stops short of the maximum) unless
+#' \code{control} sets \code{ndeps}.
 #'
 #' @param data Data frame returned by \code{\link{processing_dataset}}.
 #' @param distributions Character vector of distribution codes (see
@@ -87,7 +91,8 @@
 #' @param conf_level Confidence level, a single number in (0, 1). The
 #'   default is 0.95.
 #' @param control List of settings passed to \code{stats::optim()}. The
-#'   default is \code{list(reltol = 1e-10, maxit = 1000)}.
+#'   default is \code{list(reltol = 1e-10, maxit = 1000)}; \code{ndeps} is
+#'   added for the spline models on the normal scale (see Details).
 #'
 #' @return An object of class \code{survfitsummary}, a list with
 #'   \describe{

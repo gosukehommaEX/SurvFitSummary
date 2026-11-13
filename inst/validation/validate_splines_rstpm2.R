@@ -13,9 +13,12 @@
 # in years, groups Good, Medium, Poor) for the models of all groups with 1
 # knot on the hazard and odds scales (sp3 and sp1 of Jackson 2016, PH(2)
 # and PO(2) of Royston and Parmar 2002), to check the estimates against
-# which the published values are compared. Tolerance: 1e-3 for the
-# log-likelihood and the effect of the arm, 1e-4 for the survival
-# probabilities (both programs maximize numerically).
+# which the published values are compared. Tolerance: 1e-6 for the
+# log-likelihood, because both programs must reach the maximum (with the
+# default step ndeps = 1e-3 of optim(), the fits of the package on the
+# normal scale stopped 2e-5 to 6e-5 short of it and passed the former
+# tolerance of 1e-3; 2026-11-13), 1e-3 for the effect of the arm (1e-4 for
+# flexsurv::bc) and 1e-4 for the survival probabilities.
 # rstpm2 is used only here, not by the package. Its fits are S4 objects
 # (class "stpm2", based on "mle2"), whose methods are not found by
 # stats::logLik(), stats::coef() and stats::predict(): the S4 generics
@@ -81,7 +84,7 @@ for (g in groups) {
                          gof$model == model]
       result <- rbind(result, verdict_table(
         script, paste0(prefix, "log-likelihood"),
-        as.numeric(stats4::logLik(ref)), ll, 1e-3
+        as.numeric(stats4::logLik(ref)), ll, 1e-6
       ))
       for (a in if (g$fit_type == "dependent") arms else g$arm) {
         newdata <- data.frame(SURVTIME = times,
@@ -142,7 +145,7 @@ for (scale in c("hazard", "odds")) {
     result,
     verdict_table(script, paste0(prefix, "log-likelihood"),
                   as.numeric(stats4::logLik(ref)),
-                  bc_gof$loglik[bc_gof$model == model], 1e-3),
+                  bc_gof$loglik[bc_gof$model == model], 1e-6),
     verdict_table(script, paste0(prefix, "effect of ", effects),
                   unname(stats4::coef(ref)[effects]),
                   bc_par$est[rows][match(effects, bc_par$parameter[rows])],

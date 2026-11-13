@@ -60,6 +60,12 @@ TOL_EST <- 0.02     # estimates on the transformed scale, in standard errors
 TOL_CI <- 0.03      # confidence limits on the transformed scale, in SEs
 TOL_SE <- 5e-3      # standard errors and covariances, relative
 TOL_LOGLIK <- 1e-3  # log-likelihood, AIC and BIC, absolute
+# Spline models: log-likelihood, absolute. flexsurv reaches their maximum to
+# about 1e-8 (analytic gradients on the hazard and odds scales, ndeps =
+# 1e-5 on the normal scale). With the default step ndeps = 1e-3 of optim(),
+# the normal-scale fits stopped 2e-5 to 6e-5 short of the maximum, which
+# TOL_LOGLIK did not detect (2026-11-13).
+TOL_LOGLIK_SPLINE <- 1e-6
 TOL_SURV <- 1e-3    # survival probabilities, absolute
 TOL_HAZ <- 1e-2     # hazards, relative
 TOL_TIME <- 2e-3    # median, mean and restricted mean, relative

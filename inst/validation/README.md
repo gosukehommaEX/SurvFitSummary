@@ -5,8 +5,12 @@ simulation, the package against another package, the package against an
 independent implementation): `validate_<content>.R`. Each script writes
 `results/validate_<content>.csv` with the verdict of each comparison (PASS,
 EXPLAINED, FAIL or INFO), using the functions of `verdict.R`. The reasons
-of the EXPLAINED verdicts are registered in `explained.csv`; the verdicts
-are written by the scripts, never by hand.
+of the EXPLAINED verdicts are registered in `explained.csv` (columns
+`script`, `item`, `max_difference`, `reason` and `evidence`): an item that
+misses its tolerance is EXPLAINED only if its difference is at most
+`max_difference`, the largest difference the reason accounts for, which
+must be below 0.005 so that the mutation run below cannot be EXPLAINED.
+The verdicts are written by the scripts, never by hand.
 
 | Script | Comparison |
 |---|---|
@@ -15,9 +19,11 @@ are written by the scripts, never by hand.
 | `validate_splines_rstpm2.R` | Spline models on the hazard, odds and normal scales against `rstpm2::stpm2()` with the same knots (log-likelihood, predicted survival, effect of the arm). Needs the package rstpm2, which the package itself does not use |
 
 `run_validation.R` runs these scripts and those of `../reproduce/` twice:
-normally, and with the values of the package shifted by 1% and 0.01
-(environment variable `SURVFITSUMMARY_MUTATION = "1"`, results in
-`results/mutation/`), where no comparison may PASS. It writes the summary
+normally, where no comparison may FAIL and every entry of `explained.csv`
+must be used, and with the values of the package shifted by
+0.01 * max(1, |value|) (environment variable
+`SURVFITSUMMARY_MUTATION = "1"`, results in `results/mutation/`), where no
+comparison may PASS or be EXPLAINED. It writes the summary
 `results/validation_summary.csv`. Run it from the root of the package
 after `devtools::load_all()`:
 

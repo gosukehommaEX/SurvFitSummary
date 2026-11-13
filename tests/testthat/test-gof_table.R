@@ -11,6 +11,10 @@ check_gof <- function(set) {
   expect_identical(out$events, as.integer(e$events))
   expect_identical(out$npars, as.integer(e$npars))
   expect_lte(scaled_diff(out$loglik, e$loglik, TOL_LOGLIK), 1)
+  if (set %in% c("hazard", "odds", "normal")) {
+    # The spline fits reach the maximum (see TOL_LOGLIK_SPLINE)
+    expect_lte(scaled_diff(out$loglik, e$loglik, TOL_LOGLIK_SPLINE), 1)
+  }
   expect_lte(scaled_diff(out$AIC, e$AIC, 2 * TOL_LOGLIK), 1)
   expect_lte(scaled_diff(out$BIC, e$BIC, 2 * TOL_LOGLIK), 1)
   # Sorted by AIC within each fit, the fits in the order of the models

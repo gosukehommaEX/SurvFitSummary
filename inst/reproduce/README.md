@@ -6,7 +6,8 @@ writes `results/reproduce_<Author><Year>.csv` with one row per published
 value (published value, value of the package, difference, verdict PASS,
 EXPLAINED, FAIL or INFO). The tolerance is half a unit of the last printed
 digit. A value that cannot be reproduced is EXPLAINED only with a reason
-registered in `../validation/explained.csv`.
+registered in `../validation/explained.csv`, and only up to the largest
+difference registered with the reason (`max_difference`).
 
 | Script | Article | Values |
 |---|---|---|

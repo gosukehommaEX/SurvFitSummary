@@ -36,7 +36,9 @@ of version 1.0.0 are replaced step by step.
   hazard, odds and normal scales with 1 to 3 knots at quantiles of the log
   event times or at times given by the user. A model that fails or warns is
   recorded with its message and the other models are still fitted; the
-  optimiser uses a smaller tolerance (`reltol = 1e-10`). Print-ready model
+  optimiser uses a smaller tolerance (`reltol = 1e-10`) and, for the spline
+  models on the normal scale, whose gradient flexsurv computes numerically,
+  a smaller step of the numerical gradient (`ndeps = 1e-5`). Print-ready model
   names (for example "Log-logistic", "Generalized Gamma", "Hazards, 2
   knots").
 * New `parameter_table()`: estimates, standard errors and confidence
