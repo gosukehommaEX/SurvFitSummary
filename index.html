@@ -209,6 +209,7 @@
 </tr>
 </tbody>
 </table>
+<p>The plotting functions place the legend with <code>legend_position</code> and set the colours, line types and font sizes with <code>colours</code>, <code>linetypes</code> and <code>text_sizes</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -241,6 +242,8 @@
 <span><span class="fu"><a href="reference/spline_knot_table.html">spline_knot_table</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/plot_km.html">plot_km</a></span><span class="op">(</span><span class="va">fit_data</span>, conf_int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/plot_km.html">plot_km</a></span><span class="op">(</span><span class="va">fit_data</span>, colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"grey50"</span><span class="op">)</span>,</span>
+<span>        linetypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"solid"</span>, <span class="st">"dashed"</span><span class="op">)</span>, text_sizes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>axis_title <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_survival_fits.html">plot_survival_fits</a></span><span class="op">(</span><span class="va">fits</span>, arms <span class="op">=</span> <span class="st">"Control"</span>, time_horizon <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_hazard_fits.html">plot_hazard_fits</a></span><span class="op">(</span><span class="va">fits</span>, models <span class="op">=</span> <span class="st">"Log-logistic"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_distribution_diagnostics.html">plot_distribution_diagnostics</a></span><span class="op">(</span><span class="va">fit_data</span><span class="op">)</span></span>

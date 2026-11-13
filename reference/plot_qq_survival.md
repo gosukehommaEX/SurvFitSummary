@@ -19,7 +19,10 @@ plot_qq_survival(
   data,
   probs = seq(0.05, 0.95, by = 0.05),
   time_unit = c("months", "days", "weeks", "years"),
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 ```
 
@@ -46,6 +49,32 @@ plot_qq_survival(
 
   Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
   `"left"` or `"none"`.
+
+- colours:
+
+  `NULL` (the default) or colours of the elements of the plot:
+  `"identity"` (identity line, dark grey), `"least_squares"`
+  (least-squares line, dark grey) and `"quantiles"` (points, red). A
+  named vector sets the colours of the elements it names; an unnamed
+  vector gives the three colours in this order.
+
+- linetypes:
+
+  `NULL` (the default) or line types of `"identity"` (dashed) and
+  `"least_squares"` (solid), given as for `colours` (see
+  [`plot_km`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_km.md)
+  for the line types).
+
+- text_sizes:
+
+  `NULL` (the default) or a named vector of font sizes in points, with
+  some or all of the names `"title"` (titles of the plot and of its
+  panels), `"axis_title"`, `"axis_text"`, `"legend"` and `"risk_table"`
+  (numbers at risk and names of the arms below the plot; the title of
+  the table is 1.125 times as large). The texts not named keep their
+  default sizes: 14 points for the axis titles, 16.8 for the title of a
+  plot, and 11.2 for the titles of panels, the axis text, the legend and
+  the numbers at risk.
 
 ## Value
 

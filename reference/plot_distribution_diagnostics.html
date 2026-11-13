@@ -97,7 +97,10 @@ line of each arm is added (dashed).</p>
 <span>  which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weibull"</span>, <span class="st">"loglogistic"</span>, <span class="st">"lognormal"</span>, <span class="st">"gompertz"</span><span class="op">)</span>,</span>
 <span>  regression <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  time_unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"months"</span>, <span class="st">"days"</span>, <span class="st">"weeks"</span>, <span class="st">"years"</span><span class="op">)</span>,</span>
-<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span></span>
+<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  linetypes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  text_sizes <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -128,6 +131,31 @@ least-squares line of each arm.</p></dd>
 <dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
 <dd><p>Position of the legend: <code>"bottom"</code> (the
 default), <code>"right"</code>, <code>"top"</code>, <code>"left"</code> or <code>"none"</code>.</p></dd>
+
+
+<dt id="arg-colours">colours<a class="anchor" aria-label="anchor" href="#arg-colours"></a></dt>
+<dd><p><code>NULL</code> (the default colours of the arms, the same in
+all plots) or colours of the arms: a vector named by arm, for some or
+all of the arms, or an unnamed vector with one colour per arm, in the
+order of the arms.</p></dd>
+
+
+<dt id="arg-linetypes">linetypes<a class="anchor" aria-label="anchor" href="#arg-linetypes"></a></dt>
+<dd><p><code>NULL</code> (the default, solid lines) or line types of
+the curves of the arms, given as for <code>colours</code> (see
+<code><a href="plot_km.html">plot_km</a></code>); the least-squares lines are dashed.</p></dd>
+
+
+<dt id="arg-text-sizes">text_sizes<a class="anchor" aria-label="anchor" href="#arg-text-sizes"></a></dt>
+<dd><p><code>NULL</code> (the default) or a named vector of font
+sizes in points, with some or all of the names <code>"title"</code> (titles
+of the plot and of its panels), <code>"axis_title"</code>,
+<code>"axis_text"</code>, <code>"legend"</code> and <code>"risk_table"</code> (numbers
+at risk and names of the arms below the plot; the title of the table
+is 1.125 times as large). The texts not named keep their default
+sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+11.2 for the titles of panels, the axis text, the legend and the
+numbers at risk.</p></dd>
 
 </dl></div>
     <div class="section level2">

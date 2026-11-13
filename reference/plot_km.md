@@ -17,7 +17,10 @@ plot_km(
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Survival probability",
   break_by = NULL,
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 ```
 
@@ -69,6 +72,32 @@ plot_km(
 
   Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
   `"left"` or `"none"`.
+
+- colours:
+
+  `NULL` (the default colours of the arms, the same in all plots) or
+  colours of the arms: a vector named by arm, for some or all of the
+  plotted arms, or an unnamed vector with one colour per plotted arm, in
+  the order of the arms. The confidence bands and the numbers at risk
+  take the colours of their arms.
+
+- linetypes:
+
+  `NULL` (the default, solid lines) or line types of the arms, given as
+  for `colours`: `"solid"`, `"dashed"`, `"dotted"`, `"dotdash"`,
+  `"longdash"`, `"twodash"`, `"blank"` or a string of 2, 4, 6 or 8
+  hexadecimal digits (for example `"44"`).
+
+- text_sizes:
+
+  `NULL` (the default) or a named vector of font sizes in points, with
+  some or all of the names `"title"` (titles of the plot and of its
+  panels), `"axis_title"`, `"axis_text"`, `"legend"` and `"risk_table"`
+  (numbers at risk and names of the arms below the plot; the title of
+  the table is 1.125 times as large). The texts not named keep their
+  default sizes: 14 points for the axis titles, 16.8 for the title of a
+  plot, and 11.2 for the titles of panels, the axis text, the legend and
+  the numbers at risk.
 
 ## Value
 

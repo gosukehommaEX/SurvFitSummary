@@ -84,7 +84,10 @@ and the axes start at (0, 0).</p>
 <span>  n_points <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  n_sim <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span></span>
+<span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  linetypes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  text_sizes <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -157,6 +160,39 @@ band of a model. The default is 1000.</p></dd>
 default), <code>"right"</code>, <code>"top"</code>, <code>"left"</code> or <code>"none"</code>.
 Below or above the plot, the curves of one arm with several models
 are listed in two columns.</p></dd>
+
+
+<dt id="arg-colours">colours<a class="anchor" aria-label="anchor" href="#arg-colours"></a></dt>
+<dd><p><code>NULL</code> (the default colours) or colours of the
+curves. With one arm, the curves are the Kaplan-Meier curve (named
+<code>"Kaplan-Meier"</code>, black by default) and the models (named by
+their labels, as in <code>models</code>); with several arms, the curves are
+named by arm. A named vector sets the colours of the curves it names;
+an unnamed vector gives one colour per curve, in the order of the
+legend. With one arm, the confidence band of the model and the numbers
+at risk take the colours of the model and of the Kaplan-Meier curve;
+with several arms, the bands and the numbers at risk take the colours
+of the arms.</p></dd>
+
+
+<dt id="arg-linetypes">linetypes<a class="anchor" aria-label="anchor" href="#arg-linetypes"></a></dt>
+<dd><p><code>NULL</code> (the default) or line types of the
+Kaplan-Meier curve (<code>"Kaplan-Meier"</code>) and of the models (named by
+their labels), in both layouts, given as for <code>colours</code> (see
+<code><a href="plot_km.html">plot_km</a></code> for the line types). By default the lines are
+solid, except that of the model with several arms (dashed).</p></dd>
+
+
+<dt id="arg-text-sizes">text_sizes<a class="anchor" aria-label="anchor" href="#arg-text-sizes"></a></dt>
+<dd><p><code>NULL</code> (the default) or a named vector of font
+sizes in points, with some or all of the names <code>"title"</code> (titles
+of the plot and of its panels), <code>"axis_title"</code>,
+<code>"axis_text"</code>, <code>"legend"</code> and <code>"risk_table"</code> (numbers
+at risk and names of the arms below the plot; the title of the table
+is 1.125 times as large). The texts not named keep their default
+sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
+11.2 for the titles of panels, the axis text, the legend and the
+numbers at risk.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -29,7 +29,10 @@ plot_hazard_fits(
   n_points = 200,
   n_sim = 1000,
   seed = 1,
-  legend_position = c("bottom", "right", "top", "left", "none")
+  legend_position = c("bottom", "right", "top", "left", "none"),
+  colours = NULL,
+  linetypes = NULL,
+  text_sizes = NULL
 )
 ```
 
@@ -97,6 +100,37 @@ plot_hazard_fits(
   Position of the legend: `"bottom"` (the default), `"right"`, `"top"`,
   `"left"` or `"none"`. Below or above the plot, the curves of one arm
   with several models are listed in two columns.
+
+- colours:
+
+  `NULL` (the default colours) or colours of the curves. With one arm,
+  the curves are the smoothed empirical hazard (named
+  `"Smoothed empirical hazard"`, black by default) and the models (named
+  by their labels, as in `models`); with several arms, the curves are
+  named by arm. A named vector sets the colours of the curves it names;
+  an unnamed vector gives one colour per curve, in the order of the
+  legend. With one arm, the confidence band of the model takes its
+  colour; with several arms, the bands take the colours of the arms.
+
+- linetypes:
+
+  `NULL` (the default) or line types of the smoothed empirical hazard
+  (`"Smoothed empirical hazard"`) and of the models (named by their
+  labels), in both layouts, given as for `colours` (see
+  [`plot_km`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_km.md)
+  for the line types). By default the lines are solid, except that of
+  the model with several arms (dashed).
+
+- text_sizes:
+
+  `NULL` (the default) or a named vector of font sizes in points, with
+  some or all of the names `"title"` (titles of the plot and of its
+  panels), `"axis_title"`, `"axis_text"`, `"legend"` and `"risk_table"`
+  (numbers at risk and names of the arms below the plot; the title of
+  the table is 1.125 times as large). The texts not named keep their
+  default sizes: 14 points for the axis titles, 16.8 for the title of a
+  plot, and 11.2 for the titles of panels, the axis text, the legend and
+  the numbers at risk.
 
 ## Value
 

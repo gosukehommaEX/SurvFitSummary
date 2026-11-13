@@ -347,6 +347,29 @@ flexsurv has no analytic gradient for the spline models on the normal
 scale, for which the step of the numerical gradient is `ndeps = 1e-5`
 unless `control` sets it.
 
+## Colours, line types and text sizes of the plots
+
+The plots take the colours and line types of the arms, curves or
+elements they draw in `colours` and `linetypes`, and font sizes in
+points in `text_sizes`. A named vector changes the entries it names and
+the others keep their defaults; an unnamed vector gives one value per
+entry, in the order of the legend. For the fitted curves of one arm, the
+names are the labels of the models and `"Kaplan-Meier"` (or
+`"Smoothed empirical hazard"` in
+[`plot_hazard_fits()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_hazard_fits.md)).
+
+``` r
+
+plot_survival_fits(fits, arms = "Control", time_horizon = 120,
+                   colours = c("Kaplan-Meier" = "grey40",
+                               "Weibull" = "#0072B2"),
+                   linetypes = c("Hazards, 1 knot" = "dashed",
+                                 "Hazards, 2 knots" = "dotted"),
+                   text_sizes = c(axis_title = 16, legend = 12))
+```
+
+![](models_files/figure-html/appearance-1.png)
+
 ## References
 
 Latimer NR (2011, updated 2013). NICE DSU Technical Support Document 14:

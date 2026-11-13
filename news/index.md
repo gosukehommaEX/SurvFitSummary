@@ -92,7 +92,11 @@ replaced by those below.
   without confidence bands do not refit the models, use print-ready
   model names with the AIC in the legend, start the axes at (0, 0), and
   place the legend with `legend_position` (below the plot by default,
-  with the models of one arm in two columns).
+  with the models of one arm in two columns). `colours` and `linetypes`
+  set the colours and line types of the arms, curves or elements of a
+  plot, and `text_sizes` the font sizes of the titles, axes, legend and
+  numbers at risk; by default the plots keep the colours, line types and
+  font sizes of the report.
   - [`plot_km()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_km.md):
     Kaplan-Meier curves with numbers at risk; each curve ends at the
     largest observed time of its arm (in version 1.0.0 the curves were
@@ -155,9 +159,9 @@ replaced by those below.
   and the validation) and a pkgdown website.
 - The license is GPL (\>= 2) instead of MIT.
 - broom, dplyr, magrittr, purrr, readr, rlang, tibble and tidyr are no
-  longer used; flexsurv (\>= 2.3), ggplot2 (\>= 3.4.0), officer,
-  patchwork, splines and writexl are imported; haven, readxl, xml2,
-  knitr and rmarkdown (for the vignettes) are suggested packages.
+  longer used; flexsurv (\>= 2.3), ggplot2 (\>= 3.4.0), grDevices,
+  officer, patchwork, splines and writexl are imported; haven, readxl,
+  xml2, knitr and rmarkdown (for the vignettes) are suggested packages.
 
 ## SurvFitSummary 1.0.0
 
