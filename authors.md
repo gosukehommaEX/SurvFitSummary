@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/gosukehommaEX/SurvFitSummary/blob/main/DESCRIPTION)
 
 Homma G (2026). *SurvFitSummary: Survival Extrapolation with Standard
-Parametric and Spline Models*. R package version 2.0.0,
+Parametric and Spline Models*. R package version 2.1.0,
 <https://gosukehommaEX.github.io/SurvFitSummary/>.
 
     @Manual{,
       title = {SurvFitSummary: Survival Extrapolation with Standard Parametric and Spline Models},
       author = {Gosuke Homma},
       year = {2026},
-      note = {R package version 2.0.0},
+      note = {R package version 2.1.0},
       url = {https://gosukehommaEX.github.io/SurvFitSummary/},
     }

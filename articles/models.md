@@ -207,8 +207,8 @@ pred[pred$fit_type == "independent" & pred$arm == "Control", ]
 #> 4 independent Control     Log-logistic   60 0.0225047906 1.464361e-02
 #> 5 independent Control  Hazards, 1 knot   12 0.3953930753 3.450085e-01
 #> 6 independent Control  Hazards, 1 knot   60 0.0010588679 1.517155e-04
-#> 7 independent Control Hazards, 2 knots   12 0.3819794268 3.323450e-01
-#> 8 independent Control Hazards, 2 knots   60 0.0032387336 4.723562e-04
+#> 7 independent Control Hazards, 2 knots   12 0.3819794299 3.323450e-01
+#> 8 independent Control Hazards, 2 knots   60 0.0032387340 4.723562e-04
 #>           ucl          km
 #> 1 0.457718923 0.385418910
 #> 2 0.001781766 0.007842201
@@ -216,8 +216,8 @@ pred[pred$fit_type == "independent" & pred$arm == "Control", ]
 #> 4 0.034205032 0.007842201
 #> 5 0.446406431 0.385418910
 #> 6 0.004622649 0.007842201
-#> 7 0.436677581 0.385418910
-#> 8 0.012702212 0.007842201
+#> 7 0.436677584 0.385418910
+#> 8 0.012702213 0.007842201
 ```
 
 The Weibull model of the control arm predicts a survival of 0.000 at 5

@@ -42,6 +42,8 @@
   : Median, Mean and Restricted Mean Survival of the Fitted Models
 - [`spline_knot_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/spline_knot_table.md)
   : Placement of the Knots of the Spline Models
+- [`reporting_times()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/reporting_times.md)
+  : Reporting Times of the Tables, Predictions and Plots
 
 ## Plots
 

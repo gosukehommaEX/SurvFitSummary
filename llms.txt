@@ -57,6 +57,7 @@ devtools::install_github("gosukehommaEX/SurvFitSummary",
 | [`predict_survival()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/predict_survival.md) | Survival, hazard or cumulative hazard at given times, with the Kaplan-Meier estimate |
 | [`survival_summary()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/survival_summary.md) | Median, mean and restricted mean survival |
 | [`spline_knot_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/spline_knot_table.md) | Placement of the knots of the spline models |
+| [`reporting_times()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/reporting_times.md) | Reporting interval, landmark times and time horizon of the workbook and the report, with their defaults |
 | [`plot_km()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_km.md) | Kaplan-Meier curves with numbers at risk, each ending at the last observed time of its arm |
 | [`plot_empirical_hazard()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_empirical_hazard.md) | Smoothed empirical hazard without fitted models |
 | [`plot_survival_fits()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_survival_fits.md) | Kaplan-Meier curve with fitted survival curves extrapolated to a time horizon |
@@ -102,6 +103,9 @@ covariance_table(fits, type = "cholesky", scale = "transformed")
 predict_survival(fits, times = seq(0, 60, by = 6))
 survival_summary(fits, time_horizon = 60)
 spline_knot_table(fits)
+times <- reporting_times(fits)
+km_table(fit_data, interval = times$interval)
+predict_survival(fits, times = times$landmarks$time)
 
 plot_km(fit_data, conf_int = TRUE)
 plot_km(fit_data, colours = c("black", "grey50"),
@@ -199,6 +203,8 @@ GPL (\>= 2)
   : Median, Mean and Restricted Mean Survival of the Fitted Models
 - [`spline_knot_table()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/spline_knot_table.md)
   : Placement of the Knots of the Spline Models
+- [`reporting_times()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/reporting_times.md)
+  : Reporting Times of the Tables, Predictions and Plots
 
 ## Plots
 
