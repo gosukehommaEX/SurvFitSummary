@@ -8,8 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
-                      fig.height = 5, out.width = "100%")
+# The figures are drawn 9 inches wide, as in the Word report, and shrunk to
+# the width of the page
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 9,
+                      fig.height = 6, out.width = "100%")
 ```
 
 ```{r setup}
@@ -168,7 +170,7 @@ survival up to a time horizon.
 survival_summary(fits, time_horizon = 60)
 ```
 
-```{r ci-plot, fig.height = 6}
+```{r ci-plot, fig.height = 6.5}
 plot_survival_fits(fits, models = "Weibull", fit_type = "dependent",
                    conf_int = TRUE, time_horizon = 120)
 ```

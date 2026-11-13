@@ -53,3 +53,13 @@ test_that("invalid inputs are rejected", {
                "'y_max'")
   expect_error(plot_hazard_fits(x, models = "Hazards, 1 knot"), "'models'")
 })
+
+test_that("the legend is placed with legend_position", {
+  x <- get_fits("simple")
+  p <- plot_hazard_fits(x, models = "Weibull", arms = "Control")
+  expect_identical(p$theme$legend.position, "bottom")
+  p <- plot_hazard_fits(x, models = "Weibull", arms = "Control",
+                        legend_position = "top")
+  expect_identical(p$theme$legend.position, "top")
+  expect_error(plot_hazard_fits(x, legend_position = "middle"))
+})

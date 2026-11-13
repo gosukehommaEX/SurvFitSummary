@@ -8,7 +8,8 @@ plot_distribution_diagnostics(
   data,
   which = c("weibull", "loglogistic", "lognormal", "gompertz"),
   regression = TRUE,
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -23,6 +24,9 @@ least-squares line of each arm.}
 
 \item{time_unit}{Time unit of the data: \code{"months"} (the default),
 \code{"days"}, \code{"weeks"} or \code{"years"}.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
 }
 \value{
 A ggplot object for a single plot, otherwise a patchwork object

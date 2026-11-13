@@ -8,8 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
-                      fig.height = 5, out.width = "100%")
+# The figures are drawn 9 inches wide, as in the Word report, and shrunk to
+# the width of the page
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 9,
+                      fig.height = 6, out.width = "100%")
 ```
 
 ```{r setup}
@@ -72,7 +74,7 @@ km <- km_table(dat, interval = 12)
 head(km)
 ```
 
-```{r km-plot, fig.height = 6}
+```{r km-plot, fig.height = 6.5}
 plot_km(dat, conf_int = TRUE)
 ```
 
@@ -100,12 +102,15 @@ residuals and the quantile-quantile plot of the two arms show whether the
 hazards are proportional and whether the arms differ by a factor on the time
 scale (accelerated failure time).
 
-```{r diagnostics, fig.height = 6}
+```{r diagnostics, fig.height = 8}
 plot_distribution_diagnostics(dat)
 ```
 
 ```{r schoenfeld}
 plot_schoenfeld(dat)
+```
+
+```{r qq, fig.width = 7, fig.height = 7.5, out.width = "75%"}
 plot_qq_survival(dat)
 ```
 
@@ -161,16 +166,23 @@ s120 <- ctrl_pred$est[ctrl_pred$time == 120]
 For the control arm, the survival at 10 years ranges from `r f3(min(s120))`
 to `r f3(max(s120))` across the `r length(s120)` models.
 
-```{r fit-plots, fig.height = 6}
+```{r survival-fits, fig.height = 7.5}
 plot_survival_fits(fits, arms = "Control",
                    models = c("Exponential", "Weibull", "Log-logistic",
                               "Lognormal", "Hazards, 1 knot"),
                    time_horizon = 120)
+```
+
+```{r hazard-fits, fig.height = 6.5}
 plot_hazard_fits(fits, arms = "Control",
                  models = c("Exponential", "Weibull", "Log-logistic",
                             "Lognormal", "Hazards, 1 knot"),
                  time_horizon = 120)
 ```
+
+The legend is below the plot by default; `legend_position = "right"` (or
+`"top"`, `"left"`, `"none"`) places it elsewhere, in all the plots of the
+package.
 
 ## Excel workbook and Word report
 

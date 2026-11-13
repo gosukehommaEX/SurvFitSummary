@@ -17,6 +17,8 @@
 #' @param y_label Label of the y axis. The default is \code{"Hazard rate"}.
 #' @param break_by \code{NULL} (the default) or the spacing of the breaks
 #'   of the time axis.
+#' @param legend_position Position of the legend: \code{"bottom"} (the
+#'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'
 #' @return A ggplot object.
 #'
@@ -36,9 +38,12 @@ plot_empirical_hazard <- function(data,
                                   time_unit = c("months", "days", "weeks",
                                                 "years"),
                                   y_label = "Hazard rate",
-                                  break_by = NULL) {
+                                  break_by = NULL,
+                                  legend_position = c("bottom", "right", "top",
+                                                      "left", "none")) {
   .check_survival_data(data)
   time_unit <- match.arg(time_unit)
+  legend_position <- match.arg(legend_position)
   all_arms <- levels(droplevels(data$ARM))
   if (is.null(arms)) arms <- all_arms
   if (!is.character(arms) || length(arms) == 0L ||
@@ -75,5 +80,5 @@ plot_empirical_hazard <- function(data,
     ggplot2::coord_cartesian(xlim = c(0, max_time), ylim = c(0, y_max),
                              expand = FALSE) +
     ggplot2::labs(x = axis$label, y = y_label) +
-    .plot_theme(legend_position = "bottom")
+    .plot_theme(legend_position = legend_position)
 }

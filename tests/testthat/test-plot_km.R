@@ -71,3 +71,12 @@ test_that("invalid inputs are rejected", {
   expect_error(plot_km(d, break_by = -1), "'break_by'")
   expect_error(plot_km(d, time_unit = "hours"))
 })
+
+test_that("the legend is placed with legend_position", {
+  d <- make_fit_data()
+  p <- plot_km(d, risk_table = FALSE)
+  expect_identical(p$theme$legend.position, "bottom")
+  p <- plot_km(d, legend_position = "right")
+  expect_identical(p[[1]]$theme$legend.position, "right")
+  expect_error(plot_km(d, legend_position = "middle"))
+})

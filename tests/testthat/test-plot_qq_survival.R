@@ -40,3 +40,13 @@ test_that("invalid inputs are rejected", {
                "At least 2 treatment arms")
   expect_error(plot_qq_survival(d, probs = 1), "'probs'")
 })
+
+test_that("the legends are stacked and placed with legend_position", {
+  d <- make_fit_data()
+  p <- plot_qq_survival(d)
+  expect_identical(p$theme$legend.position, "bottom")
+  expect_identical(p$theme$legend.box, "vertical")
+  p <- plot_qq_survival(d, legend_position = "left")
+  expect_identical(p$theme$legend.position, "left")
+  expect_error(plot_qq_survival(d, legend_position = "middle"))
+})

@@ -18,6 +18,8 @@
 #'   reached by a Kaplan-Meier curve are left out.
 #' @param time_unit Time unit of the data: \code{"months"} (the default),
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
+#' @param legend_position Position of the legend: \code{"bottom"} (the
+#'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'
 #' @return A ggplot object (one panel per comparison with the control arm).
 #'
@@ -33,9 +35,12 @@
 plot_qq_survival <- function(data,
                              probs = seq(0.05, 0.95, by = 0.05),
                              time_unit = c("months", "days", "weeks",
-                                           "years")) {
+                                           "years"),
+                             legend_position = c("bottom", "right", "top",
+                                                 "left", "none")) {
   .check_survival_data(data, min_arms = 2L)
   time_unit <- match.arg(time_unit)
+  legend_position <- match.arg(legend_position)
   if (!is.numeric(probs) || length(probs) == 0L || any(!is.finite(probs)) ||
       any(probs <= 0 | probs >= 1)) {
     stop("'probs' must contain numbers in (0, 1).", call. = FALSE)
@@ -107,7 +112,12 @@ plot_qq_survival <- function(data,
         paste("Quantiles of the arm", unit_label)
       }
     ) +
-    .plot_theme(legend_position = "bottom")
+    .plot_theme(legend_position = legend_position) +
+    # The legend of the lines above that of the points, so that the legend
+    # is not wider than the plot
+    ggplot2::theme(legend.box = "vertical") +
+    ggplot2::guides(linetype = ggplot2::guide_legend(order = 1),
+                    shape = ggplot2::guide_legend(order = 2))
   if (length(comparisons) > 1L) {
     p <- p + ggplot2::facet_wrap(ggplot2::vars(.data$comparison))
   }

@@ -61,7 +61,8 @@ replaced by those below.
   `plot_schoenfeld()` and `plot_qq_survival()` of version 1.0.0. They draw
   from the fitted object, so plots with and without confidence bands do not
   refit the models, use print-ready model names with the AIC in the legend,
-  and start the axes at (0, 0).
+  start the axes at (0, 0), and place the legend with `legend_position`
+  (below the plot by default, with the models of one arm in two columns).
   * `plot_km()`: Kaplan-Meier curves with numbers at risk; each curve ends
     at the largest observed time of its arm (in version 1.0.0 the curves
     were extended to the longest arm).

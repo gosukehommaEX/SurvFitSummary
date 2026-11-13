@@ -59,3 +59,18 @@ test_that("all four plots in the order of 'which'", {
   expect_error(plot_distribution_diagnostics(make_test_raw()),
                "processing_dataset")
 })
+
+test_that("the collected legend is placed with legend_position", {
+  d <- make_fit_data()
+  which <- c("weibull", "lognormal")
+  p <- plot_distribution_diagnostics(d, which = which)
+  expect_s3_class(p, "patchwork")
+  expect_identical(p[[1]]$theme$legend.position, "bottom")
+  p <- plot_distribution_diagnostics(d, which = which,
+                                     legend_position = "right")
+  expect_identical(p[[2]]$theme$legend.position, "right")
+  p <- plot_distribution_diagnostics(d, which = "weibull",
+                                     legend_position = "none")
+  expect_identical(p$theme$legend.position, "none")
+  expect_error(plot_distribution_diagnostics(d, legend_position = "middle"))
+})

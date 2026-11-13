@@ -7,7 +7,8 @@
 plot_schoenfeld(
   data,
   conf_level = 0.95,
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ line, a single number in (0, 1). The default is 0.95.}
 
 \item{time_unit}{Time unit of the data: \code{"months"} (the default),
 \code{"days"}, \code{"weeks"} or \code{"years"}.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
 }
 \value{
 A ggplot object (one panel per comparison with the control arm,

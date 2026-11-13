@@ -29,11 +29,18 @@
     if (ci) paste0(", with ", level, " confidence intervals") else ""
   }
   fit_args <- function(fun, g, models, arms, ci) {
+    # The legend of one arm with its models on the right, as agreed for
+    # the report; with several arms below the plot
     list(fun = fun,
          args = list(x = x, models = models, arms = arms,
                      fit_type = g$fit_type, conf_int = ci,
                      time_horizon = s$time_horizon, n_sim = n_sim,
-                     seed = seed))
+                     seed = seed,
+                     legend_position = if (length(arms) == 1L) {
+                       "right"
+                     } else {
+                       "bottom"
+                     }))
   }
   gof <- gof_table(x)
   blocks <- list(

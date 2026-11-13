@@ -30,6 +30,8 @@
 #'   line, a single number in (0, 1). The default is 0.95.
 #' @param time_unit Time unit of the data: \code{"months"} (the default),
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
+#' @param legend_position Position of the legend: \code{"bottom"} (the
+#'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'
 #' @return A ggplot object (one panel per comparison with the control arm,
 #'   titled with the comparison, the log hazard ratio and the p-value).
@@ -51,9 +53,12 @@
 plot_schoenfeld <- function(data,
                             conf_level = 0.95,
                             time_unit = c("months", "days", "weeks",
-                                          "years")) {
+                                          "years"),
+                            legend_position = c("bottom", "right", "top",
+                                                "left", "none")) {
   .check_survival_data(data, min_arms = 2L)
   time_unit <- match.arg(time_unit)
+  legend_position <- match.arg(legend_position)
   if (!is.numeric(conf_level) || length(conf_level) != 1L ||
       conf_level <= 0 || conf_level >= 1) {
     stop("'conf_level' must be a single number in (0, 1).", call. = FALSE)
@@ -158,7 +163,7 @@ plot_schoenfeld <- function(data,
     ggplot2::facet_wrap(ggplot2::vars(.data$panel), scales = "free_x") +
     ggplot2::labs(x = axis$label,
                   y = "Scaled Schoenfeld residual, beta(t)") +
-    .plot_theme(legend_position = "bottom") +
+    .plot_theme(legend_position = legend_position) +
     # The legend of the points above that of the lines, so that the legend
     # is not wider than the plot
     ggplot2::theme(legend.box = "vertical") +

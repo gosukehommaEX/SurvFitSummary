@@ -23,6 +23,8 @@
 #'   survival"}. The default is \code{"Survival probability"}.
 #' @param break_by \code{NULL} (the default, chosen from usual intervals of
 #'   the time unit) or the spacing of the breaks of the time axis.
+#' @param legend_position Position of the legend: \code{"bottom"} (the
+#'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'
 #' @return A ggplot object, or with \code{risk_table = TRUE} a patchwork
 #'   object whose first element is the plot and second the table.
@@ -44,9 +46,12 @@ plot_km <- function(data,
                     risk_table = TRUE,
                     time_unit = c("months", "days", "weeks", "years"),
                     y_label = "Survival probability",
-                    break_by = NULL) {
+                    break_by = NULL,
+                    legend_position = c("bottom", "right", "top",
+                                        "left", "none")) {
   .check_survival_data(data)
   time_unit <- match.arg(time_unit)
+  legend_position <- match.arg(legend_position)
   all_arms <- levels(droplevels(data$ARM))
   if (is.null(arms)) arms <- all_arms
   if (!is.character(arms) || length(arms) == 0L ||
@@ -89,7 +94,7 @@ plot_km <- function(data,
     ggplot2::coord_cartesian(xlim = c(0, max_time), ylim = c(0, 1),
                              expand = FALSE) +
     ggplot2::labs(x = axis$label, y = y_label) +
-    .plot_theme(legend_position = "bottom")
+    .plot_theme(legend_position = legend_position)
   if (isTRUE(risk_table)) {
     p <- .add_risk_table(p, data, arms, axis$breaks, max_time, colours)
   }

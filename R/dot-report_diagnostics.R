@@ -56,7 +56,8 @@
     b("heading", "Distributional assumptions", level = 3L),
     b("figure", "Diagnostic plots of the standard parametric distributions",
       plot = list(fun = plot_distribution_diagnostics,
-                  args = list(data = x$data, time_unit = x$time_unit)),
+                  args = list(data = x$data, time_unit = x$time_unit,
+                              legend_position = "right")),
       height = 8),
     b("paragraph", paste(
       "In each plot, a transformation of the Kaplan-Meier estimate is",

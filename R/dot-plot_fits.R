@@ -23,13 +23,15 @@
 #' @param n_sim,seed Simulation of the confidence band of a model.
 #' @param risk_table Logical; numbers at risk below the plot (survival
 #'   only).
+#' @param legend_position Position of the legend (validated by the caller).
 #'
 #' @return A ggplot or patchwork object.
 #'
 #' @keywords internal
 #' @noRd
 .plot_fits <- function(x, sel, quantity, conf_int, time_horizon, y_label,
-                       y_max, break_by, n_points, n_sim, seed, risk_table) {
+                       y_max, break_by, n_points, n_sim, seed, risk_table,
+                       legend_position) {
   if (!is.logical(conf_int) || length(conf_int) != 1L || is.na(conf_int)) {
     stop("'conf_int' must be TRUE or FALSE.", call. = FALSE)
   }
@@ -124,8 +126,13 @@
         ggplot2::aes(x = .data$time, y = .data$est, colour = .data$curve),
         linewidth = 0.8
       ) +
-      ggplot2::scale_colour_manual(values = colours, breaks = curves)
-    legend_position <- "right"
+      ggplot2::scale_colour_manual(values = colours, breaks = curves) +
+      # Below or above the plot, the long labels of the models in two
+      # columns, so that the legend is not wider than the plot
+      ggplot2::guides(colour = ggplot2::guide_legend(
+        ncol = if (legend_position %in% c("bottom", "top")) 2L else 1L,
+        byrow = TRUE
+      ))
   } else {
     types <- c(observed_name, sel$models)
     colours <- .plot_colours(arms = x$arms)[sel$arms]
@@ -167,7 +174,6 @@
       ggplot2::scale_linetype_manual(
         values = stats::setNames(c("solid", "dashed"), types), breaks = types
       )
-    legend_position <- "bottom"
   }
   p <- p +
     ggplot2::scale_x_continuous(breaks = axis$breaks) +

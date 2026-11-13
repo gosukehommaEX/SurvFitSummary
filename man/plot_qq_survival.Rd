@@ -7,7 +7,8 @@
 plot_qq_survival(
   data,
   probs = seq(0.05, 0.95, by = 0.05),
-  time_unit = c("months", "days", "weeks", "years")
+  time_unit = c("months", "days", "weeks", "years"),
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -20,6 +21,9 @@ reached by a Kaplan-Meier curve are left out.}
 
 \item{time_unit}{Time unit of the data: \code{"months"} (the default),
 \code{"days"}, \code{"weeks"} or \code{"years"}.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
 }
 \value{
 A ggplot object (one panel per comparison with the control arm).

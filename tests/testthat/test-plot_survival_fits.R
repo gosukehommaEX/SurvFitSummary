@@ -104,3 +104,15 @@ test_that("invalid inputs are rejected", {
   expect_error(plot_survival_fits(x, models = "Weibull",
                                   fit_type = "joint"))
 })
+
+test_that("the legend is placed with legend_position", {
+  x <- get_fits("simple")
+  models <- c("Exponential", "Weibull")
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          risk_table = FALSE)
+  expect_identical(p$theme$legend.position, "bottom")
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          legend_position = "right")
+  expect_identical(p[[1]]$theme$legend.position, "right")
+  expect_error(plot_survival_fits(x, legend_position = "middle"))
+})

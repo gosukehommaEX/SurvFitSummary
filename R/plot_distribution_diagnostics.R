@@ -29,6 +29,8 @@
 #'   least-squares line of each arm.
 #' @param time_unit Time unit of the data: \code{"months"} (the default),
 #'   \code{"days"}, \code{"weeks"} or \code{"years"}.
+#' @param legend_position Position of the legend: \code{"bottom"} (the
+#'   default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
 #'
 #' @return A ggplot object for a single plot, otherwise a patchwork object
 #'   with the plots in the order of \code{which}, two per row, and one
@@ -51,10 +53,15 @@ plot_distribution_diagnostics <- function(data,
                                                     "gompertz"),
                                           regression = TRUE,
                                           time_unit = c("months", "days",
-                                                        "weeks", "years")) {
+                                                        "weeks", "years"),
+                                          legend_position = c("bottom",
+                                                              "right",
+                                                              "top", "left",
+                                                              "none")) {
   .check_survival_data(data)
   which <- match.arg(which, several.ok = TRUE)
   time_unit <- match.arg(time_unit)
+  legend_position <- match.arg(legend_position)
   data$ARM <- droplevels(data$ARM)
   arms <- levels(data$ARM)
   colours <- .plot_colours(arms = arms)
@@ -122,8 +129,10 @@ plot_distribution_diagnostics <- function(data,
       ggplot2::scale_colour_manual(values = colours, breaks = arms) +
       ggplot2::labs(title = panel$title, x = panel$x_label,
                     y = panel$y_label) +
-      .plot_theme(legend_position = "bottom")
+      .plot_theme(legend_position = legend_position)
   })
   if (length(plots) == 1L) return(plots[[1L]])
-  patchwork::wrap_plots(plots, ncol = 2, guides = "collect")
+  # The collected legend is placed by the theme of the patchwork
+  patchwork::wrap_plots(plots, ncol = 2, guides = "collect") &
+    ggplot2::theme(legend.position = legend_position)
 }

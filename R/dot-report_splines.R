@@ -24,11 +24,13 @@
   if (length(groups) == 0L) return(list())
   b <- .report_block
   fit_args <- function(fun, g, arm) {
+    # One arm with its models: the legend on the right, as agreed for the
+    # report
     list(fun = fun,
          args = list(x = x, models = g$models, arms = arm,
                      fit_type = g$fit_type, conf_int = FALSE,
                      time_horizon = s$time_horizon, n_sim = n_sim,
-                     seed = seed))
+                     seed = seed, legend_position = "right"))
   }
   gof <- gof_table(x)
   knots <- spline_knot_table(x)

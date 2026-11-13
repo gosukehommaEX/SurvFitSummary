@@ -53,12 +53,16 @@ plot_hazard_fits <- function(x,
                              break_by = NULL,
                              n_points = 200,
                              n_sim = 1000,
-                             seed = 1) {
+                             seed = 1,
+                             legend_position = c("bottom", "right", "top",
+                                                 "left", "none")) {
   .check_survfitsummary(x)
   fit_type <- match.arg(fit_type)
+  legend_position <- match.arg(legend_position)
   sel <- .select_models(x, models, arms, fit_type)
   .plot_fits(x, sel, quantity = "hazard", conf_int = conf_int,
              time_horizon = time_horizon, y_label = y_label, y_max = y_max,
              break_by = break_by, n_points = n_points, n_sim = n_sim,
-             seed = seed, risk_table = FALSE)
+             seed = seed, risk_table = FALSE,
+             legend_position = legend_position)
 }

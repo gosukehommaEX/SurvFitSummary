@@ -40,3 +40,11 @@ test_that("invalid inputs are rejected", {
   expect_error(plot_empirical_hazard(d, arms = "Placebo"), "'arms'")
   expect_error(plot_empirical_hazard(d, conf_level = 0), "'conf_level'")
 })
+
+test_that("the legend is placed with legend_position", {
+  d <- make_fit_data()
+  expect_identical(plot_empirical_hazard(d)$theme$legend.position, "bottom")
+  p <- plot_empirical_hazard(d, legend_position = "none")
+  expect_identical(p$theme$legend.position, "none")
+  expect_error(plot_empirical_hazard(d, legend_position = "middle"))
+})

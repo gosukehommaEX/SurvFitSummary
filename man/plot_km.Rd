@@ -12,7 +12,8 @@ plot_km(
   risk_table = TRUE,
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Survival probability",
-  break_by = NULL
+  break_by = NULL,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -40,6 +41,9 @@ survival"}. The default is \code{"Survival probability"}.}
 
 \item{break_by}{\code{NULL} (the default, chosen from usual intervals of
 the time unit) or the spacing of the breaks of the time axis.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
 }
 \value{
 A ggplot object, or with \code{risk_table = TRUE} a patchwork

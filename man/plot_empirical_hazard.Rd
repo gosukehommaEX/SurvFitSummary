@@ -11,7 +11,8 @@ plot_empirical_hazard(
   conf_level = 0.95,
   time_unit = c("months", "days", "weeks", "years"),
   y_label = "Hazard rate",
-  break_by = NULL
+  break_by = NULL,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -33,6 +34,9 @@ default is 0.95.}
 
 \item{break_by}{\code{NULL} (the default) or the spacing of the breaks
 of the time axis.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.}
 }
 \value{
 A ggplot object.

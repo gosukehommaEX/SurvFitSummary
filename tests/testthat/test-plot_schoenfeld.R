@@ -70,3 +70,11 @@ test_that("invalid inputs are rejected", {
                "At least 2 treatment arms")
   expect_error(plot_schoenfeld(d, conf_level = 1), "'conf_level'")
 })
+
+test_that("the legend is placed with legend_position", {
+  d <- make_fit_data()
+  expect_identical(plot_schoenfeld(d)$theme$legend.position, "bottom")
+  p <- plot_schoenfeld(d, legend_position = "right")
+  expect_identical(p$theme$legend.position, "right")
+  expect_error(plot_schoenfeld(d, legend_position = "middle"))
+})

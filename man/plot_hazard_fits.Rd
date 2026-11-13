@@ -16,7 +16,8 @@ plot_hazard_fits(
   break_by = NULL,
   n_points = 200,
   n_sim = 1000,
-  seed = 1
+  seed = 1,
+  legend_position = c("bottom", "right", "top", "left", "none")
 )
 }
 \arguments{
@@ -54,6 +55,11 @@ models are evaluated. The default is 200.}
 band of a model. The default is 1000.}
 
 \item{seed}{Seed of the simulation. The default is 1.}
+
+\item{legend_position}{Position of the legend: \code{"bottom"} (the
+default), \code{"right"}, \code{"top"}, \code{"left"} or \code{"none"}.
+Below or above the plot, the curves of one arm with several models
+are listed in two columns.}
 }
 \value{
 A ggplot object.
