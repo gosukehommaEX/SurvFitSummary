@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">SurvFitSummary</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,19 @@
       <small>Source: <a href="https://github.com/gosukehommaEX/SurvFitSummary/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.2.1" id="survfitsummary-221">SurvFitSummary 2.2.1<a class="anchor" aria-label="anchor" href="#survfitsummary-221"></a></h2>
+<p>The look of the Word report is closer to the template of the report:</p>
+<ul><li>The title and the subtitle are dark red (template of the package).</li>
+<li>The placeholders of the overview for the items not given (data and outcome) are highlighted in yellow.</li>
+<li>The Kaplan-Meier curves and the smoothed empirical hazards are given as a set of figures without confidence intervals followed by a set with them.</li>
+<li>The overview gives the reporting interval as “Time intervals for reporting”.</li>
+<li>In the plots of the spline models, the standard parametric model with the lowest AIC comes last in the legend.</li>
+</ul><p>Plots:</p>
+<ul><li>
+<code><a href="../reference/plot_survival_fits.html">plot_survival_fits()</a></code> and <code><a href="../reference/plot_hazard_fits.html">plot_hazard_fits()</a></code> list the models in the legend in the order given in <code>models</code> (they followed the order of the fits).</li>
+<li>With one arm, the row of the numbers at risk below the plots of <code><a href="../reference/plot_km.html">plot_km()</a></code> and <code><a href="../reference/plot_survival_fits.html">plot_survival_fits()</a></code> is labelled “N at risk”, without a title above it.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.2.0" id="survfitsummary-220">SurvFitSummary 2.2.0<a class="anchor" aria-label="anchor" href="#survfitsummary-220"></a></h2>
 <p>The Word report follows the example figures of the report template more closely:</p>

@@ -47,7 +47,7 @@ plot_hazard_fits(
 
   `NULL` (the default, all fitted models of `fit_type`) or model labels
   as in `x$models$model`, for example
-  `c("Weibull", "Hazards, 2 knots")`.
+  `c("Weibull", "Hazards, 2 knots")`, in the order of the legend.
 
 - arms:
 

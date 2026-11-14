@@ -50,7 +50,8 @@ plot_km(
 - risk_table:
 
   Logical; `TRUE` (the default) adds the numbers at risk at the breaks
-  of the time axis.
+  of the time axis: with one arm, in a row labelled "N at risk"; with
+  several arms, one row per arm below the title "N at risk".
 
 - time_unit:
 

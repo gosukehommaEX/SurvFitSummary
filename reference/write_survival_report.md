@@ -6,7 +6,7 @@ and spline-based models), with print-ready names of the models:
 
 1.  Overview: data, outcome, arms, time unit, reporting interval and the
     variables of the hazard ratios. Items not given are left as
-    placeholders in square brackets.
+    placeholders in square brackets, highlighted in yellow.
 
 2.  Methods: Kaplan-Meier analysis, hazard ratios, diagnostics (with a
     table of the shapes of the hazard functions), standard parametric
