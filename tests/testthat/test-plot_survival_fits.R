@@ -236,3 +236,23 @@ test_that("range_times marks the range of the survival of the models", {
                           time_horizon = 120, range_times = 60)
   expect_identical(layer_input(p[[1]], "GeomSegment")$time, 60)
 })
+
+test_that("the models are listed in the legend in the order given", {
+  x <- get_fits("simple")
+  models <- c("Weibull", "Exponential")
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          risk_table = FALSE)
+  lines <- layer_input(p, "GeomLine")
+  gof <- gof_table(x)
+  gof <- gof[gof$fit_type == "independent" & gof$arm == "Control", ]
+  labels <- paste0(models, " (AIC = ",
+                   formatC(gof$AIC[match(models, gof$model)], format = "f",
+                           digits = 1), ")")
+  expect_identical(levels(lines$curve), c("Kaplan-Meier (Control)", labels))
+  # Each model keeps its colour (Weibull red, exponential purple)
+  expect_identical(group_values(p, "GeomLine", "colour"),
+                   c("#E41A1C", "#984EA3"))
+  p <- plot_hazard_fits(x, models = models, arms = "Control")
+  expect_identical(levels(layer_input(p, "GeomLine", 2)$curve),
+                   c("Smoothed empirical hazard (Control)", labels))
+})

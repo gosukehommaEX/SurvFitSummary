@@ -29,7 +29,8 @@ plot_survival_fits(
 
 \item{models}{\code{NULL} (the default, all fitted models of
 \code{fit_type}) or model labels as in \code{x$models$model}, for
-example \code{c("Weibull", "Hazards, 2 knots")}.}
+example \code{c("Weibull", "Hazards, 2 knots")}, in the order of the
+legend.}
 
 \item{arms}{\code{NULL} (the default, all arms) or the arms to plot.}
 

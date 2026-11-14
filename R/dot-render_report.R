@@ -8,7 +8,8 @@
 #' that cannot be drawn is replaced by a paragraph with the error message,
 #' so that the rest of the report is still written. Items of bulleted lists
 #' take the style "List Bullet" when the document defines it; otherwise
-#' they are paragraphs that start with a bullet.
+#' they are paragraphs that start with a bullet. The part of a paragraph
+#' given in \code{highlight} (a placeholder) is highlighted in yellow.
 #'
 #' @param blocks List of elements made by \code{.report_block()}.
 #' @param file Path of the \code{.docx} file to write.
@@ -53,8 +54,15 @@
                                            c(block$level, 3L, 2L, 1L)))
       doc <- officer::body_add_par(doc, block$text, style = heading)
     } else if (block$type %in% c("title", "subtitle", "paragraph")) {
-      doc <- officer::body_add_par(doc, block$text,
-                                   style = style[[block$type]])
+      if (is.null(block$highlight)) {
+        doc <- officer::body_add_par(doc, block$text,
+                                     style = style[[block$type]])
+      } else {
+        doc <- officer::body_add_fpar(
+          doc, .highlight_par(block$text, block$highlight),
+          style = style[[block$type]]
+        )
+      }
     } else if (block$type == "bullet") {
       styled <- !is.null(style$bullet)
       doc <- officer::body_add_par(

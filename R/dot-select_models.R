@@ -14,7 +14,8 @@
 #' @param fit_type \code{"independent"} or \code{"dependent"}.
 #'
 #' @return A list with \code{x} (the object reduced to the selected fits),
-#'   \code{models} (labels, in the order of \code{x$models}), \code{rows}
+#'   \code{models} (labels, in the order given in \code{models}, or in the
+#'   order of \code{x$models} when \code{models} is \code{NULL}), \code{rows}
 #'   (one row of \code{x$models} per label) and \code{arms}.
 #'
 #' @keywords internal
@@ -40,7 +41,8 @@
     stop("'models' must be NULL or a subset of: ",
          paste(available, collapse = "; "), call. = FALSE)
   }
-  models <- available[available %in% models]
+  # In the order given, which is the order of the legend
+  models <- unique(models)
   if (length(arms) > 1L && length(models) > 1L) {
     stop("Plot either one arm with one or more models, or one model with ",
          "one or more arms.", call. = FALSE)

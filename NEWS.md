@@ -1,3 +1,26 @@
+# SurvFitSummary 2.2.1
+
+The look of the Word report is closer to the template of the report:
+
+* The title and the subtitle are dark red (template of the package).
+* The placeholders of the overview for the items not given (data and
+  outcome) are highlighted in yellow.
+* The Kaplan-Meier curves and the smoothed empirical hazards are given as a
+  set of figures without confidence intervals followed by a set with them.
+* The overview gives the reporting interval as "Time intervals for
+  reporting".
+* In the plots of the spline models, the standard parametric model with the
+  lowest AIC comes last in the legend.
+
+Plots:
+
+* `plot_survival_fits()` and `plot_hazard_fits()` list the models in the
+  legend in the order given in `models` (they followed the order of the
+  fits).
+* With one arm, the row of the numbers at risk below the plots of
+  `plot_km()` and `plot_survival_fits()` is labelled "N at risk", without
+  a title above it.
+
 # SurvFitSummary 2.2.0
 
 The Word report follows the example figures of the report template more

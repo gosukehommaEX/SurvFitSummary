@@ -33,7 +33,9 @@ to plot, for example a single arm.}
 default is 0.95.}
 
 \item{risk_table}{Logical; \code{TRUE} (the default) adds the numbers at
-risk at the breaks of the time axis.}
+risk at the breaks of the time axis: with one arm, in a row labelled
+"N at risk"; with several arms, one row per arm below the title "N at
+risk".}
 
 \item{time_unit}{Time unit of the data, for the label of the time axis
 and the spacing of its breaks: \code{"months"} (the default),

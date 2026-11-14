@@ -35,17 +35,17 @@
     b("heading", "Diagnostics", level = 2L),
     b("heading", "Empirical hazard rates over time", level = 3L)
   )
-  if (two_arms) {
-    for (ci in conf_int) {
+  # As the Kaplan-Meier curves: a set of figures without confidence
+  # intervals (all arms, then each arm), then a set with them
+  for (ci in conf_int) {
+    if (two_arms) {
       blocks <- c(blocks, list(b(
         "figure", paste0("Smoothed empirical hazards of all arms",
                          ci_text(ci)),
         plot = hazard_args(NULL, ci), height = 5.5
       )))
     }
-  }
-  for (a in x$arms) {
-    for (ci in conf_int) {
+    for (a in x$arms) {
       blocks <- c(blocks, list(b(
         "figure", paste0("Smoothed empirical hazard of ", a, ci_text(ci)),
         plot = hazard_args(a, ci), height = 5.5

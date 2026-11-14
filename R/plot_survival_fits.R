@@ -29,7 +29,8 @@
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param models \code{NULL} (the default, all fitted models of
 #'   \code{fit_type}) or model labels as in \code{x$models$model}, for
-#'   example \code{c("Weibull", "Hazards, 2 knots")}.
+#'   example \code{c("Weibull", "Hazards, 2 knots")}, in the order of the
+#'   legend.
 #' @param arms \code{NULL} (the default, all arms) or the arms to plot.
 #' @param fit_type \code{"independent"} (the default, the model fitted to
 #'   each arm) or \code{"dependent"} (the model fitted to both arms with the

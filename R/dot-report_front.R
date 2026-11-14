@@ -3,7 +3,8 @@
 #' @description
 #' Internal helper: the title, the date and the Overview section of the
 #' report. Items not given by the user are left as placeholders in square
-#' brackets, for the user to complete.
+#' brackets, highlighted in yellow as in the template of the report, for
+#' the user to complete.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param s List returned by \code{.report_settings()}.
@@ -17,8 +18,14 @@
 #' @noRd
 .report_front <- function(x, s, overview) {
   b <- .report_block
-  filled <- function(value, placeholder) {
-    if (is.null(value)) placeholder else value
+  # An item of the overview, or its placeholder (highlighted) when the item
+  # is not given
+  item <- function(label, value, placeholder) {
+    if (is.null(value)) {
+      b("paragraph", paste(label, placeholder), highlight = placeholder)
+    } else {
+      b("paragraph", paste(label, value))
+    }
   }
   blocks <- list(
     b("title", "Survival Analysis Report"),
@@ -40,21 +47,18 @@
                        substring(s$unit, 2L))
   blocks <- c(blocks, list(
     b("heading", "Overview", level = 1L),
-    b("paragraph", paste(
-      "Data:", filled(overview$data_label, paste(
-        "[to be completed: trial or data set, data cut-off date and",
-        "analysis population]"
-      ))
+    item("Data:", overview$data_label, paste(
+      "[to be completed: trial or data set, data cut-off date and",
+      "analysis population]"
     )),
-    b("paragraph", paste(
-      "Outcome:", filled(overview$outcome, paste(
-        "[to be completed: outcome, for example overall survival or",
-        "progression-free survival]"
-      ))
+    item("Outcome:", overview$outcome, paste(
+      "[to be completed: outcome, for example overall survival or",
+      "progression-free survival]"
     )),
     b("paragraph", paste("Treatment arms:", arms_text)),
     b("paragraph", paste("Time unit:", unit_title)),
-    b("paragraph", paste("Reporting interval:",
+    # The label of the template of the report
+    b("paragraph", paste("Time intervals for reporting:",
                          format(s$interval), s$unit))
   ))
   hr <- s$hazard_ratios

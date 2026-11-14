@@ -38,6 +38,23 @@ test_that("the numbers at risk are given at the breaks of the time axis", {
   expect_identical(max(table$time[table$arm == "Treatment"]), 66)
 })
 
+test_that("with one arm, the row of numbers at risk is labelled N at risk", {
+  d <- make_fit_data()
+  title_drawn <- function(p) {
+    g <- ggplot2::ggplotGrob(p)
+    !inherits(g$grobs[[which(g$layout$name == "title")]], "zeroGrob")
+  }
+  table <- plot_km(d, arms = "Treatment")[[2]]
+  expect_identical(ggplot2::layer_scales(table)$y$get_labels(), "N at risk")
+  expect_false(title_drawn(table))
+  expect_identical(unique(as.character(table$data$arm)), "Treatment")
+  # With two arms, one row per arm below the title "N at risk"
+  table <- plot_km(d)[[2]]
+  expect_identical(ggplot2::layer_scales(table)$y$get_labels(),
+                   c("Treatment", "Control"))
+  expect_true(title_drawn(table))
+})
+
 test_that("the names of the arms are clear of the numbers at time 0", {
   d <- make_fit_data()
   table <- plot_km(d)[[2]]

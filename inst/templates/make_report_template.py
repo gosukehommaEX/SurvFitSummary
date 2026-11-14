@@ -3,7 +3,8 @@ write_survival_report() uses by default.
 
 The document has no content (one empty paragraph); only its page set-up and
 styles are used: A4 page with 2.5 cm margins, Arial 10 pt text,
-numbered headings (1., 1.1., 1.1.1.) in dark red with a rule under
+title and subtitle in dark red, numbered headings (1., 1.1., 1.1.1.) in
+dark red with a rule under
 Heading 1, an unnumbered Heading 4, bold 9 pt captions, a List Bullet
 style for bulleted lists, and tables with
 grey grid lines and a dark red header row with white bold text. Table text
@@ -126,8 +127,8 @@ STYLES = HEADER + f"""<w:styles {W}>
 <w:style w:type="character" w:default="1" w:styleId="DefaultParagraphFont"><w:name w:val="Default Paragraph Font"/><w:uiPriority w:val="1"/><w:semiHidden/><w:unhideWhenUsed/></w:style>
 <w:style w:type="table" w:default="1" w:styleId="TableNormal"><w:name w:val="Normal Table"/><w:uiPriority w:val="99"/><w:semiHidden/><w:unhideWhenUsed/><w:tblPr><w:tblInd w:w="0" w:type="dxa"/><w:tblCellMar><w:top w:w="0" w:type="dxa"/><w:left w:w="108" w:type="dxa"/><w:bottom w:w="0" w:type="dxa"/><w:right w:w="108" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style>
 <w:style w:type="numbering" w:default="1" w:styleId="NoList"><w:name w:val="No List"/><w:uiPriority w:val="99"/><w:semiHidden/><w:unhideWhenUsed/></w:style>
-{paragraph_style("Title", "Title", ppr='<w:spacing w:before="0" w:after="120"/>', rpr='<w:b/><w:bCs/><w:sz w:val="44"/><w:szCs w:val="44"/>')}
-{paragraph_style("Subtitle", "Subtitle", ppr='<w:spacing w:before="0" w:after="240"/>', rpr='<w:i/><w:iCs/><w:color w:val="7F7F7F"/><w:sz w:val="22"/><w:szCs w:val="22"/>')}
+{paragraph_style("Title", "Title", ppr='<w:spacing w:before="0" w:after="120"/>', rpr='<w:b/><w:bCs/><w:color w:val="C00000"/><w:sz w:val="44"/><w:szCs w:val="44"/>')}
+{paragraph_style("Subtitle", "Subtitle", ppr='<w:spacing w:before="0" w:after="240"/>', rpr='<w:i/><w:iCs/><w:color w:val="C00000"/><w:sz w:val="22"/><w:szCs w:val="22"/>')}
 {heading(1, 32, "C00000", 360, 120, True, border='<w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="auto"/></w:pBdr>')}
 {heading(2, 26, "C00000", 240, 80, True)}
 {heading(3, 22, "C00000", 200, 60, True)}

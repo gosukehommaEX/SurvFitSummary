@@ -6,7 +6,10 @@
 #' axis. A number is shown only up to the largest observed time of the arm.
 #' The numbers at time 0 are centred on the left edge of the panel, so the
 #' names of the arms are moved to the left by half the width of the widest
-#' of these numbers (a digit is about 0.6 times the font size wide).
+#' of these numbers (a digit is about 0.6 times the font size wide). With
+#' one arm, the row is labelled "N at risk", as in the figures of the
+#' template of the report; with several arms, each row is labelled by its
+#' arm, below the title "N at risk".
 #'
 #' @param p ggplot object with the time on the x axis from 0 to
 #'   \code{max_time}.
@@ -35,6 +38,7 @@
   })
   table_data <- do.call(rbind, rows)
   table_data$arm <- factor(table_data$arm, levels = rev(arms))
+  one_arm <- length(arms) == 1L
   base_size <- 14
   if (is.null(text_size) || is.na(text_size)) text_size <- 0.8 * base_size
   first <- table_data$n[table_data$time == min(table_data$time)]
@@ -49,9 +53,13 @@
     ggplot2::scale_colour_manual(values = colours) +
     ggplot2::scale_x_continuous(breaks = breaks,
                                 expand = ggplot2::expansion(0, 0)) +
-    ggplot2::scale_y_discrete(expand = ggplot2::expansion(add = 0.6)) +
+    ggplot2::scale_y_discrete(
+      expand = ggplot2::expansion(add = 0.6),
+      labels = if (one_arm) "N at risk" else ggplot2::waiver()
+    ) +
     ggplot2::coord_cartesian(xlim = c(0, max_time), clip = "off") +
-    ggplot2::labs(x = NULL, y = NULL, title = "N at risk") +
+    ggplot2::labs(x = NULL, y = NULL,
+                  title = if (one_arm) NULL else "N at risk") +
     ggplot2::theme_classic(base_size = base_size) +
     ggplot2::theme(
       axis.line = ggplot2::element_blank(),
@@ -65,5 +73,6 @@
       plot.margin = ggplot2::margin(0, 16, 4, 8)
     )
   patchwork::wrap_plots(p, table_plot, ncol = 1,
-                        heights = c(1, 0.1 + 0.06 * length(arms)))
+                        heights = c(1, if (one_arm) 0.1 else
+                          0.1 + 0.06 * length(arms)))
 }

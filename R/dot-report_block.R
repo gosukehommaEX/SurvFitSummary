@@ -20,6 +20,8 @@
 #' @param width,height Size of the figure when drawn, in inches.
 #' @param display_width Width of the figure in the document, in inches (the
 #'   text of an A4 page with 2.5 cm margins is 6.3 inches wide).
+#' @param highlight \code{NULL} or a part of \code{text} highlighted in
+#'   yellow (paragraphs), such as a placeholder for the user to complete.
 #'
 #' @return A list with the arguments as elements.
 #'
@@ -27,7 +29,8 @@
 #' @noRd
 .report_block <- function(type, text = NULL, level = NULL, table = NULL,
                           plot = NULL, width = 9, height = 6,
-                          display_width = 6.2) {
+                          display_width = 6.2, highlight = NULL) {
   list(type = type, text = text, level = level, table = table, plot = plot,
-       width = width, height = height, display_width = display_width)
+       width = width, height = height, display_width = display_width,
+       highlight = highlight)
 }

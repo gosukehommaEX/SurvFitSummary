@@ -57,16 +57,16 @@
          args = list(data = x$data, arms = arms, conf_int = ci,
                      conf_level = x$conf_level, time_unit = x$time_unit))
   }
-  if (two_arms) {
-    for (ci in conf_int) {
+  # A set of figures without confidence intervals (all arms, then each arm),
+  # then a set with them, as in the template of the report
+  for (ci in conf_int) {
+    if (two_arms) {
       blocks <- c(blocks, list(b(
         "figure", paste0("Kaplan-Meier curves of all arms", ci_text(ci)),
         plot = km_args(NULL, ci), height = 6.5
       )))
     }
-  }
-  for (a in x$arms) {
-    for (ci in conf_int) {
+    for (a in x$arms) {
       blocks <- c(blocks, list(b(
         "figure", paste0("Kaplan-Meier curve of ", a, ci_text(ci)),
         plot = km_args(a, ci), height = 6

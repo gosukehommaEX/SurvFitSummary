@@ -103,6 +103,18 @@ test_that("figures with and without confidence intervals", {
   ci_arg <- vapply(figures, function(b) isTRUE(b$plot$args$conf_int),
                    logical(1))
   expect_identical(with_ci | band, ci_arg)
+  # The Kaplan-Meier curves and the smoothed hazards: a set of figures
+  # without confidence intervals, then a set with them
+  ci <- ", with 95% confidence intervals"
+  km <- c("Kaplan-Meier curves of all arms", "Kaplan-Meier curve of Control",
+          "Kaplan-Meier curve of Treatment")
+  expect_identical(captions[captions %in% c(km, paste0(km, ci))],
+                   c(km, paste0(km, ci)))
+  hz <- c("Smoothed empirical hazards of all arms",
+          "Smoothed empirical hazard of Control",
+          "Smoothed empirical hazard of Treatment")
+  expect_identical(captions[captions %in% c(hz, paste0(hz, ci))],
+                   c(hz, paste0(hz, ci)))
   # Every figure is shown at the same scale (6.2 inches for 9 inches), so
   # that the text of the figures has the same size
   scale <- vapply(figures, function(b) b$display_width / b$width,
@@ -177,6 +189,56 @@ test_that("the spline plots show the standard model of lowest AIC and ranges", {
   expect_true(all(vapply(figures, function(b) is.null(b$plot$args$range_times),
                          logical(1))))
   expect_false(any(grepl("vertical line", block_field(blocks, "text"))))
+})
+
+test_that("placeholders of the overview are highlighted in yellow", {
+  x <- get_fits("report")
+  s <- .report_settings(x, NULL, NULL, NULL, NULL)
+  blocks <- .report_front(x, s, report_overview)
+  text <- block_field(blocks, "text")
+  highlight <- block_field(blocks, "highlight")
+  placeholders <- c(
+    paste("[to be completed: trial or data set, data cut-off date and",
+          "analysis population]"),
+    paste("[to be completed: outcome, for example overall survival or",
+          "progression-free survival]")
+  )
+  expect_identical(highlight[!is.na(highlight)], placeholders)
+  expect_identical(text[!is.na(highlight)],
+                   paste(c("Data:", "Outcome:"), placeholders))
+  # The label of the template of the report
+  expect_true("Time intervals for reporting: 12 months" %in% text)
+  path <- withr::local_tempfile(fileext = ".docx")
+  .render_report(blocks, path)
+  expect_identical(docx_paragraphs(docx_content(path)), text)
+  # Only the placeholders are marked, in yellow (shading or highlight)
+  marked <- xml2::xml_find_all(
+    docx_xml(path), "//w:r[w:rPr/w:shd or w:rPr/w:highlight]", docx_ns
+  )
+  expect_identical(xml2::xml_text(marked), placeholders)
+  colour <- vapply(marked, function(r) {
+    shd <- xml2::xml_find_first(r, "w:rPr/w:shd", docx_ns)
+    if (inherits(shd, "xml_missing")) {
+      mark <- xml2::xml_find_first(r, "w:rPr/w:highlight", docx_ns)
+      toupper(xml2::xml_attr(mark, "w:val", docx_ns))
+    } else {
+      toupper(xml2::xml_attr(shd, "w:fill", docx_ns))
+    }
+  }, character(1))
+  expect_true(all(colour %in% c("FFFF00", "YELLOW")))
+  # Items given, and a part that is not in the text, are not highlighted
+  overview <- report_overview
+  overview$data_label <- "Trial ABC"
+  overview$outcome <- "Overall survival"
+  given <- .report_front(x, s, overview)
+  expect_true(all(is.na(block_field(given, "highlight"))))
+  .render_report(list(.report_block("paragraph", "Data: Trial ABC",
+                                    highlight = "[to be completed]")),
+                 path)
+  expect_identical(docx_paragraphs(docx_content(path)), "Data: Trial ABC")
+  expect_length(xml2::xml_find_all(
+    docx_xml(path), "//w:r[w:rPr/w:shd or w:rPr/w:highlight]", docx_ns
+  ), 0)
 })
 
 test_that("the methods of the proportional hazards assessment are bullets", {
@@ -400,6 +462,16 @@ test_that("the template of the package gives the styles of the report", {
   cell_style <- xml2::xml_find_all(doc, "//w:tc/w:p/w:pPr/w:pStyle", docx_ns)
   expect_identical(unique(xml2::xml_attr(cell_style, "w:val", docx_ns)),
                    "TableText")
+  # Title and subtitle in dark red, as in the template of the report
+  styles <- docx_xml(path, "styles")
+  colour_of <- function(id) {
+    xml2::xml_attr(xml2::xml_find_first(
+      styles, sprintf("//w:style[@w:styleId = '%s']/w:rPr/w:color", id),
+      docx_ns
+    ), "w:val", docx_ns)
+  }
+  expect_identical(colour_of("Title"), "C00000")
+  expect_identical(colour_of("Subtitle"), "C00000")
   # A4 page
   page <- xml2::xml_find_first(doc, "//w:sectPr/w:pgSz", docx_ns)
   expect_identical(xml2::xml_attr(page, "w:w", docx_ns), "11906")
