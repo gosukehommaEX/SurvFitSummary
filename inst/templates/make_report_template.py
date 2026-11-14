@@ -4,7 +4,8 @@ write_survival_report() uses by default.
 The document has no content (one empty paragraph); only its page set-up and
 styles are used: A4 page with 2.5 cm margins, Arial 10 pt text,
 numbered headings (1., 1.1., 1.1.1.) in dark red with a rule under
-Heading 1, an unnumbered Heading 4, bold 9 pt captions, and tables with
+Heading 1, an unnumbered Heading 4, bold 9 pt captions, a List Bullet
+style for bulleted lists, and tables with
 grey grid lines and a dark red header row with white bold text. Table text
 is 9 pt so that the wide tables fit the page.
 
@@ -74,7 +75,8 @@ DOCUMENT = HEADER + f"""<w:document {W} {R}>
 </w:body>
 </w:document>"""
 
-# Headings 1 to 3 numbered 1., 1.1., 1.1.1.
+# Headings 1 to 3 numbered 1., 1.1., 1.1.1. (numId 1), and the bullets of
+# the style List Bullet (numId 2)
 NUMBERING = HEADER + f"""<w:numbering {W}>
 <w:abstractNum w:abstractNumId="0">
 <w:multiLevelType w:val="multilevel"/>
@@ -82,7 +84,12 @@ NUMBERING = HEADER + f"""<w:numbering {W}>
 <w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:pStyle w:val="Heading2"/><w:lvlText w:val="%1.%2."/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="576" w:hanging="576"/></w:pPr></w:lvl>
 <w:lvl w:ilvl="2"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:pStyle w:val="Heading3"/><w:lvlText w:val="%1.%2.%3."/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="720" w:hanging="720"/></w:pPr></w:lvl>
 </w:abstractNum>
+<w:abstractNum w:abstractNumId="1">
+<w:multiLevelType w:val="singleLevel"/>
+<w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/><w:pStyle w:val="ListBullet"/><w:lvlText w:val="\u2022"/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="360" w:hanging="360"/></w:pPr><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/></w:rPr></w:lvl>
+</w:abstractNum>
 <w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num>
+<w:num w:numId="2"><w:abstractNumId w:val="1"/></w:num>
 </w:numbering>"""
 
 
@@ -129,6 +136,7 @@ STYLES = HEADER + f"""<w:styles {W}>
 {paragraph_style("TableCaption", "Table Caption", ppr='<w:keepNext/><w:keepLines/>', based_on="Caption", custom=True)}
 {paragraph_style("Figure", "Figure", ppr='<w:keepNext/><w:spacing w:before="200"/>', custom=True)}
 {paragraph_style("TableText", "Table Text", ppr='<w:spacing w:before="20" w:after="20"/>', rpr='<w:sz w:val="18"/><w:szCs w:val="18"/>', custom=True)}
+{paragraph_style("ListBullet", "List Bullet", ppr='<w:numPr><w:ilvl w:val="0"/><w:numId w:val="2"/></w:numPr><w:spacing w:before="40"/><w:ind w:left="360" w:hanging="360"/>')}
 <w:style w:type="table" w:customStyle="1" w:styleId="ReportTable"><w:name w:val="Report Table"/><w:basedOn w:val="TableNormal"/><w:uiPriority w:val="59"/><w:tblPr><w:tblBorders>{GRID}</w:tblBorders><w:tblCellMar><w:left w:w="57" w:type="dxa"/><w:right w:w="57" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblStylePr w:type="firstRow"><w:rPr><w:b/><w:bCs/><w:color w:val="FFFFFF"/></w:rPr><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="800000"/></w:tcPr></w:tblStylePr></w:style>
 </w:styles>"""
 

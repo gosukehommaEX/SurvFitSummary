@@ -25,6 +25,6 @@
     .report_data_results(x, s, conf_int),
     .report_diagnostics(x, s, conf_int),
     .report_parametric(x, s, conf_int, n_sim, seed),
-    .report_splines(x, s, n_sim, seed),
+    .report_splines(x, s, conf_int, n_sim, seed),
     .report_problems(x))
 }

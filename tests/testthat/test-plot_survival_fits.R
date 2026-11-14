@@ -101,6 +101,10 @@ test_that("invalid inputs are rejected", {
                "'n_points'")
   expect_error(plot_survival_fits(x, models = "Weibull", conf_int = NA),
                "'conf_int'")
+  expect_error(plot_survival_fits(x, models = "Weibull", arms = "Control",
+                                  range_times = -1), "'range_times'")
+  expect_error(plot_survival_fits(x, models = "Weibull", arms = "Control",
+                                  range_times = NA), "'range_times'")
   expect_error(plot_survival_fits(x, models = "Weibull",
                                   fit_type = "joint"))
 })
@@ -178,4 +182,57 @@ test_that("invalid colours, line types and text sizes are rejected", {
   expect_error(plot_survival_fits(x, models = "Weibull", arms = "Control",
                                   text_sizes = c(size = 3)),
                "'text_sizes'")
+})
+
+test_that("range_times marks the range of the survival of the models", {
+  x <- get_fits("simple")
+  models <- c("Exponential", "Weibull", "Log-logistic")
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          time_horizon = 120, risk_table = FALSE,
+                          range_times = c(150, 60, 120))
+  ranges <- layer_input(p, "GeomSegment")
+  # Sorted, and the times after the time horizon left out
+  expect_identical(ranges$time, c(60, 120))
+  e <- read_expected("predictions")
+  e <- e[e$fit_type == "independent" & e$arm == "Control", ]
+  in_plot <- e[e$model %in% models, ]
+  low <- vapply(c(60, 120), function(t) min(in_plot$surv[in_plot$time == t]),
+                numeric(1))
+  high <- vapply(c(60, 120), function(t) max(in_plot$surv[in_plot$time == t]),
+                 numeric(1))
+  # Absolute differences (edition 3 of testthat has no scale argument)
+  expect_lte(max(abs(ranges$low - low)), TOL_SURV)
+  expect_lte(max(abs(ranges$high - high)), TOL_SURV)
+  # Labels in percent, from the reference values (0.04 to 2.25 percent at
+  # 60 months, 0.00 to 0.56 percent at 120 months)
+  labels <- layer_input(p, "GeomText")
+  expect_identical(labels$label, c("0-2%", "0-1%"))
+  # Right of the line, and left of it at the time horizon
+  expect_identical(labels$hjust, c(-0.15, 1.15))
+  expect_identical(labels$high, ranges$high)
+  # In the size of the axis labels
+  text_layer <- p$layers[[layer_index(p, "GeomText")]]
+  expect_equal(text_layer$aes_params$size, 0.8 * 14 / ggplot2::.pt)
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          time_horizon = 120, risk_table = FALSE,
+                          range_times = 60, text_sizes = c(axis_text = 9))
+  text_layer <- p$layers[[layer_index(p, "GeomText")]]
+  expect_equal(text_layer$aes_params$size, 9 / ggplot2::.pt)
+  # One model: one value (Weibull at 12 months, 0.411 in the reference)
+  p <- plot_survival_fits(x, models = "Weibull", arms = "Control",
+                          time_horizon = 120, risk_table = FALSE,
+                          range_times = 12)
+  expect_identical(layer_input(p, "GeomText")$label, "41%")
+  # No line without range_times, or with all the times after the horizon
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          time_horizon = 120, risk_table = FALSE)
+  expect_length(layer_index(p, "GeomSegment"), 0)
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          time_horizon = 120, risk_table = FALSE,
+                          range_times = 200)
+  expect_length(layer_index(p, "GeomSegment"), 0)
+  # With the numbers at risk, the lines are in the plot
+  p <- plot_survival_fits(x, models = models, arms = "Control",
+                          time_horizon = 120, range_times = 60)
+  expect_identical(layer_input(p[[1]], "GeomSegment")$time, 60)
 })

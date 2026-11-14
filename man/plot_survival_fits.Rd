@@ -20,7 +20,8 @@ plot_survival_fits(
   legend_position = c("bottom", "right", "top", "left", "none"),
   colours = NULL,
   linetypes = NULL,
-  text_sizes = NULL
+  text_sizes = NULL,
+  range_times = NULL
 )
 }
 \arguments{
@@ -91,6 +92,10 @@ is 1.125 times as large). The texts not named keep their default
 sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
 11.2 for the titles of panels, the axis text, the legend and the
 numbers at risk.}
+
+\item{range_times}{\code{NULL} (the default) or times at which the range
+of the survival of the models is marked (see Details). Times after the
+time horizon are left out.}
 }
 \value{
 A ggplot object, or with \code{risk_table = TRUE} a patchwork
@@ -116,6 +121,11 @@ Kaplan-Meier curves are drawn, and, when one model is plotted, the
 confidence band of the model simulated as in
 \code{\link{predict_survival}}. The plot is drawn from the fitted object,
 so plots with and without confidence bands do not refit the models.
+
+With \code{range_times}, a vertical line at each of these times marks
+the range of the survival of the models plotted, from the lowest to the
+highest, labelled in percent (for example "5-7\\%"), as in the plots of
+the spline models in the Word report (at 5 and 10 years).
 }
 \examples{
 dat <- processing_dataset(
@@ -126,7 +136,8 @@ dat <- processing_dataset(
 fits <- fit_survival_models(dat, distributions = c("exp", "weibull",
                                                    "llogis"),
                             spline_scales = NULL)
-plot_survival_fits(fits, arms = "Control", time_horizon = 120)
+plot_survival_fits(fits, arms = "Control", time_horizon = 120,
+                   range_times = c(60, 120))
 plot_survival_fits(fits, models = "Weibull", fit_type = "dependent",
                    conf_int = TRUE)
 

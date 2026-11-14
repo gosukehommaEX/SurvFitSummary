@@ -103,14 +103,21 @@ plot_qq_survival <- function(data,
   points$comparison <- factor(points$comparison, levels = comparisons)
   lines$comparison <- factor(lines$comparison, levels = comparisons)
   limit <- 1.05 * max(c(points$control, points$arm))
+  # The lines are drawn as segments across the plot, so that their keys in
+  # the legend are horizontal lines (the keys of geom_abline() are diagonal)
+  lines$x <- 0
+  lines$xend <- limit
+  lines$y <- lines$intercept
+  lines$yend <- lines$intercept + lines$slope * limit
   unit_label <- substring(.time_axis(1, time_unit)$label, 6L)
   point_label <- paste0("Quantiles (", format(100 * min(probs)), "% to ",
                         format(100 * max(probs)), "%)")
   p <- ggplot2::ggplot() +
-    ggplot2::geom_abline(
+    ggplot2::geom_segment(
       data = lines,
-      ggplot2::aes(intercept = .data$intercept, slope = .data$slope,
-                   colour = .data$type, linetype = .data$type),
+      ggplot2::aes(x = .data$x, y = .data$y, xend = .data$xend,
+                   yend = .data$yend, colour = .data$type,
+                   linetype = .data$type),
       linewidth = 0.7
     ) +
     ggplot2::geom_point(

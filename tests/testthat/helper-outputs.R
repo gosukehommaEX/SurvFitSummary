@@ -34,19 +34,21 @@ docx_paragraphs <- function(content) {
   p$text[!is.na(p$text) & p$text != ""]
 }
 
-# The XML of the body of the document, read with xml2 (the order and
-# numbering of the table cells returned by officer::docx_summary() differ
-# between versions of officer)
+# The XML of the body of the document, or of another part of it (for
+# example "numbering"), read with xml2 (the order and numbering of the table
+# cells returned by officer::docx_summary() differ between versions of
+# officer)
 docx_ns <- c(
   w = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
   wp = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 )
 
-docx_xml <- function(file) {
+docx_xml <- function(file, part = "document") {
   dir <- tempfile()
   on.exit(unlink(dir, recursive = TRUE))
-  utils::unzip(file, files = "word/document.xml", exdir = dir)
-  xml2::read_xml(file.path(dir, "word", "document.xml"))
+  name <- paste0("word/", part, ".xml")
+  utils::unzip(file, files = name, exdir = dir)
+  xml2::read_xml(file.path(dir, name))
 }
 
 # Text of the cells of each table of the document, row by row from the

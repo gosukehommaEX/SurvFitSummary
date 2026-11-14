@@ -97,3 +97,16 @@ test_that("invalid colours, line types and text sizes are rejected", {
                                 linetypes = c(Weibull = "zigzag")),
                "invalid line types")
 })
+
+test_that("with several models, conf_int shows the band of the hazard only", {
+  x <- get_fits("simple")
+  p <- plot_hazard_fits(x, models = c("Exponential", "Weibull"),
+                        arms = "Control", conf_int = TRUE)
+  expect_length(layer_index(p, "GeomRibbon"), 1)
+  band <- layer_input(p, "GeomRibbon")
+  hz <- estimate_empirical_hazard(x$data[x$data$ARM == "Control", ],
+                                  conf_level = x$conf_level)
+  expect_equal(band$lcl, hz$lcl)
+  expect_equal(band$ucl, hz$ucl)
+  expect_identical(group_values(p, "GeomRibbon", "fill"), "grey60")
+})

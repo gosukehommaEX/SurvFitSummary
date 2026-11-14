@@ -110,7 +110,9 @@
       b("figure", "Quantile-quantile plot of the survival times",
         plot = list(fun = plot_qq_survival,
                     args = list(data = x$data, time_unit = x$time_unit)),
-        width = 7, height = 7.5, display_width = 5),
+        # The square plot is drawn 7 inches wide and shown at the scale of
+        # the other figures (6.2 / 9), so that its text has the same size
+        width = 7, height = 7.5, display_width = 7 * 6.2 / 9),
       b("paragraph", paste(
         "In the QQ plot, the quantiles of the survival times of each",
         "treatment arm are plotted against those of the control arm, with",

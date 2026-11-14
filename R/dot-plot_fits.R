@@ -30,6 +30,10 @@
 #'   and model; with several arms the colours are given by arm and the line
 #'   types by observed curve and model.
 #' @param text_sizes Sizes returned by \code{.check_text_sizes()}.
+#' @param range_times \code{NULL} or times at which a vertical line marks
+#'   the range of the survival of the models, from the lowest to the
+#'   highest, labelled in percent (survival only); times after the time
+#'   horizon are left out.
 #'
 #' @return A ggplot or patchwork object.
 #'
@@ -38,7 +42,7 @@
 .plot_fits <- function(x, sel, quantity, conf_int, time_horizon, y_label,
                        y_max, break_by, n_points, n_sim, seed, risk_table,
                        legend_position, colours = NULL, linetypes = NULL,
-                       text_sizes = NULL) {
+                       text_sizes = NULL, range_times = NULL) {
   if (!is.logical(conf_int) || length(conf_int) != 1L || is.na(conf_int)) {
     stop("'conf_int' must be TRUE or FALSE.", call. = FALSE)
   }
@@ -57,6 +61,11 @@
       (!is.numeric(y_max) || length(y_max) != 1L || !is.finite(y_max) ||
        y_max <= 0)) {
     stop("'y_max' must be NULL or a single positive number.", call. = FALSE)
+  }
+  if (!is.null(range_times) &&
+      (!is.numeric(range_times) || length(range_times) == 0L ||
+       any(!is.finite(range_times)) || any(range_times <= 0))) {
+    stop("'range_times' must be NULL or positive numbers.", call. = FALSE)
   }
   survival_plot <- quantity == "survival"
   data <- x$data[x$data$ARM %in% sel$arms, , drop = FALSE]
@@ -206,6 +215,54 @@
     .plot_theme(legend_position = legend_position, text_sizes = text_sizes)
   if (survival_plot) {
     p <- p + ggplot2::scale_y_continuous(breaks = seq(0, 1, by = 0.2))
+    shown <- if (is.null(range_times)) {
+      numeric(0)
+    } else {
+      sort(unique(range_times[range_times <= time_horizon]))
+    }
+    ranges <- NULL
+    if (length(shown) > 0L) {
+      # At each time, a vertical line from the lowest to the highest
+      # survival of the models, labelled in percent (for example "5-7%")
+      at <- predict_survival(sel$x, shown, type = "survival")
+      at <- at[at$arm %in% sel$arms & is.finite(at$est), , drop = FALSE]
+      ranges <- do.call(rbind, lapply(shown, function(t) {
+        est <- at$est[at$time == t]
+        if (length(est) == 0L) return(NULL)
+        data.frame(time = t, low = min(est), high = max(est))
+      }))
+    }
+    if (!is.null(ranges)) {
+      percent <- function(v) as.character(round(100 * v))
+      ranges$label <- ifelse(
+        percent(ranges$low) == percent(ranges$high),
+        paste0(percent(ranges$high), "%"),
+        paste0(percent(ranges$low), "-", percent(ranges$high), "%")
+      )
+      # Right of the line, or left of it in the last fifth of the time
+      # axis, so that the label stays in the plot (for example at 10 years
+      # with a time horizon of 10 years)
+      ranges$hjust <- ifelse(ranges$time > 0.8 * time_horizon, 1.15, -0.15)
+      # The labels in the size of the axis labels (0.8 times the base size
+      # 14 of the theme by default)
+      label_size <- if (is.null(text_sizes)) NA_real_ else
+        unname(text_sizes["axis_text"])
+      if (is.na(label_size)) label_size <- 0.8 * 14
+      p <- p +
+        ggplot2::geom_segment(
+          data = ranges,
+          ggplot2::aes(x = .data$time, xend = .data$time, y = .data$low,
+                       yend = .data$high),
+          colour = "grey20", linewidth = 0.6
+        ) +
+        ggplot2::geom_text(
+          data = ranges,
+          ggplot2::aes(x = .data$time, y = .data$high, label = .data$label,
+                       hjust = .data$hjust),
+          vjust = -0.5, colour = "grey20",
+          size = label_size / ggplot2::.pt
+        )
+    }
     if (isTRUE(risk_table)) {
       # With one arm, the numbers in the colour of its Kaplan-Meier curve
       # (black by default)

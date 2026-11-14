@@ -94,9 +94,20 @@ test_that("figures with and without confidence intervals", {
   expect_equal(length(figures), expected)
   captions <- block_field(figures, "text")
   with_ci <- grepl("with 95% confidence intervals$", captions)
+  # The plots of the smoothed hazard with several models show the
+  # confidence interval of the smoothed hazard: those of the standard models
+  # and of the spline models, of each arm and of each arm of both arms
+  band <- grepl("(with its 95% confidence interval)", captions, fixed = TRUE)
+  expect_equal(sum(band), 2 * (2 + 2))
+  expect_true(all(startsWith(captions[band], "Smoothed empirical hazard")))
   ci_arg <- vapply(figures, function(b) isTRUE(b$plot$args$conf_int),
                    logical(1))
-  expect_identical(with_ci, ci_arg)
+  expect_identical(with_ci | band, ci_arg)
+  # Every figure is shown at the same scale (6.2 inches for 9 inches), so
+  # that the text of the figures has the same size
+  scale <- vapply(figures, function(b) b$display_width / b$width,
+                  numeric(1))
+  expect_equal(scale, rep(6.2 / 9, length(figures)))
   # Kaplan-Meier and hazards: all arms and each arm; standard models: 2
   # plots per model of each arm and of both arms
   expect_equal(sum(with_ci), (1 + 2) * 2 + 2 * n_models * 2 + n_models * 2)
@@ -115,6 +126,92 @@ test_that("figures with and without confidence intervals", {
   expect_identical(overlay$plot$fun, plot_survival_fits)
   expect_identical(overlay$plot$args$models, c("Exponential", "Weibull"))
   expect_identical(overlay$plot$args$time_horizon, 120)
+})
+
+test_that("the spline plots show the standard model of lowest AIC and ranges", {
+  blocks <- report_plan()
+  figures <- blocks[block_field(blocks, "type") == "figure"]
+  captions <- block_field(figures, "text")
+  spline <- figures[grepl("spline models", captions)]
+  expect_length(spline, 2 * (2 + 2))
+  # The standard parametric model with the lowest AIC of each fit, from the
+  # reference values (Weibull for each arm and for both arms)
+  e <- read_expected("gof")
+  for (f in spline) {
+    args <- f$plot$args
+    arm <- if (args$fit_type == "dependent") "Both arms" else args$arms
+    r <- e[e$fit_type == args$fit_type & e$arm == arm &
+             e$model %in% c("Exponential", "Weibull"), ]
+    best <- r$model[which.min(r$AIC)]
+    expect_identical(args$models, c("Hazards, 1 knot", best))
+    expect_identical(args$linetypes, stats::setNames("dashed", best))
+    expect_true(grepl(paste0(" and of the ", best, " model (dashed)"),
+                      f$text, fixed = TRUE))
+    if (identical(f$plot$fun, plot_survival_fits)) {
+      # The range of the predicted survival at 5 and 10 years
+      expect_identical(args$range_times, c(60, 120))
+      expect_false(args$conf_int)
+      expect_true(endsWith(f$text, "at 5 years and 10 years"))
+    } else {
+      expect_identical(f$plot$fun, plot_hazard_fits)
+      expect_null(args$range_times)
+      expect_true(args$conf_int)
+    }
+  }
+  text <- block_field(blocks, "text")
+  intro <- text[which(text == "Spline-based extrapolation")[2L] + 1L]
+  expect_true(grepl(
+    "the standard parametric model with the lowest AIC (dashed line)",
+    intro, fixed = TRUE
+  ))
+  expect_true(grepl("a vertical line at 5 years and 10 years shows the range",
+                    intro, fixed = TRUE))
+  # Without the figures with confidence intervals, no band; with landmark
+  # times up to 24 months (the time horizon), no range at 5 or 10 years
+  x <- get_fits("report")
+  s <- .report_settings(x, NULL, c(6, 12, 24), NULL, NULL)
+  blocks <- .report_splines(x, s, FALSE, n_sim = 1000, seed = 1)
+  figures <- blocks[block_field(blocks, "type") == "figure"]
+  expect_false(any(vapply(figures, function(b) isTRUE(b$plot$args$conf_int),
+                          logical(1))))
+  expect_true(all(vapply(figures, function(b) is.null(b$plot$args$range_times),
+                         logical(1))))
+  expect_false(any(grepl("vertical line", block_field(blocks, "text"))))
+})
+
+test_that("the methods of the proportional hazards assessment are bullets", {
+  blocks <- report_plan()
+  type <- block_field(blocks, "type")
+  text <- block_field(blocks, "text")
+  start <- which(text == "Proportional hazards assessment")[1L]
+  bullets <- c(
+    "Plot of the scaled Schoenfeld residuals of the treatment effect",
+    "Grambsch-Therneau test (with time transformed by the KM estimate)",
+    "Plot of log(cumulative hazard) versus log(time)",
+    "Plot of the smoothed empirical hazards of the arms versus time",
+    "Quantile-quantile (QQ) plot of the survival times"
+  )
+  expect_identical(type[start + 1:6], c("paragraph", rep("bullet", 5)))
+  expect_identical(text[start + 2:6], bullets)
+  expect_identical(text[type == "bullet"], bullets)
+  # Written with the style List Bullet of the template of the package,
+  # whose numbering draws the bullet
+  path <- withr::local_tempfile(fileext = ".docx")
+  .render_report(blocks[start + 0:6], path)
+  content <- docx_content(path)
+  expect_identical(content$style_name[content$text %in% bullets],
+                   rep("List Bullet", 5))
+  level <- xml2::xml_find_all(
+    docx_xml(path, "numbering"),
+    "//w:abstractNum[w:lvl/w:pStyle/@w:val = 'ListBullet']/w:lvl/w:numFmt",
+    docx_ns
+  )
+  expect_identical(xml2::xml_attr(level, "w:val", docx_ns), "bullet")
+  # Without the style, the bullet starts the text
+  expect_identical(.bullet_text("Grambsch-Therneau test", TRUE),
+                   "Grambsch-Therneau test")
+  expect_identical(.bullet_text("Grambsch-Therneau test", FALSE),
+                   paste(intToUtf8(8226), "Grambsch-Therneau test"))
 })
 
 test_that("data summary and Kaplan-Meier tables from the data", {

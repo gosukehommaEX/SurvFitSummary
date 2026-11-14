@@ -1,7 +1,7 @@
 Package: SurvFitSummary
 Type: Package
 Title: Survival Extrapolation with Standard Parametric and Spline Models
-Version: 2.1.0
+Version: 2.2.0
 Authors@R: person(given = "Gosuke",
                   family = "Homma",
                   role = c("aut", "cre"),

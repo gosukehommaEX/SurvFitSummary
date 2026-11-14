@@ -2,13 +2,15 @@
 #'
 #' @description
 #' Internal helper: the report is first built as a list of elements
-#' (title, headings, paragraphs, tables and figures), which
+#' (title, headings, paragraphs, items of bulleted lists, tables and
+#' figures), which
 #' \code{.render_report()} then writes to the Word document. Figures are
 #' kept as a plotting function and its arguments, and drawn only when the
 #' document is written.
 #'
 #' @param type \code{"title"}, \code{"subtitle"}, \code{"heading"},
-#'   \code{"paragraph"}, \code{"table"} or \code{"figure"}.
+#'   \code{"paragraph"}, \code{"bullet"} (an item of a bulleted list),
+#'   \code{"table"} or \code{"figure"}.
 #' @param text Text of the element, or the caption of a table or figure
 #'   (without its number).
 #' @param level Level of a heading (1 to 4).

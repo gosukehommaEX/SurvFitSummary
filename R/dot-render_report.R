@@ -6,7 +6,9 @@
 #' (caption above) and the figures (caption below), and draws each figure
 #' as a PNG file in a temporary folder that is removed at the end. A figure
 #' that cannot be drawn is replaced by a paragraph with the error message,
-#' so that the rest of the report is still written.
+#' so that the rest of the report is still written. Items of bulleted lists
+#' take the style "List Bullet" when the document defines it; otherwise
+#' they are paragraphs that start with a bullet.
 #'
 #' @param blocks List of elements made by \code{.report_block()}.
 #' @param file Path of the \code{.docx} file to write.
@@ -36,6 +38,7 @@
                                            "Image Caption", "Normal")),
     image = .docx_style(styles, c("Figure", "centered", "Normal")),
     table_text = .docx_style(styles, "Table Text"),
+    bullet = .docx_style(styles, "List Bullet"),
     table = .docx_style(styles, c("Report Table", "table_template",
                                   "Table Grid"), type = "table")
   )
@@ -52,6 +55,12 @@
     } else if (block$type %in% c("title", "subtitle", "paragraph")) {
       doc <- officer::body_add_par(doc, block$text,
                                    style = style[[block$type]])
+    } else if (block$type == "bullet") {
+      styled <- !is.null(style$bullet)
+      doc <- officer::body_add_par(
+        doc, .bullet_text(block$text, styled),
+        style = if (styled) style$bullet else style$paragraph
+      )
     } else if (block$type == "table") {
       n_table <- n_table + 1L
       doc <- officer::body_add_par(

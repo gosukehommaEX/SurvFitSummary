@@ -21,6 +21,11 @@
 #' \code{\link{predict_survival}}. The plot is drawn from the fitted object,
 #' so plots with and without confidence bands do not refit the models.
 #'
+#' With \code{range_times}, a vertical line at each of these times marks
+#' the range of the survival of the models plotted, from the lowest to the
+#' highest, labelled in percent (for example "5-7\%"), as in the plots of
+#' the spline models in the Word report (at 5 and 10 years).
+#'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param models \code{NULL} (the default, all fitted models of
 #'   \code{fit_type}) or model labels as in \code{x$models$model}, for
@@ -65,6 +70,9 @@
 #'   \code{\link{plot_km}} for the line types). By default the lines are
 #'   solid, except that of the model with several arms (dashed).
 #' @inheritParams plot_km
+#' @param range_times \code{NULL} (the default) or times at which the range
+#'   of the survival of the models is marked (see Details). Times after the
+#'   time horizon are left out.
 #'
 #' @return A ggplot object, or with \code{risk_table = TRUE} a patchwork
 #'   object whose first element is the plot and second the table.
@@ -78,7 +86,8 @@
 #' fits <- fit_survival_models(dat, distributions = c("exp", "weibull",
 #'                                                    "llogis"),
 #'                             spline_scales = NULL)
-#' plot_survival_fits(fits, arms = "Control", time_horizon = 120)
+#' plot_survival_fits(fits, arms = "Control", time_horizon = 120,
+#'                    range_times = c(60, 120))
 #' plot_survival_fits(fits, models = "Weibull", fit_type = "dependent",
 #'                    conf_int = TRUE)
 #'
@@ -99,7 +108,8 @@ plot_survival_fits <- function(x,
                                                    "left", "none"),
                                colours = NULL,
                                linetypes = NULL,
-                               text_sizes = NULL) {
+                               text_sizes = NULL,
+                               range_times = NULL) {
   .check_survfitsummary(x)
   fit_type <- match.arg(fit_type)
   legend_position <- match.arg(legend_position)
@@ -110,5 +120,6 @@ plot_survival_fits <- function(x,
              break_by = break_by, n_points = n_points, n_sim = n_sim,
              seed = seed, risk_table = risk_table,
              legend_position = legend_position, colours = colours,
-             linetypes = linetypes, text_sizes = text_sizes)
+             linetypes = linetypes, text_sizes = text_sizes,
+             range_times = range_times)
 }

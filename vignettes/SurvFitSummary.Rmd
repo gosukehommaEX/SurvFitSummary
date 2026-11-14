@@ -164,13 +164,16 @@ s120 <- ctrl_pred$est[ctrl_pred$time == 120]
 ```
 
 For the control arm, the survival at 10 years ranges from `r f3(min(s120))`
-to `r f3(max(s120))` across the `r length(s120)` models.
+to `r f3(max(s120))` across the `r length(s120)` models. In the plot of the
+fitted survival curves, `range_times` marks the range of the models plotted
+at given times (here 5 and 10 years), labelled in percent, as in the plots
+of the spline models in the Word report.
 
 ```{r survival-fits, fig.height = 7.5}
 plot_survival_fits(fits, arms = "Control",
                    models = c("Exponential", "Weibull", "Log-logistic",
                               "Lognormal", "Hazards, 1 knot"),
-                   time_horizon = 120)
+                   time_horizon = 120, range_times = c(60, 120))
 ```
 
 ```{r hazard-fits, fig.height = 6.5}

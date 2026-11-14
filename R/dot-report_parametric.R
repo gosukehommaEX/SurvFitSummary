@@ -7,7 +7,10 @@
 #' curve overlaid with all the models, the table of AIC and BIC in
 #' ascending order of AIC, and for each model its hazard and survival
 #' plots, with and/or without confidence intervals (both arms in one plot
-#' for the models of both arms).
+#' for the models of both arms). When the report has figures with
+#' confidence intervals, the plots of the smoothed empirical hazard with
+#' all the models show the confidence interval of the smoothed hazard, as
+#' in the example figures of the template of the report.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param s List returned by \code{.report_settings()}.
@@ -28,6 +31,15 @@
   ci_text <- function(ci) {
     if (ci) paste0(", with ", level, " confidence intervals") else ""
   }
+  band_text <- function(band) {
+    if (band) paste0(" (with its ", level, " confidence interval)") else ""
+  }
+  # The confidence interval of the smoothed hazard in the plots with all
+  # the models (with one model, the plot would also show the interval of
+  # the model)
+  band <- TRUE %in% conf_int
+  bands <- vapply(groups, function(g) band && length(g$models) > 1L,
+                  logical(1))
   fit_args <- function(fun, g, models, arms, ci) {
     # The legend of one arm with its models on the right, as agreed for
     # the report; with several arms below the plot
@@ -47,22 +59,25 @@
     b("heading", "Standard parametric models", level = 2L),
     b("paragraph", paste0(
       "For each arm, and for both arms fitted together, the smoothed ",
-      "empirical hazards and the Kaplan-Meier curves are overlaid with the ",
+      "empirical hazards",
+      if (any(bands)) paste0(" (with their ", level, " confidence intervals)"),
+      " and the Kaplan-Meier curves are overlaid with the ",
       "fitted models, extrapolated to ", format(s$time_horizon), " ",
       s$unit, ", and the goodness of fit statistics are listed in ",
       "ascending order of AIC."
     ))
   )
-  for (g in groups) {
+  for (i in seq_along(groups)) {
+    g <- groups[[i]]
     by_both <- g$fit_type == "dependent"
     fitted_to <- if (by_both) " fitted to both arms" else ""
     blocks <- c(blocks, list(b("heading", g$arm, level = 3L)))
     for (a in g$arms) {
       blocks <- c(blocks, list(
         b("figure", paste0(
-          "Smoothed empirical hazard of ", a, " and the hazards of the ",
-          "standard parametric models", fitted_to
-        ), plot = fit_args(plot_hazard_fits, g, g$models, a, FALSE),
+          "Smoothed empirical hazard of ", a, band_text(bands[[i]]),
+          " and the hazards of the standard parametric models", fitted_to
+        ), plot = fit_args(plot_hazard_fits, g, g$models, a, bands[[i]]),
         height = 5.5),
         b("figure", paste0(
           "Kaplan-Meier curve of ", a, " and the survival curves of the ",

@@ -114,13 +114,17 @@
     blocks <- c(blocks, list(
       b("heading", "Proportional hazards assessment", level = 3L),
       b("paragraph", paste(
-        "Proportional hazards are assessed with the scaled Schoenfeld",
-        "residuals of the treatment effect and the Grambsch-Therneau test",
-        "(with time transformed by the KM estimate), the plot of",
-        "log(cumulative hazard) against log(time), the smoothed empirical",
-        "hazards of the arms over time, and the quantile-quantile (QQ) plot",
-        "of the survival times."
-      ))
+        "The proportional hazards assumption is examined with the following",
+        "tests and plots:"
+      )),
+      b("bullet", paste("Plot of the scaled Schoenfeld residuals of the",
+                        "treatment effect")),
+      b("bullet", paste("Grambsch-Therneau test (with time transformed by",
+                        "the KM estimate)")),
+      b("bullet", "Plot of log(cumulative hazard) versus log(time)"),
+      b("bullet", paste("Plot of the smoothed empirical hazards of the arms",
+                        "versus time")),
+      b("bullet", "Quantile-quantile (QQ) plot of the survival times")
     ))
   }
 

@@ -20,13 +20,18 @@
 #'     models (overlaid plots, AIC and BIC, and hazard and survival plots
 #'     of each model) and the spline models (placement of the knots, fit
 #'     statistics, median, mean and predicted survival at the landmark
-#'     times, and overlaid plots).
+#'     times, and overlaid plots with the standard parametric model with
+#'     the lowest AIC for comparison and, in the plots of the Kaplan-Meier
+#'     curves, the range of the predicted survival at 5 and 10 years).
 #' }
 #' The figures are drawn as PNG files and embedded in the document; the
 #' versions without and with confidence intervals are both included by
 #' default, so that they do not have to be recomputed. The tables of fit
 #' statistics and predicted survival of the spline models of both arms are
-#' given for each arm, so that they fit the page.
+#' given for each arm, so that they fit the page. When the report has
+#' figures with confidence intervals, the plots of the smoothed empirical
+#' hazard with several models show the confidence interval of the smoothed
+#' hazard, as in the example figures of the template of the report.
 #'
 #' @param x Object returned by \code{\link{fit_survival_models}}.
 #' @param file Path of the \code{.docx} file to write (replaced if it
@@ -60,7 +65,8 @@
 #'   \code{inst/templates/make_report_template.py}). The styles
 #'   \code{"Title"}, \code{"Subtitle"}, \code{"heading 1"} to
 #'   \code{"heading 4"}, \code{"Caption"}, \code{"Table Caption"},
-#'   \code{"Figure"}, \code{"Table Text"} and the table style
+#'   \code{"Figure"}, \code{"Table Text"}, \code{"List Bullet"} and the
+#'   table style
 #'   \code{"Report Table"} are used when the document defines them.
 #' @param dpi Resolution of the figures. The default is 300.
 #'
