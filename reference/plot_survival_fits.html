@@ -25,7 +25,7 @@ and the axes start at (0, 0)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">SurvFitSummary</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,8 @@ and the axes start at (0, 0).</p>
 <span>  legend_position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"left"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  linetypes <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  text_sizes <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  text_sizes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  range_times <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -194,6 +195,12 @@ sizes: 14 points for the axis titles, 16.8 for the title of a plot, and
 11.2 for the titles of panels, the axis text, the legend and the
 numbers at risk.</p></dd>
 
+
+<dt id="arg-range-times">range_times<a class="anchor" aria-label="anchor" href="#arg-range-times"></a></dt>
+<dd><p><code>NULL</code> (the default) or times at which the range
+of the survival of the models is marked (see Details). Times after the
+time horizon are left out.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -207,6 +214,10 @@ Kaplan-Meier curves are drawn, and, when one model is plotted, the
 confidence band of the model simulated as in
 <code><a href="predict_survival.html">predict_survival</a></code>. The plot is drawn from the fitted object,
 so plots with and without confidence bands do not refit the models.</p>
+<p>With <code>range_times</code>, a vertical line at each of these times marks
+the range of the survival of the models plotted, from the lowest to the
+highest, labelled in percent (for example "5-7\<!-- %"), as in the plots of -->
+the spline models in the Word report (at 5 and 10 years).</p>
     </div>
 
     <div class="section level2">
@@ -219,7 +230,8 @@ so plots with and without confidence bands do not refit the models.</p>
 <span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_survival_models.html">fit_survival_models</a></span><span class="op">(</span><span class="va">dat</span>, distributions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exp"</span>, <span class="st">"weibull"</span>,</span></span>
 <span class="r-in"><span>                                                   <span class="st">"llogis"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                            spline_scales <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">plot_survival_fits</span><span class="op">(</span><span class="va">fits</span>, arms <span class="op">=</span> <span class="st">"Control"</span>, time_horizon <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_survival_fits</span><span class="op">(</span><span class="va">fits</span>, arms <span class="op">=</span> <span class="st">"Control"</span>, time_horizon <span class="op">=</span> <span class="fl">120</span>,</span></span>
+<span class="r-in"><span>                   range_times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_survival_fits-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">plot_survival_fits</span><span class="op">(</span><span class="va">fits</span>, models <span class="op">=</span> <span class="st">"Weibull"</span>, fit_type <span class="op">=</span> <span class="st">"dependent"</span>,</span></span>
 <span class="r-in"><span>                   conf_int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>

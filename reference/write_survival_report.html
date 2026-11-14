@@ -17,12 +17,17 @@ each arm and for both arms fitted together: the standard parametric
 models (overlaid plots, AIC and BIC, and hazard and survival plots
 of each model) and the spline models (placement of the knots, fit
 statistics, median, mean and predicted survival at the landmark
-times, and overlaid plots).
+times, and overlaid plots with the standard parametric model with
+the lowest AIC for comparison and, in the plots of the Kaplan-Meier
+curves, the range of the predicted survival at 5 and 10 years).
 The figures are drawn as PNG files and embedded in the document; the
 versions without and with confidence intervals are both included by
 default, so that they do not have to be recomputed. The tables of fit
 statistics and predicted survival of the spline models of both arms are
-given for each arm, so that they fit the page."><meta property="og:description" content="Writes a Word report on the extrapolation of survival data for health
+given for each arm, so that they fit the page. When the report has
+figures with confidence intervals, the plots of the smoothed empirical
+hazard with several models show the confidence interval of the smoothed
+hazard, as in the example figures of the template of the report."><meta property="og:description" content="Writes a Word report on the extrapolation of survival data for health
 technology assessment (the standard parametric models of NICE DSU TSD 14
 and spline-based models), with print-ready names of the models:
 Overview: data, outcome, arms, time unit, reporting interval and
@@ -40,12 +45,17 @@ each arm and for both arms fitted together: the standard parametric
 models (overlaid plots, AIC and BIC, and hazard and survival plots
 of each model) and the spline models (placement of the knots, fit
 statistics, median, mean and predicted survival at the landmark
-times, and overlaid plots).
+times, and overlaid plots with the standard parametric model with
+the lowest AIC for comparison and, in the plots of the Kaplan-Meier
+curves, the range of the predicted survival at 5 and 10 years).
 The figures are drawn as PNG files and embedded in the document; the
 versions without and with confidence intervals are both included by
 default, so that they do not have to be recomputed. The tables of fit
 statistics and predicted survival of the spline models of both arms are
-given for each arm, so that they fit the page."></head><body>
+given for each arm, so that they fit the page. When the report has
+figures with confidence intervals, the plots of the smoothed empirical
+hazard with several models show the confidence interval of the smoothed
+hazard, as in the example figures of the template of the report."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -53,7 +63,7 @@ given for each arm, so that they fit the page."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">SurvFitSummary</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,12 +113,17 @@ each arm and for both arms fitted together: the standard parametric
 models (overlaid plots, AIC and BIC, and hazard and survival plots
 of each model) and the spline models (placement of the knots, fit
 statistics, median, mean and predicted survival at the landmark
-times, and overlaid plots).</p></li>
+times, and overlaid plots with the standard parametric model with
+the lowest AIC for comparison and, in the plots of the Kaplan-Meier
+curves, the range of the predicted survival at 5 and 10 years).</p></li>
 </ol><p>The figures are drawn as PNG files and embedded in the document; the
 versions without and with confidence intervals are both included by
 default, so that they do not have to be recomputed. The tables of fit
 statistics and predicted survival of the spline models of both arms are
-given for each arm, so that they fit the page.</p>
+given for each arm, so that they fit the page. When the report has
+figures with confidence intervals, the plots of the smoothed empirical
+hazard with several models show the confidence interval of the smoothed
+hazard, as in the example figures of the template of the report.</p>
     </div>
 
     <div class="section level2">
@@ -196,7 +211,8 @@ captions, and tables with a dark red header row (made by
 <code>inst/templates/make_report_template.py</code>). The styles
 <code>"Title"</code>, <code>"Subtitle"</code>, <code>"heading 1"</code> to
 <code>"heading 4"</code>, <code>"Caption"</code>, <code>"Table Caption"</code>,
-<code>"Figure"</code>, <code>"Table Text"</code> and the table style
+<code>"Figure"</code>, <code>"Table Text"</code>, <code>"List Bullet"</code> and the
+table style
 <code>"Report Table"</code> are used when the document defines them.</p></dd>
 
 

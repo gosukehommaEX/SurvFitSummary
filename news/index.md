@@ -1,5 +1,34 @@
 # Changelog
 
+## SurvFitSummary 2.2.0
+
+The Word report follows the example figures of the report template more
+closely:
+
+- The plots of the smoothed empirical hazard with all the standard
+  parametric models, and with the spline models, show the confidence
+  interval of the smoothed hazard when the report includes figures with
+  confidence intervals (the default).
+- The plots of the spline models also show the standard parametric model
+  with the lowest AIC of the same fit (dashed line), and the plots of
+  the Kaplan-Meier curve with the spline models mark the range of the
+  predicted survival at 5 and 10 years.
+- The methods of the proportional hazards assessment are listed as
+  bullet points, with the new style “List Bullet” of the template of the
+  package (`inst/templates/report_template.docx`).
+- The quantile-quantile plot is shown at the same scale as the other
+  figures, so that its text has the same size.
+
+Plots:
+
+- New argument `range_times` of
+  [`plot_survival_fits()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_survival_fits.md):
+  times at which a vertical line marks the range of the survival of the
+  models plotted, labelled in percent.
+- [`plot_qq_survival()`](https://gosukehommaEX.github.io/SurvFitSummary/reference/plot_qq_survival.md)
+  draws the identity and least-squares lines as segments, so that their
+  keys in the legend are horizontal lines (they were diagonal).
+
 ## SurvFitSummary 2.1.0
 
 - New

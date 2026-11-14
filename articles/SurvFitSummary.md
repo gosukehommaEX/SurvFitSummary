@@ -211,14 +211,17 @@ head(ctrl_pred[ctrl_pred$time == 120, c("model", "time", "est", "km")], 8)
 ```
 
 For the control arm, the survival at 10 years ranges from 0.000 to 0.006
-across the 16 models.
+across the 16 models. In the plot of the fitted survival curves,
+`range_times` marks the range of the models plotted at given times (here
+5 and 10 years), labelled in percent, as in the plots of the spline
+models in the Word report.
 
 ``` r
 
 plot_survival_fits(fits, arms = "Control",
                    models = c("Exponential", "Weibull", "Log-logistic",
                               "Lognormal", "Hazards, 1 knot"),
-                   time_horizon = 120)
+                   time_horizon = 120, range_times = c(60, 120))
 ```
 
 ![](SurvFitSummary_files/figure-html/survival-fits-1.png)

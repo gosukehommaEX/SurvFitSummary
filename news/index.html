@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">SurvFitSummary</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,18 @@
       <small>Source: <a href="https://github.com/gosukehommaEX/SurvFitSummary/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.2.0" id="survfitsummary-220">SurvFitSummary 2.2.0<a class="anchor" aria-label="anchor" href="#survfitsummary-220"></a></h2>
+<p>The Word report follows the example figures of the report template more closely:</p>
+<ul><li>The plots of the smoothed empirical hazard with all the standard parametric models, and with the spline models, show the confidence interval of the smoothed hazard when the report includes figures with confidence intervals (the default).</li>
+<li>The plots of the spline models also show the standard parametric model with the lowest AIC of the same fit (dashed line), and the plots of the Kaplan-Meier curve with the spline models mark the range of the predicted survival at 5 and 10 years.</li>
+<li>The methods of the proportional hazards assessment are listed as bullet points, with the new style “List Bullet” of the template of the package (<code>inst/templates/report_template.docx</code>).</li>
+<li>The quantile-quantile plot is shown at the same scale as the other figures, so that its text has the same size.</li>
+</ul><p>Plots:</p>
+<ul><li>New argument <code>range_times</code> of <code><a href="../reference/plot_survival_fits.html">plot_survival_fits()</a></code>: times at which a vertical line marks the range of the survival of the models plotted, labelled in percent.</li>
+<li>
+<code><a href="../reference/plot_qq_survival.html">plot_qq_survival()</a></code> draws the identity and least-squares lines as segments, so that their keys in the legend are horizontal lines (they were diagonal).</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.1.0" id="survfitsummary-210">SurvFitSummary 2.1.0<a class="anchor" aria-label="anchor" href="#survfitsummary-210"></a></h2>
 <ul><li>New <code><a href="../reference/reporting_times.html">reporting_times()</a></code>: the reporting interval, the landmark times and the time horizon of <code><a href="../reference/write_survival_workbook.html">write_survival_workbook()</a></code> and <code><a href="../reference/write_survival_report.html">write_survival_report()</a></code>, with their defaults filled in, so that tables, predictions and plots made with the other functions can use the same times (for example in the Shiny app of the package). The workbook and the report now take these times from <code><a href="../reference/reporting_times.html">reporting_times()</a></code>; their contents are unchanged.</li>

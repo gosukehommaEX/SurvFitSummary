@@ -19,13 +19,19 @@ and spline-based models), with print-ready names of the models:
     fitted together: the standard parametric models (overlaid plots, AIC
     and BIC, and hazard and survival plots of each model) and the spline
     models (placement of the knots, fit statistics, median, mean and
-    predicted survival at the landmark times, and overlaid plots).
+    predicted survival at the landmark times, and overlaid plots with
+    the standard parametric model with the lowest AIC for comparison
+    and, in the plots of the Kaplan-Meier curves, the range of the
+    predicted survival at 5 and 10 years).
 
 The figures are drawn as PNG files and embedded in the document; the
 versions without and with confidence intervals are both included by
 default, so that they do not have to be recomputed. The tables of fit
 statistics and predicted survival of the spline models of both arms are
-given for each arm, so that they fit the page.
+given for each arm, so that they fit the page. When the report has
+figures with confidence intervals, the plots of the smoothed empirical
+hazard with several models show the confidence interval of the smoothed
+hazard, as in the example figures of the template of the report.
 
 ## Usage
 
@@ -110,8 +116,8 @@ write_survival_report(
   tables with a dark red header row (made by
   `inst/templates/make_report_template.py`). The styles `"Title"`,
   `"Subtitle"`, `"heading 1"` to `"heading 4"`, `"Caption"`,
-  `"Table Caption"`, `"Figure"`, `"Table Text"` and the table style
-  `"Report Table"` are used when the document defines them.
+  `"Table Caption"`, `"Figure"`, `"Table Text"`, `"List Bullet"` and the
+  table style `"Report Table"` are used when the document defines them.
 
 - dpi:
 
